@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+         #
+#    By: mcarc <mcarc@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/08/15 07:57:51 by bdrinkin         ###   ########.fr        #
+#    Updated: 2020/08/16 15:28:29 by mcarc            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CCFLAGS = -Wall -Wextra -Werror
 OTHERS_FLAGS = -lm
 
 # Список фреймворков и их пути:
-FRAME_SDL2_DIR = Frameworks
+FRAME_SDL2_DIR = ./Frameworks
 FRAME_SDL2 = $(FRAME_SDL2_DIR)/SDL2.framework
 FRAME_SDL2_IMAGE = $(FRAME_SDL2_DIR)/SDL2_image.framework
 FRAME_SDL2_MIXER = $(FRAME_SDL2_DIR)/SDL2_mixer.framework
