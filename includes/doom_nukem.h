@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/15 09:34:39 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/17 20:01:58 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,17 @@ typedef struct			s_sdl_sys
 {
 	SDL_Window			*window;
 	SDL_Renderer		*render;
+	SDL_Surface			*surface;
 	SDL_Window			*map_window;
 	SDL_Renderer		*map_render;
-	SDL_Texture			*textures;
+	// SDL_Texture			*textures;
 	SDL_Event			event;
 	const Uint8			*state;
 	int					width;
 	int					height;
 	int					map_width;
 	int					map_heigth;
+	SDL_Surface			*textures;
 
 }						t_sdl_sys;
 
@@ -91,7 +93,9 @@ Uint32					get_ticks(t_timer *time);
 bool					time_is_started(t_timer *time);
 bool					time_is_paused(t_timer *time);
 void					fps_counter(t_timer *time);
-
-
+/*
+** editor_map.c
+*/
+bool					editor_map(t_doom_nukem *doom);
 
 #endif
