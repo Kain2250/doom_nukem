@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/17 20:01:58 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/18 18:37:52 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <math.h>
 # include <stdbool.h>
 # include "errorout.h"
+# include "define_resource.h"
 # include "libft.h"
 # include "SDL.h"
 # include "SDL_image.h"
@@ -36,6 +37,13 @@ typedef struct			s_timer
 	int					counted_frames;
 }						t_timer;
 
+typedef struct			s_color
+{
+	Uint8				red;
+	Uint8				green;
+	Uint8				blue;
+}						t_color;
+
 typedef struct			s_sdl_sys
 {
 	SDL_Window			*window;
@@ -46,12 +54,12 @@ typedef struct			s_sdl_sys
 	// SDL_Texture			*textures;
 	SDL_Event			event;
 	const Uint8			*state;
+	const Uint32		*state_mouse;
 	int					width;
 	int					height;
 	int					map_width;
 	int					map_heigth;
-	SDL_Surface			*textures;
-
+	SDL_Surface			*textures[texture_total];
 }						t_sdl_sys;
 
 
@@ -97,5 +105,20 @@ void					fps_counter(t_timer *time);
 ** editor_map.c
 */
 bool					editor_map(t_doom_nukem *doom);
+/*
+** load_res/load_res.c
+*/
+bool					load_res(t_doom_nukem *doom);
+/*
+** tools_for_editor/tools.c
+*/
+bool					frame_master(t_doom_nukem *doom, SDL_Rect *dst);
+/*
+** accses_pixel.c
+*/
+Uint32					get_pixel(SDL_Surface *surface, int x, int y);
+void					putpixel(SDL_Surface *surface,
+						int x, int y, Uint32 pixel);
+void					clear_surface(SDL_Surface *surface, Uint32 color);
 
 #endif

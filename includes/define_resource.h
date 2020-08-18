@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   define_resource.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/18 17:15:03 by bdrinkin         ###   ########.fr       */
+/*   Created: 2020/08/18 15:07:49 by bdrinkin          #+#    #+#             */
+/*   Updated: 2020/08/18 15:19:44 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom_nukem.h"
+#ifndef DEFINE_RESOURCE_H
+# define DEFINE_RESOURCE_H
 
-int					main(int ac, char **av)
+# define IMG_TEST "resource/textures/test.bmp"
+# define IMG_IRON "resource/textures/ract_iron.bmp"
+
+typedef enum		e_texture
 {
-	t_doom_nukem	*doom;
-	t_timer			time;
+	texture_test,
+	texture_iron,
+	texture_total
+}					t_texture;
 
-	if (ac == 1)
-	{
-		doom = ft_memalloc(sizeof(t_doom_nukem));
-		init_lib_sdl(doom);
-		load_res(doom);
-		timer_start(&time);
-		while (doom->quit == false)
-		{
-			// editor_map(doom);
-			event_list(doom);
-			// fps_counter(&time);
-		}
-		doom_exit(doom);
-		(void)av;
-	}
-	else
-		ft_putendl(USAGE_DOOM);
-	return (0);
-}
+#endif
