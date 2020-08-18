@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_nukem.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mcarc <mcarc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/18 18:37:52 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/18 23:16:35 by mcarc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # include "SDL_mixer.h"
 # include "SDL_ttf.h"
 # include "SDL_net.h"
+
+typedef struct s_map_editor t_map_editor;
+
 
 typedef struct			s_timer
 {
@@ -102,10 +105,6 @@ bool					time_is_started(t_timer *time);
 bool					time_is_paused(t_timer *time);
 void					fps_counter(t_timer *time);
 /*
-** editor_map.c
-*/
-bool					editor_map(t_doom_nukem *doom);
-/*
 ** load_res/load_res.c
 */
 bool					load_res(t_doom_nukem *doom);
@@ -120,5 +119,7 @@ Uint32					get_pixel(SDL_Surface *surface, int x, int y);
 void					putpixel(SDL_Surface *surface,
 						int x, int y, Uint32 pixel);
 void					clear_surface(SDL_Surface *surface, Uint32 color);
-
+t_map_editor			*map_editor_init(t_doom_nukem *doom);
+bool					editor_map(t_map_editor *map_editor);
+// void					map_editor_event_list(t_map_editor *map_editor);
 #endif

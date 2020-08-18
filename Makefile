@@ -6,7 +6,7 @@
 #    By: mcarc <mcarc@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/08/18 18:57:58 by mcarc            ###   ########.fr        #
+#    Updated: 2020/08/18 20:39:24 by mcarc            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,10 @@ INCLUDES = -I$(INCLUDES_DIRECTORY) \
 	-I$(INCLUDES_DIRECTORY_LIBFT) \
 	$(INCLUDES_SDL2)
 
-HEADERS_LIST = *.h
+HEADERS_LIST = editor_map.h \
+	doom_nukem.h \
+	define_resource.h \
+	errorout.h
 
 HEADERS = $(addprefix $(INCLUDES_DIRECTORY), $(HEADERS_LIST))
 
