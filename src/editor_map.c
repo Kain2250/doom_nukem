@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   editor_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/18 17:15:03 by bdrinkin         ###   ########.fr       */
+/*   Created: 2020/08/17 19:38:55 by bdrinkin          #+#    #+#             */
+/*   Updated: 2020/08/18 16:06:29 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-int					main(int ac, char **av)
+bool			editor_map(t_doom_nukem *doom)
 {
-	t_doom_nukem	*doom;
-	t_timer			time;
+	SDL_Rect	q;
 
-	if (ac == 1)
-	{
-		doom = ft_memalloc(sizeof(t_doom_nukem));
-		init_lib_sdl(doom);
-		load_res(doom);
-		timer_start(&time);
-		while (doom->quit == false)
-		{
-			// editor_map(doom);
-			event_list(doom);
-			// fps_counter(&time);
-		}
-		doom_exit(doom);
-		(void)av;
-	}
-	else
-		ft_putendl(USAGE_DOOM);
-	return (0);
+	q.h = 100;
+	q.w = 400;
+	q.x = 0;
+	q.y = 0;
+	SDL_BlitScaled(doom->sdl.textures[texture_test], &q, doom->sdl.surface, NULL);
+	SDL_UpdateWindowSurface(doom->sdl.window);
+	(void)doom;
+	return (true);
 }

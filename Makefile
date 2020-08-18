@@ -6,7 +6,7 @@
 #    By: mcarc <mcarc@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/08/16 15:57:47 by mcarc            ###   ########.fr        #
+#    Updated: 2020/08/18 16:07:02 by bdrinkin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,9 @@ HEADERS = $(addprefix $(INCLUDES_DIRECTORY), $(HEADERS_LIST))
 
 # Основные файлы программы и их пути:
 SRC_DIRECTORY = src/
-SRC_LIST = *.c
+SRC_LIST = *.c \
+	tools_for_editor/*.c \
+	load_res/*.c
 
 SRC = $(addprefix $(SRC_DIRECTORY), $(SRC_LIST))
 
@@ -75,7 +77,7 @@ RESET = \033[0m
 # Основные правила сборки:
 all: $(NAME)
 
-$(NAME): $(LIBFT_DIRECTORY) $(SRC) $(HEADERS)
+$(NAME): $(LIBFT_DIRECTORY) $(SRC) $(HEADERS) $(RES)
 	@$(MAKE) -C $(LIBFT_DIRECTORY)
 	@echo "wolf3d: $(GREEN)Компиляция исполняемого файла$(RESET)\n"
 	@$(GCC) -g $(CCFLAGS) $(INCLUDES) $(LIBRARIES_LIBFT) $(FRAMEWORKS) $(OTHERS_FLAGS) $(SRC) -o $(NAME)
@@ -83,7 +85,7 @@ $(NAME): $(LIBFT_DIRECTORY) $(SRC) $(HEADERS)
 
 $(RES):
 	@echo "wolf3d: $(GREEN)Подгрузка материалов$(RESET)\n"
-	@git clone https://github.com/Kain2250/resourse_of_wolf3d.git $(CURDIR)/resource
+	@git clone https://github.com/Kain2250/res_doom.git $(CURDIR)/resource
 	@echo "wolf3d: $(GREEN)Подгрузка материалов завершена$(RESET)\n"
 
 $(LIBFT_DIRECTORY):
@@ -103,4 +105,3 @@ fclean: clean
 re:
 	@$(MAKE) fclean
 	@$(MAKE) all
-	

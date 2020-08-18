@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:30:01 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/15 09:58:14 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/18 16:06:16 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ bool			init_sdl(t_doom_nukem *doom)
 		0, WIDTH_WIN,
 		HEIGHT_WIN, SDL_WINDOW_RESIZABLE)) == NULL)
 		return (false);
-	if ((doom->sdl.render = SDL_CreateRenderer(doom->sdl.window,
-		-1, SDL_RENDERER_SOFTWARE)) == NULL)
+	if ((doom->sdl.surface = SDL_GetWindowSurface(doom->sdl.window)) == NULL)
 		return (false);
 	SDL_EventState(SDL_MOUSEMOTION, SDL_DISABLE);
 	SDL_EventState(SDL_KEYDOWN, SDL_DISABLE);
@@ -35,7 +34,7 @@ bool			init_sdl_image(t_doom_nukem *doom)
 		return (false);
 	(void)doom;
 	return (true);
-}
+} 
 
 bool			init_sdl_mixer(t_doom_nukem *doom)
 {
