@@ -6,7 +6,7 @@
 /*   By: mcarc <mcarc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 19:38:55 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/18 18:46:16 by mcarc            ###   ########.fr       */
+/*   Updated: 2020/08/18 18:57:58 by mcarc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool			editor_map(t_doom_nukem *doom)
 	t_map_editor *map_editor;
 
 	q.h = 100;
-	q.w = 200;
+	q.w = 400;
 	q.x = 0;
 	q.y = 0;
 	if (!(map_editor = ft_memalloc(sizeof(t_map_editor))))

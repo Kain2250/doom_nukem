@@ -6,7 +6,7 @@
 #    By: mcarc <mcarc@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/08/17 20:25:03 by mcarc            ###   ########.fr        #
+#    Updated: 2020/08/18 18:57:58 by mcarc            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,9 @@ HEADERS = $(addprefix $(INCLUDES_DIRECTORY), $(HEADERS_LIST))
 
 # Основные файлы программы и их пути:
 SRC_DIRECTORY = src/
-SRC_LIST = *.c
+SRC_LIST = *.c \
+	tools_for_editor/*.c \
+	load_res/*.c
 
 SRC = $(addprefix $(SRC_DIRECTORY), $(SRC_LIST))
 
@@ -103,4 +105,3 @@ fclean: clean
 re:
 	@$(MAKE) fclean
 	@$(MAKE) all
-	
