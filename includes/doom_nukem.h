@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/18 18:37:52 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/19 20:32:21 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,15 @@ typedef struct			s_timer
 	int					counted_frames;
 }						t_timer;
 
+typedef struct			s_mouse
+{
+	bool				is_presed;
+	int					prew_x;
+	int					prew_y;
+	int					x;
+	int					y;
+}						t_mouse;
+
 typedef struct			s_color
 {
 	Uint8				red;
@@ -66,6 +75,7 @@ typedef struct			s_sdl_sys
 typedef struct			s_doom_nukem
 {
 	struct s_sdl_sys	sdl;
+	struct s_mouse		mouse;
 	bool				quit;
 }						t_doom_nukem;
 /*
@@ -109,10 +119,14 @@ bool					editor_map(t_doom_nukem *doom);
 ** load_res/load_res.c
 */
 bool					load_res(t_doom_nukem *doom);
+SDL_Surface				*loadSurface(char *path, SDL_Surface *screen_surface);
 /*
 ** tools_for_editor/tools.c
 */
 bool					frame_master(t_doom_nukem *doom, SDL_Rect *dst);
+void					drag_and_drop(SDL_Surface *src, SDL_Surface *dst);
+void					scale_frame(SDL_Surface *dst, t_mouse mouse, Uint32 color);
+void					draw_rect(SDL_Surface *dst, SDL_Rect *rect, Uint32 color);
 /*
 ** accses_pixel.c
 */
@@ -120,5 +134,8 @@ Uint32					get_pixel(SDL_Surface *surface, int x, int y);
 void					putpixel(SDL_Surface *surface,
 						int x, int y, Uint32 pixel);
 void					clear_surface(SDL_Surface *surface, Uint32 color);
+Uint32					color8_to_32(t_color color);
+t_color					color32_to_8(Uint32 color);
+
 
 #endif

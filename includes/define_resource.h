@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 15:07:49 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/18 15:19:44 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/19 18:18:31 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef enum		e_texture
 {
 	texture_test,
 	texture_iron,
+	texture_test2,
 	texture_total
 }					t_texture;
 
