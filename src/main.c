@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/19 21:34:18 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/20 22:38:38 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int					main(int ac, char **av)
 		timer_start(&time);
 		while (doom->quit == false)
 		{
-			// fps_counter(&time);
-			editor_map(doom);
+			fps_counter(&time);
+			frame_tamer(doom);
+			// editor_map(doom);
 			event_list(doom);
 			SDL_UpdateWindowSurface(doom->sdl.window);
 			clear_surface(doom->sdl.surface, 0);

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 18:10:36 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/19 19:33:31 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/20 16:06:09 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ Uint32				color8_to_32(t_color color)
 void				clear_surface(SDL_Surface *surface, Uint32 color)
 {
 	SDL_LockSurface(surface);
-	SDL_memset(surface->pixels, color, surface->h * surface->pitch);
+	SDL_memset(surface->pixels, color, surface->h * surface->pitch);//ВАЖНО
 	SDL_UnlockSurface(surface);
 }

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 09:15:51 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/19 21:10:31 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/20 22:06:45 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,18 @@ int				which_button(bool *mouse)
 
 void			mouse_events(t_doom_nukem *doom)
 {
-	SDL_Rect	q;
+	int			button;
 
-	q.x = 100;
-	q.y = 100;
-	q.h = 100;
-	q.w = 500;
 	if (doom->mouse.is_presed == false)
 		SDL_GetMouseState(&doom->mouse.prew_x, &doom->mouse.prew_y);
-	if (SDL_BUTTON_RIGHT == which_button(&doom->mouse.is_presed))
-	{
-		scale_frame(doom->sdl.surface, doom->mouse, 0xfffff);
-		// draw_rect(doom->sdl.surface, &q, 0xFFFF00);
-		// drag_and_drop(doom->sdl.textures[texture_test], doom->sdl.surface);
-	}
-	// if (SDL_BUTTON(SDL_BUTTON_LEFT) & SDL_GetMouseState(NULL, NULL))
-	// 	drow_color_point(doom->sdl.surface, 0xff98f8);
-	// if (SDL_BUTTON(SDL_BUTTON_RIGHT) & SDL_GetMouseState(NULL, NULL))
-	// 	scale_frame(doom->sdl.surface, NULL, doom->sdl.textures[texture_test2], NULL);
+	button = which_button(&doom->mouse.is_presed);
+	if (SDL_BUTTON_RIGHT == button)
+		scale_frame(doom->sdl.surface, doom->mouse, 0x00ff00, draw_rect);
+	else if (SDL_BUTTON_LEFT == button)
+		scale_frame(doom->sdl.surface, doom->mouse, 0x00ff00, draw_feel_rect);
+	else if (SDL_BUTTON_MIDDLE == button)
+		drag_and_drop(doom->sdl.textures[texture_test], doom->sdl.surface);
+
 
 }
 

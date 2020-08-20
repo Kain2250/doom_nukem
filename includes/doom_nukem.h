@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/19 20:32:21 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/20 22:36:17 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef struct			s_sdl_sys
 	SDL_Surface			*surface;
 	SDL_Window			*map_window;
 	SDL_Renderer		*map_render;
-	// SDL_Texture			*textures;
 	SDL_Event			event;
 	const Uint8			*state;
 	const Uint32		*state_mouse;
@@ -70,7 +69,6 @@ typedef struct			s_sdl_sys
 	int					map_heigth;
 	SDL_Surface			*textures[texture_total];
 }						t_sdl_sys;
-
 
 typedef struct			s_doom_nukem
 {
@@ -119,14 +117,20 @@ bool					editor_map(t_doom_nukem *doom);
 ** load_res/load_res.c
 */
 bool					load_res(t_doom_nukem *doom);
-SDL_Surface				*loadSurface(char *path, SDL_Surface *screen_surface);
+SDL_Surface				*load_surface(char *path, SDL_Surface *screen_surface);
 /*
 ** tools_for_editor/tools.c
 */
-bool					frame_master(t_doom_nukem *doom, SDL_Rect *dst);
 void					drag_and_drop(SDL_Surface *src, SDL_Surface *dst);
-void					scale_frame(SDL_Surface *dst, t_mouse mouse, Uint32 color);
-void					draw_rect(SDL_Surface *dst, SDL_Rect *rect, Uint32 color);
+void					scale_frame(SDL_Surface *dst, t_mouse mouse,
+							Uint32 color, void draw(SDL_Surface *,
+							SDL_Rect *, Uint32));
+void					draw_rect(SDL_Surface *dst,
+							SDL_Rect *rect, Uint32 color);
+void					scale_surface(SDL_Surface *src, SDL_Rect *rscr,
+							SDL_Surface *dst, SDL_Rect *drect);
+void					draw_feel_rect(SDL_Surface *dst,
+							SDL_Rect *rect, Uint32 color);
 /*
 ** accses_pixel.c
 */
@@ -136,6 +140,9 @@ void					putpixel(SDL_Surface *surface,
 void					clear_surface(SDL_Surface *surface, Uint32 color);
 Uint32					color8_to_32(t_color color);
 t_color					color32_to_8(Uint32 color);
-
+/*
+** frame.c
+*/
+void					frame_tamer(t_doom_nukem *doom);
 
 #endif

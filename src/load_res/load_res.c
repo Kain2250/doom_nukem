@@ -6,13 +6,13 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 15:00:44 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/19 18:18:34 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/20 22:36:59 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-SDL_Surface			*loadSurface(char *path, SDL_Surface *screen_surface)
+SDL_Surface			*load_surface(char *path, SDL_Surface *screen_surface)
 {
 	SDL_Surface		*optimizedSurface;
 	SDL_Surface		*loadedSurface;
@@ -36,9 +36,9 @@ static bool			load_texture(SDL_Surface *textures[texture_total],
 {
 	int				i;
 
-	textures[texture_test] = loadSurface(IMG_TEST, surface);
-	textures[texture_iron] = loadSurface(IMG_IRON, surface);
-	textures[texture_test2] = loadSurface("resource/textures/sw2cmt.bmp", surface);
+	textures[texture_test] = load_surface(IMG_TEST, surface);
+	textures[texture_iron] = load_surface(IMG_IRON, surface);
+	textures[texture_test2] = load_surface("resource/textures/sw2cmt.bmp", surface);
 	i = 0;
 	while (i != texture_total)
 	{

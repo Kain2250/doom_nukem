@@ -6,35 +6,43 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 20:40:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/19 21:57:58 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/20 21:56:26 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void			scale_frame(SDL_Surface *dst, t_mouse mouse, Uint32 color)
+void			abs_side_frame(int *a, int *b)
+{
+	*a += *b;
+	*b *= -1;
+}
+
+void			scale_frame(SDL_Surface *dst, t_mouse mouse, Uint32 color,
+				void draw(SDL_Surface *, SDL_Rect *, Uint32))
 {
 	static SDL_Rect	cur;
-	
+
 	SDL_GetMouseState(cur.w >= 0 ? &cur.w : NULL, cur.h >= 0 ? &cur.h : NULL);
 	cur.x = mouse.prew_x;
 	cur.y = mouse.prew_y;
-	if (cur.w > 0)
+	if (cur.w >= 0)
+	{
 		cur.w -= cur.x;
-	else
-	{
-		cur.x += cur.w;
-		cur.w *= -1;
+		if (cur.w < 0)
+			abs_side_frame(&cur.x, &cur.w);
 	}
-	if (cur.h > 0)
+	else
+		abs_side_frame(&cur.x, &cur.w);
+	if (cur.h >= 0)
+	{
 		cur.h -= cur.y;
-	else
-	{
-		cur.y += cur.h;
-		cur.h *= -1;
+		if (cur.h < 0)
+			abs_side_frame(&cur.y, &cur.h);
 	}
-	printf("cur.x - %d cur.y - %d cur.w - %d cur.h - %d\n", cur.x, cur.y, cur.w, cur.h);
-	draw_rect(dst, &cur, color);
+	else
+		abs_side_frame(&cur.y, &cur.h);
+	draw(dst, &cur, color);
 }
 
 void			draw_rect(SDL_Surface *dst, SDL_Rect *rect, Uint32 color)
@@ -61,6 +69,28 @@ void			draw_rect(SDL_Surface *dst, SDL_Rect *rect, Uint32 color)
 	}
 }
 
+void			draw_feel_rect(SDL_Surface *dst, SDL_Rect *rect, Uint32 color)
+{
+	register int	x;
+	register int	y;
+	register int	w;
+	register int	h;
+
+	w = rect->x + rect->w;
+	h = rect->y + rect->h;
+	y = rect->y;
+	while (y < h)
+	{
+		x = rect->x;
+		while (x <= w)
+		{
+			putpixel(dst, x, y, color);
+			x++;
+		}
+		y++;
+	}
+}
+
 void			drag_and_drop(SDL_Surface *src, SDL_Surface *dst)
 {
 	SDL_Point	mouse;
@@ -84,12 +114,4 @@ void			drag_and_drop(SDL_Surface *src, SDL_Surface *dst)
 		}
 		screen.y++;
 	}
-}
-
-bool		frame_master(t_doom_nukem *doom, SDL_Rect *dst)
-{
-	
-	SDL_BlitScaled(doom->sdl.textures[texture_iron], NULL, doom->sdl.surface, dst);
-	SDL_UpdateWindowSurface(doom->sdl.window);
-	return (true);
 }

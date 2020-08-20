@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:30:01 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/19 16:10:06 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/20 16:00:56 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool			init_sdl(t_doom_nukem *doom)
 		return (false);
 	if ((doom->sdl.window = SDL_CreateWindow(NAME_WIN, 0,
 		0, WIDTH_WIN,
-		HEIGHT_WIN, SDL_WINDOW_RESIZABLE)) == NULL)
+		HEIGHT_WIN, SDL_WINDOW_SHOWN)) == NULL)
 		return (false);
 	if ((doom->sdl.surface = SDL_GetWindowSurface(doom->sdl.window)) == NULL)
 		return (false);
