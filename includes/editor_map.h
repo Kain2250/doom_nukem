@@ -6,7 +6,7 @@
 /*   By: mcarc <mcarc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 20:37:43 by mcarc             #+#    #+#             */
-/*   Updated: 2020/08/18 23:11:55 by mcarc            ###   ########.fr       */
+/*   Updated: 2020/08/20 15:34:49 by mcarc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ typedef struct			s_field
 {
 	SDL_Surface			*surface;
 	bool				map[MAP_HEIGHT][MAP_WIDTH];
-	double		zoom;
+	double				zoom;
 	struct t_sector		*sectors;
+	SDL_Rect			map_rect;
 }						t_field;
 
 typedef struct			s_map_editor
 {
+	SDL_Point			mouse;
 	struct s_sdl_sys	sdl;
 	t_field		field;
 }						t_map_editor;
