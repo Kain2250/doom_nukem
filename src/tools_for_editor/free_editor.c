@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   define_resource.h                                  :+:      :+:    :+:   */
+/*   free_editor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/18 15:07:49 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/23 18:00:50 by bdrinkin         ###   ########.fr       */
+/*   Created: 2020/08/22 19:25:49 by bdrinkin          #+#    #+#             */
+/*   Updated: 2020/08/22 20:02:25 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFINE_RESOURCE_H
-# define DEFINE_RESOURCE_H
+#include "doom_nukem.h"
 
-# define IMG_TEST "resource/textures/test.bmp"
-# define IMG_IRON "resource/textures/ract_iron.bmp"
-
-typedef enum		e_texture
+void				free_editor(t_doom_nukem *doom, t_frames *frame_table)
 {
-	texture_test,
-	texture_iron,
-	texture_test2,
-	texture_editor_back,
-	texture_total
-}					t_texture;
+	t_frames		*temp;
 
-#endif
+	while (frame_table)
+	{
+		temp = frame_table->next;
+		free(frame_table);
+		frame_table = temp;
+	}
+	(void)doom;
+}

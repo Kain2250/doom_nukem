@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 15:00:44 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/20 22:36:59 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/23 18:20:13 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static bool			load_texture(SDL_Surface *textures[texture_total],
 	textures[texture_test] = load_surface(IMG_TEST, surface);
 	textures[texture_iron] = load_surface(IMG_IRON, surface);
 	textures[texture_test2] = load_surface("resource/textures/sw2cmt.bmp", surface);
+	textures[texture_editor_back] = load_surface("resource/textures/editor_back.bmp", surface);
 	i = 0;
 	while (i != texture_total)
 	{
