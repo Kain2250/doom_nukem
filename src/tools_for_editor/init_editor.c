@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 19:24:18 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/24 20:42:23 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/27 21:15:58 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_frames			*init_editor(t_doom_nukem *doom)
 {
 	t_frames		*frame_table;
 	t_frames		*temp;
-	SDL_Rect		rect;
-	SDL_Rect		canvas;
+	t_rect			rect;
+	t_rect			canvas;
 
 	SDL_GetWindowSize(doom->sdl.window, &doom->sdl.width, &doom->sdl.height);
 	rect.x = 0;

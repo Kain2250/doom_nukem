@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 09:15:51 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/24 21:45:26 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/27 22:03:54 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void			mouse_events(t_doom_nukem *doom)
 		scale_frame(doom->sdl.surface, doom->mouse, 0x00ff00, draw_rect);
 	else if (SDL_BUTTON_LEFT == button)
 		// drow_color_point(doom->sdl.surface, 0xffffff);
-		scale_frame_01(doom->sdl.surface, doom->mouse, doom->sdl.textures[texture_test]);
+		scale_frame_01(doom->sdl.surface, doom->mouse, doom->sdl.textures[texture_test2]);
 	else if (SDL_BUTTON_MIDDLE == button)
 		drag_and_drop(doom->sdl.textures[texture_test], doom->sdl.surface);
 

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/24 19:12:52 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/27 21:18:25 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,45 @@
 # include "SDL_net.h"
 # include <mlx.h>
 
+typedef struct		s_point
+{
+	int				x;
+	int				y;
+}					t_point;
+
+typedef struct		s_pointf
+{
+	double			x;
+	double			y;
+}					t_pointf;
+
+typedef struct		s_rect
+{
+	int				x;
+	int				y;
+	int				w;
+	int				h;
+}					t_rect;
+
+typedef struct		s_rectf
+{
+	double			x;
+	double			y;
+	double			w;
+	double			h;
+}					t_rectf;
+
 typedef struct		s_block
 {
 	SDL_Surface		*block_pic;
-	SDL_Rect		rect_block;
+	t_rect			rect_block;
 	bool			is_push;
 	struct s_block	*next;
 }					t_block;
 
 typedef struct		s_frames
 {
-	SDL_Rect		main_frame;
+	t_rect			main_frame;
 	Uint32			color;
 	int				count_blocks;
 	struct s_block	*blocks;
@@ -142,13 +170,13 @@ SDL_Surface				*load_surface(char *path, SDL_Surface *screen_surface);
 void					drag_and_drop(SDL_Surface *src, SDL_Surface *dst);
 void					scale_frame(SDL_Surface *dst, t_mouse mouse,
 							Uint32 color, void draw(SDL_Surface *,
-							SDL_Rect *, Uint32, int));
+							t_rect *, Uint32, int));
 void					draw_rect(SDL_Surface *dst,
-							SDL_Rect *rect, Uint32 color, int step);
-void					scale_surface(SDL_Surface *src, SDL_Rect *rscr,
-							SDL_Surface *dst, SDL_Rect *drect);
+							t_rect *rect, Uint32 color, int step);
+void					scale_surface(SDL_Surface *src, t_rect *rscr,
+							SDL_Surface *dst, t_rect *drect);
 void					draw_feel_rect(SDL_Surface *dst,
-							SDL_Rect *rect, Uint32 color, int step);
+							t_rect *rect, Uint32 color, int step);
 /*
 ** accses_pixel.c
 */
@@ -162,11 +190,13 @@ t_color					color32_to_8(Uint32 color);
 ** frame.c
 */
 void					free_editor(t_doom_nukem *doom, t_frames *frame_table);
-t_frames				*new_frame(SDL_Rect *rect, Uint32 color,
+t_frames				*new_frame(t_rect *rect, Uint32 color,
 							struct s_block *blocks);
 void					frame_tamer(t_doom_nukem *doom, t_frames *frame_table);
 t_frames				*init_editor(t_doom_nukem *doom);
 void					scale_frame_01(SDL_Surface *dst, t_mouse mouse, SDL_Surface *src);
-void					blit_surface(SDL_Surface *src, SDL_Rect *rsrc, SDL_Surface *dst, SDL_Rect *rdst);
+void					blit_surf_scaled(SDL_Surface *src, t_rect *rsrc,
+							SDL_Surface *dst, t_rect *rdst);
+t_rect					*rect_fill(int x, int y, int w, int h);
 
 #endif

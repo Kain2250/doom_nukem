@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 20:40:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/24 22:09:38 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/27 22:03:20 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void			abs_side_frame(int *a, int *b)
 
 void			scale_frame_01(SDL_Surface *dst, t_mouse mouse, SDL_Surface *src)
 {
-	static SDL_Rect	cur;
+	static t_rect	cur;
 
 	SDL_GetMouseState(cur.w >= 0 ? &cur.w : NULL, cur.h >= 0 ? &cur.h : NULL);
 	cur.x = mouse.prew_x;
@@ -41,14 +41,13 @@ void			scale_frame_01(SDL_Surface *dst, t_mouse mouse, SDL_Surface *src)
 	}
 	else
 		abs_side_frame(&cur.y, &cur.h);
-	blit_surface(src, NULL, dst, &cur);
-	// SDL_BlitScaled(src, NULL, dst, &cur);
+	blit_surf_scaled(src, NULL, dst, &cur);
 }
 
 void			scale_frame(SDL_Surface *dst, t_mouse mouse, Uint32 color,
-				void draw(SDL_Surface *, SDL_Rect *, Uint32, int))
+				void draw(SDL_Surface *, t_rect *, Uint32, int))
 {
-	static SDL_Rect	cur;
+	static t_rect	cur;
 
 	SDL_GetMouseState(cur.w >= 0 ? &cur.w : NULL, cur.h >= 0 ? &cur.h : NULL);
 	cur.x = mouse.prew_x;
@@ -72,7 +71,7 @@ void			scale_frame(SDL_Surface *dst, t_mouse mouse, Uint32 color,
 	draw(dst, &cur, color, 1);
 }
 
-void			draw_rect(SDL_Surface *dst, SDL_Rect *rect, Uint32 color, int step)
+void			draw_rect(SDL_Surface *dst, t_rect *rect, Uint32 color, int step)
 {
 	register int	i;
 	register int	w;
@@ -97,7 +96,7 @@ void			draw_rect(SDL_Surface *dst, SDL_Rect *rect, Uint32 color, int step)
 	}
 }
 
-void			draw_feel_rect(SDL_Surface *dst, SDL_Rect *rect,
+void			draw_feel_rect(SDL_Surface *dst, t_rect *rect,
 				Uint32 color, int step)
 {
 	register int	x;
@@ -123,8 +122,8 @@ void			draw_feel_rect(SDL_Surface *dst, SDL_Rect *rect,
 
 void			drag_and_drop(SDL_Surface *src, SDL_Surface *dst)
 {
-	SDL_Point	mouse;
-	SDL_Point	screen;
+	t_point		mouse;
+	t_point		screen;
 	int			x;
 	int			y;
 
