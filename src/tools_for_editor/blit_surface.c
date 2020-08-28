@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 21:03:55 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/27 22:29:31 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/28 16:31:00 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,20 @@ static void			while_scale_pic(SDL_Surface *src, t_rect *rsrc,
 {
 	t_pointf		crd[2];
 	t_rectf			delta;
+	Uint32			color;
 
 	delta = check_scale_delta(rdst, rsrc);
 	crd[0].y = rdst->y;
-	crd[1].y = 0;//rsrc->y;
+	crd[1].y = rsrc->y;
 	while (crd[0].y < rdst->h || crd[0].y < rdst->y + rdst->h)
 	{
 		crd[0].x = rdst->x;
-		crd[1].x = 0;//rsrc->x;
+		crd[1].x = rsrc->x;
+		color = get_pixel(src, crd[1].x, crd[1].y);
 		while (crd[0].x < rdst->w || crd[0].x < rdst->x + rdst->w)
 		{
-			putpixel(dst, round(crd[0].x), round(crd[0].y),
-				get_pixel(src, round(crd[1].x), round(crd[1].y)));
+			color = get_pixel(src, crd[1].x, crd[1].y);
+			putpixel(dst, crd[0].x, crd[0].y, color);
 			crd[1].x += delta.w;
 			crd[0].x++;
 		}

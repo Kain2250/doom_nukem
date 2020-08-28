@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/24 22:01:10 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/28 16:31:49 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ int					main(int ac, char **av)
 			frame_tamer(doom, editor);
 			// editor_map(doom);
 			event_list(doom);
-			// blit_surface(doom->sdl.textures[texture_test2], NULL, doom->sdl.surface, NULL);
 			SDL_UpdateWindowSurface(doom->sdl.window);
-			// clear_surface(doom->sdl.surface, 0);
+			clear_surface(doom->sdl.surface, 0);
 		}
 		doom_exit(doom);
 		free_editor(doom, editor);

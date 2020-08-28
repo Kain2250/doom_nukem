@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/27 21:18:25 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/28 16:58:25 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ typedef struct		s_rectf
 typedef struct		s_block
 {
 	SDL_Surface		*block_pic;
-	t_rect			rect_block;
+	t_rect			*rect_block;
 	bool			is_push;
 	struct s_block	*next;
 }					t_block;
 
 typedef struct		s_frames
 {
-	t_rect			main_frame;
+	t_rect			*main_frame;
 	Uint32			color;
 	int				count_blocks;
 	struct s_block	*blocks;
@@ -190,7 +190,7 @@ t_color					color32_to_8(Uint32 color);
 ** frame.c
 */
 void					free_editor(t_doom_nukem *doom, t_frames *frame_table);
-t_frames				*new_frame(t_rect *rect, Uint32 color,
+t_frames				*new_frame(t_rect *rect(int x, int y, int w, int h), Uint32 color,
 							struct s_block *blocks);
 void					frame_tamer(t_doom_nukem *doom, t_frames *frame_table);
 t_frames				*init_editor(t_doom_nukem *doom);
