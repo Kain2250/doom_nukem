@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/28 16:31:49 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/29 21:15:47 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 // 	SDL_SetCursor(curs);
 // }
 
+
+
 int					main(int ac, char **av)
 {
 	t_doom_nukem	*doom;
@@ -32,6 +34,7 @@ int					main(int ac, char **av)
 		doom = ft_memalloc(sizeof(t_doom_nukem));
 		init_lib_sdl(doom);
 		load_res(doom);
+		SDL_SetWindowIcon(doom->sdl.window, doom->sdl.textures[texture_test2]);
 		editor = init_editor(doom);
 		timer_start(&time);
 		while (doom->quit == false)

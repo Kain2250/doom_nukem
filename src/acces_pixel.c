@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 18:10:36 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/20 16:06:09 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/29 20:13:57 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ Uint32				get_pixel(SDL_Surface *surface, int x, int y)
 
 void				putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 {
-	register int	bpp;
-	register Uint8	*p;
+	int	bpp;
+	Uint8	*p;
 
 	bpp = surface->format->BytesPerPixel;
 	p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;

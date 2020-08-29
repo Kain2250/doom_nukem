@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:30:01 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/20 16:00:56 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/29 18:17:17 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,13 @@ bool			init_lib_sdl(t_doom_nukem *doom)
 	if (init_sdl(doom) == false)
 		return (put_error_sdl(ERR_INIT_SDL, SDL_GetError()));
 	if (init_sdl_image(doom) == false)
-		return (put_error_sdl(ERR_INIT_IMG, SDL_GetError()));
+		return (put_error_sdl(ERR_INIT_IMG, IMG_GetError()));
 	if (init_sdl_mixer(doom) == false)
 		return (put_error_sdl(ERR_INIT_MIX, SDL_GetError()));
 	if (init_sdl_ttf(doom) == false)
-		return (put_error_sdl(ERR_INIT_TTF, SDL_GetError()));
+		return (put_error_sdl(ERR_INIT_TTF, TTF_GetError()));
 	if (init_sdl_net(doom) == false)
 		return (put_error_sdl(ERR_INIT_NET, SDL_GetError()));
+	doom->frame.quit = true;
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 20:40:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/27 22:03:20 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/29 20:35:09 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ void			draw_feel_rect(SDL_Surface *dst, t_rect *rect,
 	register int	w;
 	register int	h;
 
+	if (rect == NULL)
+		rect = rect_fill(0, 0, dst->w, dst->h);
 	step = (step == 0) ? 1 : step;
 	w = rect->x + rect->w;
 	h = rect->y + rect->h;
@@ -118,6 +120,8 @@ void			draw_feel_rect(SDL_Surface *dst, t_rect *rect,
 		}
 		y += step;
 	}
+	if (rect->free == true)
+		free(rect);
 }
 
 void			drag_and_drop(SDL_Surface *src, SDL_Surface *dst)

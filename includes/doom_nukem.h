@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/28 16:58:25 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/29 20:07:23 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct		s_rect
 	int				y;
 	int				w;
 	int				h;
+	bool			free;
 }					t_rect;
 
 typedef struct		s_rectf
@@ -55,6 +56,7 @@ typedef struct		s_rectf
 	double			y;
 	double			w;
 	double			h;
+	bool			free;
 }					t_rectf;
 
 typedef struct		s_block
@@ -114,12 +116,23 @@ typedef struct			s_sdl_sys
 	int					map_width;
 	int					map_heigth;
 	SDL_Surface			*textures[texture_total];
+	TTF_Font			*fonts[font_total];
 }						t_sdl_sys;
+
+typedef struct			s_new_win
+{
+	SDL_Window			*win;
+	SDL_Surface			*screen;
+	SDL_Event			event;
+	struct s_frames		*frames;
+	bool				quit;
+}						t_new_win;
 
 typedef struct			s_doom_nukem
 {
 	struct s_sdl_sys	sdl;
 	struct s_mouse		mouse;
+	struct s_new_win	frame;
 	bool				quit;
 }						t_doom_nukem;
 /*
@@ -190,7 +203,7 @@ t_color					color32_to_8(Uint32 color);
 ** frame.c
 */
 void					free_editor(t_doom_nukem *doom, t_frames *frame_table);
-t_frames				*new_frame(t_rect *rect(int x, int y, int w, int h), Uint32 color,
+t_frames				*new_frame(t_rect *rect, Uint32 color,
 							struct s_block *blocks);
 void					frame_tamer(t_doom_nukem *doom, t_frames *frame_table);
 t_frames				*init_editor(t_doom_nukem *doom);
@@ -198,5 +211,7 @@ void					scale_frame_01(SDL_Surface *dst, t_mouse mouse, SDL_Surface *src);
 void					blit_surf_scaled(SDL_Surface *src, t_rect *rsrc,
 							SDL_Surface *dst, t_rect *rdst);
 t_rect					*rect_fill(int x, int y, int w, int h);
+t_rect					oblast(int x, int y, int w, int h);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:33:00 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/18 16:18:45 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/29 18:25:54 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ void	doom_exit(t_doom_nukem *doom)
 		SDL_FreeSurface(doom->sdl.surface);
 	if (doom->sdl.window != NULL)
 		SDL_DestroyWindow(doom->sdl.window);
+	while (i < font_total)
+	{
+		if (doom->sdl.fonts[i] != NULL)
+			TTF_CloseFont(doom->sdl.fonts[i]);
+		i++;
+	}
 	IMG_Quit();
 	TTF_Quit();
 	SDLNet_Quit();

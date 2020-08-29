@@ -6,16 +6,16 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 15:00:44 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/23 18:20:13 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/08/29 18:16:28 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-SDL_Surface			*load_surface(char *path, SDL_Surface *screen_surface)
+SDL_Surface		*load_surface(char *path, SDL_Surface *screen_surface)
 {
-	SDL_Surface		*optimizedSurface;
-	SDL_Surface		*loadedSurface;
+	SDL_Surface	*optimizedSurface;
+	SDL_Surface	*loadedSurface;
 
 	loadedSurface = SDL_LoadBMP(path);
 	if (loadedSurface == NULL)
@@ -31,10 +31,28 @@ SDL_Surface			*load_surface(char *path, SDL_Surface *screen_surface)
 	return (optimizedSurface);
 }
 
-static bool			load_texture(SDL_Surface *textures[texture_total],
-					SDL_Surface *surface)
+static bool		load_font(TTF_Font *font[font_total])
 {
-	int				i;
+	int			i;
+
+	i = 0;
+	font[font_button] = TTF_OpenFont(FONT_BUTTON, 16);
+	font[font_text] = TTF_OpenFont(FONT_TEXT, 14);
+	while (i != font_total)
+	{
+		if (font[i] == NULL)
+			return (false);
+		else
+			i++;
+	}
+	return (true);
+
+}
+
+static bool		load_texture(SDL_Surface *textures[texture_total],
+				SDL_Surface *surface)
+{
+	int			i;
 
 	textures[texture_test] = load_surface(IMG_TEST, surface);
 	textures[texture_iron] = load_surface(IMG_IRON, surface);
@@ -51,9 +69,11 @@ static bool			load_texture(SDL_Surface *textures[texture_total],
 	return (true);
 }
 
-bool				load_res(t_doom_nukem *doom)
+bool			load_res(t_doom_nukem *doom)
 {
 	if (load_texture(doom->sdl.textures, doom->sdl.surface) == false)
 		return (put_error_sdl(ERR_LOAD_IMG, IMG_GetError()));
+	if (load_font(doom->sdl.fonts) == false)
+		return (put_error_sdl(ERR_LOAD_FONT, TTF_GetError()));
 	return (true);
 }
