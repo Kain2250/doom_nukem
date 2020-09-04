@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 20:37:35 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/29 20:34:38 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/04 15:52:01 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void				frame_tamer(t_doom_nukem *doom, t_frames *frame_table)
 	// blit_surf_scaled(doom->sdl.textures[texture_editor_back], NULL, doom->sdl.surface, NULL);
 	while (temp)
 	{
-		draw_feel_rect(doom->sdl.surface, temp->main_frame, temp->color, 2);
+		draw_feel_rect(doom->sdl.surface, temp->main_frame, temp->color, 0);
 		temp = temp->next;
 	}
 }

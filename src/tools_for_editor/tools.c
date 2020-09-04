@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 20:40:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/29 20:35:09 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/04 16:07:45 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,82 +69,4 @@ void			scale_frame(SDL_Surface *dst, t_mouse mouse, Uint32 color,
 	else
 		abs_side_frame(&cur.y, &cur.h);
 	draw(dst, &cur, color, 1);
-}
-
-void			draw_rect(SDL_Surface *dst, t_rect *rect, Uint32 color, int step)
-{
-	register int	i;
-	register int	w;
-	register int	h;
-
-	step = (step == 0) ? 1 : step;
-	i = rect->x;
-	w = rect->x + rect->w;
-	h = rect->y + rect->h;
-	while (i <= w)
-	{
-		putpixel(dst, i, rect->y, color);
-		putpixel(dst, i, h, color);
-		i += step;
-	}
-	i = rect->y + 1;
-	while (i < h)
-	{
-		putpixel(dst, rect->x, i, color);
-		putpixel(dst, w, i, color);
-		i += step;
-	}
-}
-
-void			draw_feel_rect(SDL_Surface *dst, t_rect *rect,
-				Uint32 color, int step)
-{
-	register int	x;
-	register int	y;
-	register int	w;
-	register int	h;
-
-	if (rect == NULL)
-		rect = rect_fill(0, 0, dst->w, dst->h);
-	step = (step == 0) ? 1 : step;
-	w = rect->x + rect->w;
-	h = rect->y + rect->h;
-	y = rect->y;
-	while (y < h)
-	{
-		x = rect->x;
-		while (x <= w)
-		{
-			putpixel(dst, x, y, color);
-			x += step;
-		}
-		y += step;
-	}
-	if (rect->free == true)
-		free(rect);
-}
-
-void			drag_and_drop(SDL_Surface *src, SDL_Surface *dst)
-{
-	t_point		mouse;
-	t_point		screen;
-	int			x;
-	int			y;
-
-	SDL_GetMouseState(&mouse.x, &mouse.y);
-	screen.y = 0;
-	while (screen.y < src->h)
-	{
-		screen.x = 0;
-		while (screen.x < src->w)
-		{
-			x = (mouse.x + screen.x >= dst->w) ?
-				dst->w - 1 : mouse.x + screen.x;
-			y = (mouse.y + screen.y >= dst->h) ?
-				dst->h - 1 : mouse.y + screen.y;
-			putpixel(dst, x, y, get_pixel(src, screen.x, screen.y));
-			screen.x++;
-		}
-		screen.y++;
-	}
 }

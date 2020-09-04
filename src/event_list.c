@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 09:15:51 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/29 21:18:17 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/04 18:21:08 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int				which_button(bool *mouse)
 	return (0);
 }
 
-t_rect			oblast(int x, int y, int w, int h)
+t_rect			rect_fill_no_malloc(int x, int y, int w, int h)
 {
 	t_rect		q;
 
@@ -111,7 +111,7 @@ void			render_new_win(t_new_win *frame,
 // 	draw_feel_rect(frame->screen, NULL, 0xafafaf, 1);
 // 	while (i < 6)
 // 	{
-// 		q = oblast(x += 80, 10, 70, 20);
+// 		q = rect_fill_no_malloc(x += 80, 10, 70, 20);
 // 		draw_feel_rect(frame->screen, &q, 0xffffff, 1);
 // 		i++;
 // 	}
@@ -143,9 +143,9 @@ void			open_new_win(t_new_win *frame, TTF_Font *font)
 		SDL_WINDOWPOS_UNDEFINED, 600, 700, SDL_WINDOW_SHOWN);
 	frame->screen = SDL_GetWindowSurface(frame->win);
 	frame->quit = false;
-	q = oblast(10, 10, 60, 80);
+	q = rect_fill_no_malloc(10, 10, 60, 80);
 	frame->frames = new_frame(&q, 0xa0a0a0, new_block(TTF_RenderText_Blended(font, "Knopka", color), &q));
-	render_new_win(frame, 0xafafaf, oblast(0, 0, frame->screen->w, frame->screen->h));
+	render_new_win(frame, 0xafafaf, rect_fill_no_malloc(0, 0, frame->screen->w, frame->screen->h));
 }
 
 void			close_new_win(t_new_win *frame)
@@ -178,7 +178,8 @@ void			mouse_events(t_doom_nukem *doom)
 	if (SDL_BUTTON_RIGHT == button)
 		scale_frame(doom->sdl.surface, doom->mouse, 0x00ff00, draw_rect);
 	else if (SDL_BUTTON_LEFT == button)
-		scale_frame_01(doom->sdl.surface, doom->mouse, doom->sdl.textures[texture_test2]);
+		draw_line(doom->sdl.surface, fill_point(500, 500), fill_point(doom->mouse.prew_x, doom->mouse.prew_y), 0xffffff);
+		// scale_frame_01(doom->sdl.surface, doom->mouse, doom->sdl.textures[texture_test2]);
 	else if (SDL_BUTTON_MIDDLE == button)
 		drag_and_drop(doom->sdl.textures[texture_test], doom->sdl.surface);
 

@@ -5,75 +5,77 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/27 21:03:55 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/29 21:18:30 by bdrinkin         ###   ########.fr       */
+/*   Created: 2020/09/04 12:16:13 by bdrinkin          #+#    #+#             */
+/*   Updated: 2020/09/04 15:21:48 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-static t_rectf		check_scale_delta(t_rect *rdst, t_rect *rsrc)
+void		free_rect(t_rect *rect)
 {
-	t_rectf			delta;
-
-	if (rdst->h == rsrc->h)
-		delta.h = 1.0;
-	else
-		delta.h = ((rsrc->h * 1.0) / (rdst->h * 1.0));
-	if (rdst->w == rsrc->w)
-		delta.w = 1.0;
-	else
-		delta.w = ((rsrc->w * 1.0) / (rdst->w * 1.0));
-	return (delta);
+	if (rect->free == true)
+		free(rect);
 }
 
-static void			while_scale_pic(SDL_Surface *src, t_rect *rsrc,
-					SDL_Surface *dst, t_rect *rdst)
+void		if_rect(SDL_Surface *src, t_rect **rsrc,
+			SDL_Surface *dst, t_rect **rdst)
 {
-	t_pointf		crd[2];
-	t_rectf			delta;
-	Uint32			color;
-
-	delta = check_scale_delta(rdst, rsrc);
-	crd[0].y = rdst->y;
-	crd[1].y = rsrc->y;
-	while (crd[0].y < rdst->h || crd[0].y < rdst->y + rdst->h)
+	if (*rsrc == NULL)
 	{
-		crd[0].x = rdst->x;
-		crd[1].x = rsrc->x;
-		color = get_pixel(src, crd[1].x, crd[1].y);
-		while (crd[0].x < rdst->w || crd[0].x < rdst->x + rdst->w)
+		*rsrc = (t_rect *)ft_memalloc(sizeof(t_rect));
+		(*rsrc)->w = src->w;
+		(*rsrc)->h = src->h;
+		(*rsrc)->free = true;
+	}
+	if (*rdst == NULL)
+	{
+		*rdst = (t_rect *)ft_memalloc(sizeof(t_rect));
+		(*rdst)->w = dst->w;
+		(*rdst)->h = dst->h;
+		(*rsrc)->free = true;
+	}
+}
+
+void		check_scale(SDL_Surface *source, t_rect **src)
+{
+	if ((*src)->w > source->w)
+		(*src)->w = source->w;
+	if ((*src)->h > source->h)
+		(*src)->h = source->h;
+	// if ((*src)->x > source->w)
+	// 	(*src)->x = source->w;
+	// if ((*src)->y > source->h)
+	// 	(*src)->y = source->h;
+
+}
+
+void		blit_surface(SDL_Surface *src, t_rect *rsrc,
+			SDL_Surface *dst, t_rect *rdst)
+{
+	t_point	source;
+	t_point	dest;
+
+	if_rect(src, &rsrc, dst, &rdst);
+	check_scale(src, &rsrc);
+	source.y = rsrc->y;
+	dest.y = rdst->y;
+	while (source.y != rsrc->h)
+	{
+		source.x = rsrc->x;
+		dest.x = rdst->x;
+		while (source.x != rsrc->w)
 		{
-			color = get_pixel(src, crd[1].x, crd[1].y);
-			putpixel(dst, crd[0].x, crd[0].y, color);
-			crd[1].x += delta.w;
-			crd[0].x++;
+			putpixel(dst, dest.x++, dest.y,
+				get_pixel(src, source.x++, source.y));
+			if (source.x > rdst->w)
+				break ;
 		}
-		crd[1].y += delta.h;
-		crd[0].y++;
+		source.y++;
+		dest.y++;
+		if (source.y > rdst->h)
+			break ;
 	}
-}
-
-void				blit_surf_scaled(SDL_Surface *src, t_rect *rsrc,
-					SDL_Surface *dst, t_rect *rdst)
-{
-	bool			frees[2];
-
-	frees[0] = false;
-	frees[1] = false;
-	if (rsrc == NULL)
-	{
-		rsrc = rect_fill(0, 0, src->w, src->h);
-		frees[0] = true;
-	}
-	if (rdst == NULL)
-	{
-		rdst = rect_fill(0, 0, dst->w, dst->h);
-		frees[1] = true;
-	}
-	while_scale_pic(src, rsrc, dst, rdst);
-	if (frees[0])
-		free(rsrc);
-	if (frees[1])
-		free(rdst);
+	free_rect(rsrc);
+	free_rect(rdst);
 }

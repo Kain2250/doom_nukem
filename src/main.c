@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/29 21:15:47 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/04 18:31:10 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,14 @@
 // 	SDL_SetCursor(curs);
 // }
 
+t_point				fill_point(int x, int y)
+{
+	t_point			point;
 
+	point.x = x;
+	point.y = y;
+	return (point);
+}
 
 int					main(int ac, char **av)
 {

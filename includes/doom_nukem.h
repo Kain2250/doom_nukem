@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/29 20:07:23 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/04 17:47:04 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,10 +208,18 @@ t_frames				*new_frame(t_rect *rect, Uint32 color,
 void					frame_tamer(t_doom_nukem *doom, t_frames *frame_table);
 t_frames				*init_editor(t_doom_nukem *doom);
 void					scale_frame_01(SDL_Surface *dst, t_mouse mouse, SDL_Surface *src);
+
+void					if_rect(SDL_Surface *src, t_rect **rsrc,
+							SDL_Surface *dst, t_rect **rdst);
+
 void					blit_surf_scaled(SDL_Surface *src, t_rect *rsrc,
 							SDL_Surface *dst, t_rect *rdst);
-t_rect					*rect_fill(int x, int y, int w, int h);
-t_rect					oblast(int x, int y, int w, int h);
+void					blit_surface(SDL_Surface *src, t_rect *rsrc,
+							SDL_Surface *dst, t_rect *rdst);
 
+t_rect					*rect_fill(int x, int y, int w, int h);
+t_rect					rect_fill_no_malloc(int x, int y, int w, int h);
+void					draw_line(SDL_Surface *dst, t_point start, t_point end, Uint32 color);
+t_point					fill_point(int x, int y);
 
 #endif
