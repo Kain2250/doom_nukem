@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 09:15:51 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/04 18:21:08 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/04 19:19:27 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,8 +178,9 @@ void			mouse_events(t_doom_nukem *doom)
 	if (SDL_BUTTON_RIGHT == button)
 		scale_frame(doom->sdl.surface, doom->mouse, 0x00ff00, draw_rect);
 	else if (SDL_BUTTON_LEFT == button)
-		draw_line(doom->sdl.surface, fill_point(500, 500), fill_point(doom->mouse.prew_x, doom->mouse.prew_y), 0xffffff);
-		// scale_frame_01(doom->sdl.surface, doom->mouse, doom->sdl.textures[texture_test2]);
+		draw_circl(doom->sdl.surface, 400, fill_point(doom->mouse.prew_x, doom->mouse.prew_y), 0xffffff);
+		// draw_line(doom->sdl.surface, fill_point(500, 500), fill_point(doom->mouse.prew_x, doom->mouse.prew_y), 0xffffff);
+		// scale_rect_texture(doom->sdl.surface, doom->mouse, doom->sdl.textures[texture_test2]);
 	else if (SDL_BUTTON_MIDDLE == button)
 		drag_and_drop(doom->sdl.textures[texture_test], doom->sdl.surface);
 

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/04 17:47:04 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/04 20:21:44 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,6 @@ void					scale_frame(SDL_Surface *dst, t_mouse mouse,
 							t_rect *, Uint32, int));
 void					draw_rect(SDL_Surface *dst,
 							t_rect *rect, Uint32 color, int step);
-void					scale_surface(SDL_Surface *src, t_rect *rscr,
-							SDL_Surface *dst, t_rect *drect);
 void					draw_feel_rect(SDL_Surface *dst,
 							t_rect *rect, Uint32 color, int step);
 /*
@@ -207,7 +205,7 @@ t_frames				*new_frame(t_rect *rect, Uint32 color,
 							struct s_block *blocks);
 void					frame_tamer(t_doom_nukem *doom, t_frames *frame_table);
 t_frames				*init_editor(t_doom_nukem *doom);
-void					scale_frame_01(SDL_Surface *dst, t_mouse mouse, SDL_Surface *src);
+void					scale_rect_texture(SDL_Surface *dst, t_mouse mouse, SDL_Surface *src);
 
 void					if_rect(SDL_Surface *src, t_rect **rsrc,
 							SDL_Surface *dst, t_rect **rdst);
@@ -220,6 +218,11 @@ void					blit_surface(SDL_Surface *src, t_rect *rsrc,
 t_rect					*rect_fill(int x, int y, int w, int h);
 t_rect					rect_fill_no_malloc(int x, int y, int w, int h);
 void					draw_line(SDL_Surface *dst, t_point start, t_point end, Uint32 color);
+void					draw_circl(SDL_Surface *dst, int radius,
+							t_point center, Uint32 color);
+void					draw_fill_circl(SDL_Surface *dst, int radius,
+							t_point center, Uint32 color);
+
 t_point					fill_point(int x, int y);
 
 #endif

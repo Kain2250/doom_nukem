@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 12:16:13 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/04 15:21:48 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/04 18:59:42 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,6 @@ void		check_scale(SDL_Surface *source, t_rect **src)
 		(*src)->w = source->w;
 	if ((*src)->h > source->h)
 		(*src)->h = source->h;
-	// if ((*src)->x > source->w)
-	// 	(*src)->x = source->w;
-	// if ((*src)->y > source->h)
-	// 	(*src)->y = source->h;
-
 }
 
 void		blit_surface(SDL_Surface *src, t_rect *rsrc,

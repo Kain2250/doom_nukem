@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 20:40:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/04 16:07:45 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/04 19:00:44 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void			abs_side_frame(int *a, int *b)
 	*b *= -1;
 }
 
-void			scale_frame_01(SDL_Surface *dst, t_mouse mouse, SDL_Surface *src)
+void			scale_rect_texture(SDL_Surface *dst, t_mouse mouse, SDL_Surface *src)
 {
 	static t_rect	cur;
 
