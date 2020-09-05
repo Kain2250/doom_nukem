@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:33:00 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/29 18:25:54 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:21:59 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	doom_exit(t_doom_nukem *doom)
 	while (i < texture_total)
 	{
 		if (doom->sdl.textures[i] != NULL)
-			SDL_FreeSurface(doom->sdl.textures[i]);
-		i++;
+			SDL_FreeSurface(doom->sdl.textures[i++]);
 	}
 	if (doom->sdl.surface != NULL)
 		SDL_FreeSurface(doom->sdl.surface);

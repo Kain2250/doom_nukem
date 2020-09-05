@@ -6,7 +6,7 @@
 #    By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/08/22 19:18:30 by bdrinkin         ###   ########.fr        #
+#    Updated: 2020/09/05 18:49:36 by bdrinkin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,8 @@ HEADERS = $(addprefix $(INCLUDES_DIRECTORY), $(HEADERS_LIST))
 SRC_DIRECTORY = src/
 SRC_LIST = *.c \
 	tools_for_editor/*.c \
-	load_res/*.c
+	load_res/*.c \
+	primitives/*.c
 
 SRC = $(addprefix $(SRC_DIRECTORY), $(SRC_LIST))
 

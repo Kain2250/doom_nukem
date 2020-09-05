@@ -6,19 +6,19 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/04 18:31:10 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:26:30 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-// void				user_cursor(void)
-// {
-// 	SDL_Cursor *curs;
+void				user_cursor(t_doom_nukem *doom)
+{
+	SDL_Cursor		*curs;
 
-// 	curs =  SDL_CreateColorCursor(doom->sdl.textures[texture_curs], 1, 1);
-// 	SDL_SetCursor(curs);
-// }
+	curs = SDL_CreateColorCursor(doom->sdl.textures[texture_iron], 1, 1);
+	SDL_SetCursor(curs);
+}
 
 t_point				fill_point(int x, int y)
 {
@@ -48,16 +48,15 @@ int					main(int ac, char **av)
 		{
 			fps_counter(&time);
 			frame_tamer(doom, editor);
-			// editor_map(doom);
+			editor_map(doom);
 			event_list(doom);
 			SDL_UpdateWindowSurface(doom->sdl.window);
 			clear_surface(doom->sdl.surface, 0);
 		}
 		doom_exit(doom);
 		free_editor(doom, editor);
-		(void)av;
 	}
-	else
+	else if (!av[1])
 		ft_putendl(USAGE_DOOM);
 	return (0);
 }

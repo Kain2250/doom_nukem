@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/04 20:21:44 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/05 16:43:48 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,13 @@ void					draw_circl(SDL_Surface *dst, int radius,
 							t_point center, Uint32 color);
 void					draw_fill_circl(SDL_Surface *dst, int radius,
 							t_point center, Uint32 color);
+void					draw_smooth_rect(SDL_Surface *dst, t_rect *rect,
+							Uint32 color, int thickness);
+void					draw_smooth_fill_rect(SDL_Surface *dst, t_rect *rect,
+							Uint32 color);
+void					put_button(SDL_Surface *dst, t_rect *rect,
+							Uint32 color_fill, Uint32 color_frame);
+
 
 t_point					fill_point(int x, int y);
 

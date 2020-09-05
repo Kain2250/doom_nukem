@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 09:15:51 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/04 19:19:27 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:50:02 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void			drow_color_point(SDL_Surface *dst, Uint32 color)
 	SDL_GetMouseState(&mouse.x, &mouse.y);
 	putpixel(dst, mouse.x, mouse.y, color);
 }
-
 
 int				which_button(bool *mouse)
 {
@@ -100,25 +99,6 @@ void			render_new_win(t_new_win *frame,
 	SDL_UpdateWindowSurface(frame->win);
 }
 
-// void			render_new_win(t_new_win *frame)
-// {
-// 	int			x;
-// 	int			i;
-// 	t_rect		q;
-
-// 	x = -50;
-// 	i = 0;
-// 	draw_feel_rect(frame->screen, NULL, 0xafafaf, 1);
-// 	while (i < 6)
-// 	{
-// 		q = rect_fill_no_malloc(x += 80, 10, 70, 20);
-// 		draw_feel_rect(frame->screen, &q, 0xffffff, 1);
-// 		i++;
-// 	}
-// 	SDL_UpdateWindowSurface(frame->win);
-
-// }
-
 t_block			*new_block(SDL_Surface *pic, t_rect *rect_block)
 {
 	t_block		*block;
@@ -137,15 +117,21 @@ t_block			*new_block(SDL_Surface *pic, t_rect *rect_block)
 void			open_new_win(t_new_win *frame, TTF_Font *font)
 {
 	t_rect		q;
-	SDL_Color	color = {0, 0, 0, 255};
+	SDL_Color	color;
 
+	color.r = 0;
+	color.g = 0;
+	color.b = 0;
+	color.a = 255;
 	frame->win = SDL_CreateWindow("New_win", SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED, 600, 700, SDL_WINDOW_SHOWN);
 	frame->screen = SDL_GetWindowSurface(frame->win);
 	frame->quit = false;
 	q = rect_fill_no_malloc(10, 10, 60, 80);
-	frame->frames = new_frame(&q, 0xa0a0a0, new_block(TTF_RenderText_Blended(font, "Knopka", color), &q));
-	render_new_win(frame, 0xafafaf, rect_fill_no_malloc(0, 0, frame->screen->w, frame->screen->h));
+	frame->frames = new_frame(&q, 0xa0a0a0,
+		new_block(TTF_RenderText_Blended(font, "Knopka", color), &q));
+	render_new_win(frame, 0xafafaf,
+		rect_fill_no_malloc(0, 0, frame->screen->w, frame->screen->h));
 }
 
 void			close_new_win(t_new_win *frame)
@@ -162,7 +148,8 @@ void			keybord_events(t_doom_nukem *doom)
 {
 	if (doom->sdl.state[SDL_SCANCODE_N] && doom->frame.win == NULL)
 		open_new_win(&doom->frame, doom->sdl.fonts[font_button]);
-	if ((doom->sdl.state[SDL_SCANCODE_C] || doom->sdl.state[SDL_SCANCODE_ESCAPE]) && doom->frame.win != NULL )
+	if ((doom->sdl.state[SDL_SCANCODE_C] ||
+		doom->sdl.state[SDL_SCANCODE_ESCAPE]) && doom->frame.win != NULL)
 		close_new_win(&doom->frame);
 	if (doom->sdl.state[SDL_SCANCODE_T] && doom->frame.win != NULL)
 		SDL_SetWindowTitle(doom->frame.win, "Change_name_win");
@@ -176,15 +163,13 @@ void			mouse_events(t_doom_nukem *doom)
 		SDL_GetMouseState(&doom->mouse.prew_x, &doom->mouse.prew_y);
 	button = which_button(&doom->mouse.is_presed);
 	if (SDL_BUTTON_RIGHT == button)
-		scale_frame(doom->sdl.surface, doom->mouse, 0x00ff00, draw_rect);
+		scale_rect_texture(doom->sdl.surface, doom->mouse, doom->sdl.textures[texture_test2]);
+		// scale_frame(doom->sdl.surface, doom->mouse, 0x00ff00, draw_rect);
 	else if (SDL_BUTTON_LEFT == button)
-		draw_circl(doom->sdl.surface, 400, fill_point(doom->mouse.prew_x, doom->mouse.prew_y), 0xffffff);
-		// draw_line(doom->sdl.surface, fill_point(500, 500), fill_point(doom->mouse.prew_x, doom->mouse.prew_y), 0xffffff);
-		// scale_rect_texture(doom->sdl.surface, doom->mouse, doom->sdl.textures[texture_test2]);
+		draw_fill_circl(doom->sdl.surface, 20,
+			fill_point(doom->mouse.prew_x, doom->mouse.prew_y), 0xff00ff);
 	else if (SDL_BUTTON_MIDDLE == button)
 		drag_and_drop(doom->sdl.textures[texture_test], doom->sdl.surface);
-
-
 }
 
 void			event_list(t_doom_nukem *doom)
@@ -199,6 +184,4 @@ void			event_list(t_doom_nukem *doom)
 		keybord_events(doom);
 		mouse_events(doom);
 	}
-	
 }
-	

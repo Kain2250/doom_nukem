@@ -6,13 +6,14 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 16:06:54 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/04 16:07:20 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:16:22 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void			draw_rect(SDL_Surface *dst, t_rect *rect, Uint32 color, int step)
+void			draw_rect(SDL_Surface *dst, t_rect *rect,
+					Uint32 color, int step)
 {
 	register int	i;
 	register int	w;
@@ -38,7 +39,7 @@ void			draw_rect(SDL_Surface *dst, t_rect *rect, Uint32 color, int step)
 }
 
 void			draw_feel_rect(SDL_Surface *dst, t_rect *rect,
-				Uint32 color, int step)
+					Uint32 color, int step)
 {
 	register int	x;
 	register int	y;

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 15:00:44 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/29 18:16:28 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:27:03 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 SDL_Surface		*load_surface(char *path, SDL_Surface *screen_surface)
 {
-	SDL_Surface	*optimizedSurface;
-	SDL_Surface	*loadedSurface;
+	SDL_Surface	*optimized_surface;
+	SDL_Surface	*loaded_surface;
 
-	loadedSurface = SDL_LoadBMP(path);
-	if (loadedSurface == NULL)
+	loaded_surface = SDL_LoadBMP(path);
+	if (loaded_surface == NULL)
 		return (NULL);
 	else
 	{
-		optimizedSurface = SDL_ConvertSurface(loadedSurface,
+		optimized_surface = SDL_ConvertSurface(loaded_surface,
 			screen_surface->format, 0);
-		if (optimizedSurface == NULL)
+		if (optimized_surface == NULL)
 			return (NULL);
-		SDL_FreeSurface(loadedSurface);
+		SDL_FreeSurface(loaded_surface);
 	}
-	return (optimizedSurface);
+	return (optimized_surface);
 }
 
 static bool		load_font(TTF_Font *font[font_total])
@@ -46,7 +46,6 @@ static bool		load_font(TTF_Font *font[font_total])
 			i++;
 	}
 	return (true);
-
 }
 
 static bool		load_texture(SDL_Surface *textures[texture_total],
@@ -56,8 +55,10 @@ static bool		load_texture(SDL_Surface *textures[texture_total],
 
 	textures[texture_test] = load_surface(IMG_TEST, surface);
 	textures[texture_iron] = load_surface(IMG_IRON, surface);
-	textures[texture_test2] = load_surface("resource/textures/sw2cmt.bmp", surface);
-	textures[texture_editor_back] = load_surface("resource/textures/editor_back.bmp", surface);
+	textures[texture_test2] =
+		load_surface("resource/textures/sw2cmt.bmp", surface);
+	textures[texture_editor_back] =
+		load_surface("resource/textures/editor_back.bmp", surface);
 	i = 0;
 	while (i != texture_total)
 	{

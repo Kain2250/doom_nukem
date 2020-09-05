@@ -6,16 +6,16 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 20:37:35 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/04 15:52:01 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:15:44 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-t_frames			*new_frame(t_rect *rect, Uint32 color,
+t_frames		*new_frame(t_rect *rect, Uint32 color,
 					struct s_block *blocks)
 {
-	t_frames		*src;
+	t_frames	*src;
 
 	src = (t_frames *)ft_memalloc(sizeof(t_frames));
 	src->main_frame = (t_rect *)ft_memalloc(sizeof(t_rect));
@@ -29,9 +29,9 @@ t_frames			*new_frame(t_rect *rect, Uint32 color,
 	return (src);
 }
 
-t_rect				*rect_fill(int x, int y, int w, int h)
+t_rect			*rect_fill(int x, int y, int w, int h)
 {
-	t_rect			*rect;
+	t_rect		*rect;
 
 	rect = (t_rect *)ft_memalloc(sizeof(t_rect));
 	rect->x = x;
@@ -42,12 +42,13 @@ t_rect				*rect_fill(int x, int y, int w, int h)
 	return (rect);
 }
 
-void				frame_tamer(t_doom_nukem *doom, t_frames *frame_table)
+void			frame_tamer(t_doom_nukem *doom, t_frames *frame_table)
 {
-	t_frames		*temp;
+	t_frames	*temp;
 
 	temp = frame_table;
-	// blit_surf_scaled(doom->sdl.textures[texture_editor_back], NULL, doom->sdl.surface, NULL);
+	blit_surf_scaled(doom->sdl.textures[texture_editor_back],
+		NULL, doom->sdl.surface, NULL);
 	while (temp)
 	{
 		draw_feel_rect(doom->sdl.surface, temp->main_frame, temp->color, 0);

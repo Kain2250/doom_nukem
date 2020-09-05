@@ -6,19 +6,20 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:30:01 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/29 18:17:17 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/05 18:28:17 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
+
 bool			init_sdl(t_doom_nukem *doom)
 {
 	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO |
-		SDL_INIT_EVENTS) == -1)
+			SDL_INIT_EVENTS) == -1)
 		return (false);
 	if ((doom->sdl.window = SDL_CreateWindow(NAME_WIN, 0,
-		0, WIDTH_WIN,
-		HEIGHT_WIN, SDL_WINDOW_SHOWN)) == NULL)
+			0, WIDTH_WIN,
+			HEIGHT_WIN, SDL_WINDOW_SHOWN)) == NULL)
 		return (false);
 	if ((doom->sdl.surface = SDL_GetWindowSurface(doom->sdl.window)) == NULL)
 		return (false);
@@ -31,7 +32,7 @@ bool			init_sdl_image(t_doom_nukem *doom)
 		return (false);
 	(void)doom;
 	return (true);
-} 
+}
 
 bool			init_sdl_mixer(t_doom_nukem *doom)
 {
