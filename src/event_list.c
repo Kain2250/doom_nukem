@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 09:15:51 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/05 18:50:02 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/09 20:43:56 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,30 +153,76 @@ void			keybord_events(t_doom_nukem *doom)
 		close_new_win(&doom->frame);
 	if (doom->sdl.state[SDL_SCANCODE_T] && doom->frame.win != NULL)
 		SDL_SetWindowTitle(doom->frame.win, "Change_name_win");
+	if (doom->sdl.state[SDL_SCANCODE_D] && doom->frame.win == NULL)
+	{
+		if (doom->player.heals.cur < doom->player.heals.max)
+			doom->player.heals.cur++;
+	}
+	if (doom->sdl.state[SDL_SCANCODE_A] && doom->frame.win == NULL)
+	{
+		if (doom->player.heals.cur > doom->player.heals.min)
+			doom->player.heals.cur--;
+	}
 }
+
+bool		is_button_area(t_rect *area, t_mouse mouse)
+{
+	SDL_GetMouseState(&mouse.x, &mouse.y);
+	if ((mouse.x > area->x && mouse.x < area->w + area->x) &&
+		(mouse.y > area->y && mouse.y < area->h + area->y))
+		return (true);
+	return (false);
+}
+
+void		is_mouse_presed(t_mouse *mouse)
+{
+	if (mouse->is_presed == false)
+		SDL_GetMouseState(&mouse->prew_x, &mouse->prew_y);
+	else
+		SDL_GetMouseState(&mouse->x, &mouse->y);
+}
+
+static void			button_rigth_event(t_doom_nukem *doom, int button)
+{
+	if (button == SDL_BUTTON_RIGHT)
+		scale_frame(doom->sdl.surface, doom->mouse, 0x00ff00, draw_rect);
+}
+
+static void			button_left_event(t_doom_nukem *doom, int button)
+{
+	if (SDL_BUTTON_LEFT == button && is_button_area(doom->screen->blocks->rect_block, doom->mouse))
+		doom->player.heals.cur = doom->mouse.x - doom->screen->blocks->rect_block->x;
+	// else if (!is_button_area(doom->screen->blocks->rect_block, doom->mouse))
+	// 	draw_fill_circl(doom->sdl.surface, 10,
+	// 	fill_point(doom->mouse.prew_x, doom->mouse.prew_y), 0xfff0ff);
+}
+
+static void			button_midle_event(t_doom_nukem *doom, int button)
+{
+	if (SDL_BUTTON_MIDDLE == button)
+		drag_and_drop(doom->sdl.textures[texture_test], doom->sdl.surface);
+}
+
 
 void			mouse_events(t_doom_nukem *doom)
 {
 	int			button;
 
-	if (doom->mouse.is_presed == false)
-		SDL_GetMouseState(&doom->mouse.prew_x, &doom->mouse.prew_y);
+	is_mouse_presed(&doom->mouse);
 	button = which_button(&doom->mouse.is_presed);
 	if (SDL_BUTTON_RIGHT == button)
-		scale_rect_texture(doom->sdl.surface, doom->mouse, doom->sdl.textures[texture_test2]);
-		// scale_frame(doom->sdl.surface, doom->mouse, 0x00ff00, draw_rect);
+		button_rigth_event(doom, button);
 	else if (SDL_BUTTON_LEFT == button)
-		draw_fill_circl(doom->sdl.surface, 20,
-			fill_point(doom->mouse.prew_x, doom->mouse.prew_y), 0xff00ff);
+		button_left_event(doom, button);
 	else if (SDL_BUTTON_MIDDLE == button)
-		drag_and_drop(doom->sdl.textures[texture_test], doom->sdl.surface);
+		button_midle_event(doom, button);
 }
 
 void			event_list(t_doom_nukem *doom)
 {
-	SDL_PumpEvents();
+	SDL_PollEvent(&doom->sdl.event);
+	// SDL_PumpEvents();
 	doom->sdl.state = SDL_GetKeyboardState(NULL);
-	SDL_GetWindowSize(doom->sdl.window, &doom->sdl.width, &doom->sdl.height);
 	if (event_exit(doom) == true)
 		doom->quit = true;
 	else

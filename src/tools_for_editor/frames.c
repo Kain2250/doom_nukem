@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 20:37:35 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/05 18:15:44 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/09 20:18:18 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,15 @@ t_rect			*rect_fill(int x, int y, int w, int h)
 void			frame_tamer(t_doom_nukem *doom, t_frames *frame_table)
 {
 	t_frames	*temp;
-
+	
 	temp = frame_table;
 	blit_surf_scaled(doom->sdl.textures[texture_editor_back],
 		NULL, doom->sdl.surface, NULL);
 	while (temp)
 	{
 		draw_feel_rect(doom->sdl.surface, temp->main_frame, temp->color, 0);
+		if (temp->blocks != NULL)
+			put_slide_bar(doom->sdl.surface, temp->blocks->rect_block, &doom->player.heals, 0xffffff);
 		temp = temp->next;
 	}
 }

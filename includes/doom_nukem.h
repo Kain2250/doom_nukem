@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/05 16:43:48 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/09 20:39:06 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,23 @@ typedef struct		s_rectf
 	bool			free;
 }					t_rectf;
 
+typedef struct			s_limit
+{
+	int					cur;
+	int					max;
+	int					min;
+}						t_limit;
+
+typedef struct			s_limit_f
+{
+	float				cur;
+	float				max;
+	float				min;
+}						t_limit_f;
+
 typedef struct		s_block
 {
+	int				type_block;
 	SDL_Surface		*block_pic;
 	t_rect			*rect_block;
 	bool			is_push;
@@ -101,6 +116,11 @@ typedef struct			s_color
 	Uint8				blue;
 }						t_color;
 
+typedef struct			s_player
+{
+	t_limit				heals;
+}						t_player;
+
 typedef struct			s_sdl_sys
 {
 	SDL_Window			*window;
@@ -133,6 +153,8 @@ typedef struct			s_doom_nukem
 	struct s_sdl_sys	sdl;
 	struct s_mouse		mouse;
 	struct s_new_win	frame;
+	struct s_frames		*screen;
+	struct s_player		player;
 	bool				quit;
 }						t_doom_nukem;
 /*
@@ -207,8 +229,8 @@ void					frame_tamer(t_doom_nukem *doom, t_frames *frame_table);
 t_frames				*init_editor(t_doom_nukem *doom);
 void					scale_rect_texture(SDL_Surface *dst, t_mouse mouse, SDL_Surface *src);
 
-void					if_rect(SDL_Surface *src, t_rect **rsrc,
-							SDL_Surface *dst, t_rect **rdst);
+void					if_rect(SDL_Surface *src, t_rect *rsrc,
+							SDL_Surface *dst, t_rect *rdst);
 
 void					blit_surf_scaled(SDL_Surface *src, t_rect *rsrc,
 							SDL_Surface *dst, t_rect *rdst);
@@ -229,6 +251,10 @@ void					draw_smooth_fill_rect(SDL_Surface *dst, t_rect *rect,
 void					put_button(SDL_Surface *dst, t_rect *rect,
 							Uint32 color_fill, Uint32 color_frame);
 
+void					put_slide_bar(SDL_Surface *dst, t_rect *rect, t_limit *data, Uint32 color);
+float					interpolate(t_limit_f x, t_limit_f c);
+void					fill_limit(t_limit *data, int min, int cur, int max);
+void					fill_limit_f(t_limit_f *data, float min, float cur, float max);
 
 t_point					fill_point(int x, int y);
 

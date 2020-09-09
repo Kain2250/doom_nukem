@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 16:10:26 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/05 18:20:09 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/09 14:49:14 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,9 @@ static void	draw_smooth_fill_angle(SDL_Surface *dst, t_point center[4],
 	}
 }
 
-void		draw_smooth_fill_rect(SDL_Surface *dst, t_rect *rect, Uint32 color)
+static void	drawing(SDL_Surface *dst, t_rect *rect,
+				t_point	center[4], Uint32 color)
 {
-	t_point	center[4];
-	int		rounding;
-
-	rounding = (rect->w >= rect->h) ?
-		rect->w / 10 : rect->h / 10;
-	center[0].x = rect->x + rounding;
-	center[0].y = rect->y + rounding;
-	center[1].x = rect->x + rect->w - rounding;
-	center[1].y = rect->y + rounding;
-	center[2].x = rect->x + rounding;
-	center[2].y = rect->y + rect->h - rounding;
-	center[3].x = rect->x + rect->w - rounding;
-	center[3].y = rect->y + rect->h - rounding;
 	draw_line(dst, fill_point(center[0].x, rect->y),
 		fill_point(center[1].x, rect->y), color);
 	draw_line(dst, fill_point(center[2].x, rect->y + rect->h),
@@ -90,6 +78,26 @@ void		draw_smooth_fill_rect(SDL_Surface *dst, t_rect *rect, Uint32 color)
 		fill_point(rect->x, center[2].y), color);
 	draw_line(dst, fill_point(rect->x + rect->w, center[1].y),
 		fill_point(rect->x + rect->w, center[3].y), color);
+}
+
+void		draw_smooth_fill_rect(SDL_Surface *dst, t_rect *rect, Uint32 color)
+{
+	t_point	center[4];
+	int		rounding;
+
+	rounding = (rect->w >= rect->h) ?
+		rect->w / 10 : rect->h / 10;
+	rounding = (rounding > rect->w) ? rounding = rect->w / 2 : rounding;
+	rounding = (rounding > rect->h) ? rounding = rect->h / 2 : rounding;
+	center[0].x = rect->x + rounding;
+	center[0].y = rect->y + rounding;
+	center[1].x = rect->x + rect->w - rounding;
+	center[1].y = rect->y + rounding;
+	center[2].x = rect->x + rounding;
+	center[2].y = rect->y + rect->h - rounding;
+	center[3].x = rect->x + rect->w - rounding;
+	center[3].y = rect->y + rect->h - rounding;
+	drawing(dst, rect, center, color);
 	draw_smooth_fill_angle(dst, center, rounding, color);
 	draw_feel_rect(dst, rect_fill(rect->x + 1, center[0].y + 1,
 		rect->w - 2, rect->h - rounding * 2), color, 1);

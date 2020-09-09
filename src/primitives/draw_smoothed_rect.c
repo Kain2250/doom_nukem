@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 09:36:46 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/05 18:55:13 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/09 14:49:30 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,10 @@ void		draw_smooth_rect(SDL_Surface *dst, t_rect *rect,
 
 	i = 0;
 	rounding = (rect->w >= rect->h) ? rect->w / 10 : rect->h / 10;
+	if (rounding > rect->w)
+		rounding = rect->w / 2;
+	if (rounding > rect->h)
+		rounding = rect->h / 2;
 	shift = 0;
 	while (i < thickness)
 	{
