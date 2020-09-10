@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 20:37:35 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/09 20:18:18 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/10 14:52:08 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,6 @@ t_frames		*new_frame(t_rect *rect, Uint32 color,
 	src->blocks = blocks;
 	src->next = NULL;
 	return (src);
-}
-
-t_rect			*rect_fill(int x, int y, int w, int h)
-{
-	t_rect		*rect;
-
-	rect = (t_rect *)ft_memalloc(sizeof(t_rect));
-	rect->x = x;
-	rect->y = y;
-	rect->w = w;
-	rect->h = h;
-	rect->free = true;
-	return (rect);
 }
 
 void			frame_tamer(t_doom_nukem *doom, t_frames *frame_table)

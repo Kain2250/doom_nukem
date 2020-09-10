@@ -6,7 +6,7 @@
 #    By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/09/05 18:49:36 by bdrinkin         ###   ########.fr        #
+#    Updated: 2020/09/10 14:34:36 by bdrinkin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,10 @@ SRC_DIRECTORY = src/
 SRC_LIST = *.c \
 	tools_for_editor/*.c \
 	load_res/*.c \
-	primitives/*.c
+	primitives/*.c \
+	events/*.c \
+	init/*.c \
+	tools/*.c
 
 SRC = $(addprefix $(SRC_DIRECTORY), $(SRC_LIST))
 

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 12:16:13 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/09 11:14:42 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/10 14:51:01 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,6 @@ void		free_rect(t_rect *rect)
 {
 	if (rect->free == true)
 		free(rect);
-}
-
-void		if_rect(SDL_Surface *src, t_rect *rsrc,
-			SDL_Surface *dst, t_rect *rdst)
-{
-	if (rsrc == NULL)
-	{
-		rsrc = (t_rect *)ft_memalloc(sizeof(t_rect));
-		rsrc->w = src->w;
-		rsrc->h = src->h;
-		rsrc->free = true;
-	}
-	if (rdst == NULL)
-	{
-		rdst = (t_rect *)ft_memalloc(sizeof(t_rect));
-		rdst->w = dst->w;
-		rdst->h = dst->h;
-		rsrc->free = true;
-	}
 }
 
 void		check_scale(SDL_Surface *source, t_rect *src)

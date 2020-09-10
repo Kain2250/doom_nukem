@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/09 20:39:06 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/10 14:59:22 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,10 +191,6 @@ bool					time_is_started(t_timer *time);
 bool					time_is_paused(t_timer *time);
 void					fps_counter(t_timer *time);
 /*
-** editor_map.c
-*/
-bool					editor_map(t_doom_nukem *doom);
-/*
 ** load_res/load_res.c
 */
 bool					load_res(t_doom_nukem *doom);
@@ -255,6 +251,13 @@ void					put_slide_bar(SDL_Surface *dst, t_rect *rect, t_limit *data, Uint32 col
 float					interpolate(t_limit_f x, t_limit_f c);
 void					fill_limit(t_limit *data, int min, int cur, int max);
 void					fill_limit_f(t_limit_f *data, float min, float cur, float max);
+
+void					mouse_events(t_doom_nukem *doom);
+bool					is_button_area(t_rect *area, t_mouse mouse);
+void					is_mouse_presed(t_mouse *mouse);
+bool					is_slidebar_area(t_rect *area, t_mouse mouse);
+int						which_button(bool *mouse);
+
 
 t_point					fill_point(int x, int y);
 

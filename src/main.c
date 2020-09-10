@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/09 20:42:39 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/10 14:52:02 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,6 @@ void				user_cursor(t_doom_nukem *doom)
 
 	curs = SDL_CreateColorCursor(doom->sdl.textures[texture_iron], 1, 1);
 	SDL_SetCursor(curs);
-}
-
-t_point				fill_point(int x, int y)
-{
-	t_point			point;
-
-	point.x = x;
-	point.y = y;
-	return (point);
-}
-
-void				fill_limit_f(t_limit_f *data, float min, float cur, float max)
-{
-	data->min = min;
-	data->cur = (cur <= min) ? min : (cur >= max) ? max : cur;
-	data->max = max;
-}
-
-void				fill_limit(t_limit *data, int min, int cur, int max)
-{
-	data->min = min;
-	data->cur = (cur <= min) ? min : (cur >= max) ? max : cur;
-	data->max = max;
 }
 
 int					main(int ac, char **av)
@@ -73,7 +50,6 @@ int					main(int ac, char **av)
 		{
 			// fps_counter(&time);
 			frame_tamer(doom, doom->screen);
-			editor_map(doom);
 			event_list(doom);
 			SDL_UpdateWindowSurface(doom->sdl.window);
 			clear_surface(doom->sdl.surface, 0);

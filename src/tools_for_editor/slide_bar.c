@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/09 14:18:54 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/09 19:11:48 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/10 14:35:52 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,5 @@ void		put_slide_bar(SDL_Surface *dst, t_rect *rect,
 	center.x = (int)x.cur;
 	center.y = rect->y + rect->h / 2;
 	draw_smooth_fill_rect(dst, rect, color);
-	draw_fill_circl(dst, rect->h + 1, center, color + 0xEE6256);
+	draw_fill_circl(dst, rect->h + 2, center, color + 0xEE6256);
 }
-
-// void		change_data_from_sladebar(t_rect *rect, t_limit *data, t_mouse mouse)
-// {
-// 	;
-
-// }

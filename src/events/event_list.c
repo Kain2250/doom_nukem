@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 09:15:51 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/09 20:43:56 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/10 14:57:22 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,6 @@ bool			event_exit(t_doom_nukem *doom)
 		return (true);
 	else
 		return (false);
-}
-
-void			assig_rect(SDL_Rect *rect, SDL_Point xy, int w, int h)
-{
-	rect->x = xy.x;
-	rect->y = xy.y;
-	rect->h = h;
-	rect->w = w;
-}
-
-void			drow_color_point(SDL_Surface *dst, Uint32 color)
-{
-	SDL_Point	mouse;
-
-	SDL_GetMouseState(&mouse.x, &mouse.y);
-	putpixel(dst, mouse.x, mouse.y, color);
 }
 
 int				which_button(bool *mouse)
@@ -52,17 +36,6 @@ int				which_button(bool *mouse)
 		return (SDL_BUTTON_X2);
 	*mouse = false;
 	return (0);
-}
-
-t_rect			rect_fill_no_malloc(int x, int y, int w, int h)
-{
-	t_rect		q;
-
-	q.x = x;
-	q.y = y;
-	q.w = w;
-	q.h = h;
-	return (q);
 }
 
 void			draw_frames(t_new_win *win)
@@ -163,59 +136,6 @@ void			keybord_events(t_doom_nukem *doom)
 		if (doom->player.heals.cur > doom->player.heals.min)
 			doom->player.heals.cur--;
 	}
-}
-
-bool		is_button_area(t_rect *area, t_mouse mouse)
-{
-	SDL_GetMouseState(&mouse.x, &mouse.y);
-	if ((mouse.x > area->x && mouse.x < area->w + area->x) &&
-		(mouse.y > area->y && mouse.y < area->h + area->y))
-		return (true);
-	return (false);
-}
-
-void		is_mouse_presed(t_mouse *mouse)
-{
-	if (mouse->is_presed == false)
-		SDL_GetMouseState(&mouse->prew_x, &mouse->prew_y);
-	else
-		SDL_GetMouseState(&mouse->x, &mouse->y);
-}
-
-static void			button_rigth_event(t_doom_nukem *doom, int button)
-{
-	if (button == SDL_BUTTON_RIGHT)
-		scale_frame(doom->sdl.surface, doom->mouse, 0x00ff00, draw_rect);
-}
-
-static void			button_left_event(t_doom_nukem *doom, int button)
-{
-	if (SDL_BUTTON_LEFT == button && is_button_area(doom->screen->blocks->rect_block, doom->mouse))
-		doom->player.heals.cur = doom->mouse.x - doom->screen->blocks->rect_block->x;
-	// else if (!is_button_area(doom->screen->blocks->rect_block, doom->mouse))
-	// 	draw_fill_circl(doom->sdl.surface, 10,
-	// 	fill_point(doom->mouse.prew_x, doom->mouse.prew_y), 0xfff0ff);
-}
-
-static void			button_midle_event(t_doom_nukem *doom, int button)
-{
-	if (SDL_BUTTON_MIDDLE == button)
-		drag_and_drop(doom->sdl.textures[texture_test], doom->sdl.surface);
-}
-
-
-void			mouse_events(t_doom_nukem *doom)
-{
-	int			button;
-
-	is_mouse_presed(&doom->mouse);
-	button = which_button(&doom->mouse.is_presed);
-	if (SDL_BUTTON_RIGHT == button)
-		button_rigth_event(doom, button);
-	else if (SDL_BUTTON_LEFT == button)
-		button_left_event(doom, button);
-	else if (SDL_BUTTON_MIDDLE == button)
-		button_midle_event(doom, button);
 }
 
 void			event_list(t_doom_nukem *doom)
