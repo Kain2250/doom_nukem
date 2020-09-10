@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:33:00 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/09 13:11:52 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/10 15:21:39 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	doom_exit(t_doom_nukem *doom)
 			TTF_CloseFont(doom->sdl.fonts[i]);
 		i++;
 	}
+	free_editor(doom->screen);
 	IMG_Quit();
 	TTF_Quit();
 	SDLNet_Quit();
