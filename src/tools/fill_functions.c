@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 14:48:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/10 14:56:48 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/17 21:09:39 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ t_rect		*rect_fill(int x, int y, int w, int h)
 	rect->y = y;
 	rect->w = w;
 	rect->h = h;
-	rect->free = true;
 	return (rect);
 }
 

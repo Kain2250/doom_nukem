@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/10 15:57:55 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/17 20:58:22 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int					main(int ac, char **av)
 			doom_exit(doom);
 			return (0);
 		}
+		SDL_GetWindowSize(doom->sdl.window, &doom->sdl.width, &doom->sdl.height);
 		user_cursor(doom);
 		SDL_SetWindowIcon(doom->sdl.window, doom->sdl.textures[texture_icon]);
-		SDL_GetWindowSize(doom->sdl.window, &doom->sdl.width, &doom->sdl.height);
 		doom->screen = init_editor(doom);
 		fill_limit(&doom->player.heals, 0, 190, 200);
 		timer_start(&time);

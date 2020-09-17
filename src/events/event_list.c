@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 09:15:51 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/10 14:57:22 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/17 20:44:53 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,6 @@ void			render_new_win(t_new_win *frame,
 	SDL_UpdateWindowSurface(frame->win);
 }
 
-t_block			*new_block(SDL_Surface *pic, t_rect *rect_block)
-{
-	t_block		*block;
-
-	block = (t_block *)ft_memalloc(sizeof(t_block));
-	block->block_pic = pic;
-	block->rect_block = (t_rect *)ft_memalloc(sizeof(t_rect));
-	block->rect_block->x = rect_block->x;
-	block->rect_block->y = rect_block->y;
-	block->rect_block->w = rect_block->w;
-	block->rect_block->h = rect_block->h;
-	block->next = NULL;
-	return (block);
-}
-
 void			open_new_win(t_new_win *frame, TTF_Font *font)
 {
 	t_rect		q;
@@ -101,8 +86,8 @@ void			open_new_win(t_new_win *frame, TTF_Font *font)
 	frame->screen = SDL_GetWindowSurface(frame->win);
 	frame->quit = false;
 	q = rect_fill_no_malloc(10, 10, 60, 80);
-	frame->frames = new_frame(&q, 0xa0a0a0,
-		new_block(TTF_RenderText_Blended(font, "Knopka", color), &q));
+	frame->frames = new_frame(q, 0xa0a0a0,
+		new_block(2, q, TTF_RenderText_Blended(font, "Knopka", color)));
 	render_new_win(frame, 0xafafaf,
 		rect_fill_no_malloc(0, 0, frame->screen->w, frame->screen->h));
 }

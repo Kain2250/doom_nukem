@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 14:40:45 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/10 15:00:47 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/17 19:25:20 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ static void	button_left_event(t_doom_nukem *doom)
 		doom->player.heals.cur =
 		doom->mouse.x - doom->screen->blocks->rect_block->x;
 	else
-		draw_fill_circl(doom->sdl.surface, 10,
-		fill_point(doom->mouse.prew_x, doom->mouse.prew_y), 0xfff0ff);
+		scale_frame(doom->sdl.surface, doom->mouse, 0xabfbc, &draw_rect);
 }
 
 static void	button_midle_event(t_doom_nukem *doom)

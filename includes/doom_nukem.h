@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/10 15:20:59 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/17 20:44:10 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,8 +219,9 @@ t_color					color32_to_8(Uint32 color);
 ** frame.c
 */
 void					free_editor(t_frames *frame_table);
-t_frames				*new_frame(t_rect *rect, Uint32 color,
+t_frames				*new_frame(t_rect rect, Uint32 color,
 							struct s_block *blocks);
+t_block					*new_block(int type, t_rect rect, SDL_Surface *pic);
 void					frame_tamer(t_doom_nukem *doom, t_frames *frame_table);
 t_frames				*init_editor(t_doom_nukem *doom);
 void					scale_rect_texture(SDL_Surface *dst, t_mouse mouse, SDL_Surface *src);

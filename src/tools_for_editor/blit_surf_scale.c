@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 21:03:55 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/09 11:41:46 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/17 21:26:00 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void			while_scale_pic(SDL_Surface *src, t_rect *rsrc,
 	{
 		crd[0].x = rdst->x;
 		crd[1].x = rsrc->x;
-		color = get_pixel(src, crd[1].x, crd[1].y);
 		while (crd[0].x < rdst->w || crd[0].x < rdst->x + rdst->w)
 		{
 			color = get_pixel(src, crd[1].x, crd[1].y);
