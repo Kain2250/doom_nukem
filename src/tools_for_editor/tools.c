@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 20:40:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/05 18:47:38 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/22 22:22:21 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,7 @@ void				scale_frame(SDL_Surface *dst, t_mouse mouse, Uint32 color,
 	}
 	else
 		abs_side_frame(&cur.y, &cur.h);
+	(void)draw;
 	draw(dst, &cur, color, 1);
+	// draw_circl(dst, cur.w, fill_point(500, 500), color);
 }

@@ -6,7 +6,7 @@
 #    By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/09/10 14:34:36 by bdrinkin         ###   ########.fr        #
+#    Updated: 2020/09/24 21:08:38 by bdrinkin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,11 @@ HEADERS = $(addprefix $(INCLUDES_DIRECTORY), $(HEADERS_LIST))
 
 # Основные файлы программы и их пути:
 SRC_DIRECTORY = src/
-SRC_LIST = *.c \
+SRC_LIST = main.c \
+	debug_file.c \
+	wad_loader.c \
+	wad_reader.c \
+	bytes_shift.c \
 	tools_for_editor/*.c \
 	load_res/*.c \
 	primitives/*.c \

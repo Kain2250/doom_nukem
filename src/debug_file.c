@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:33:00 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/10 15:21:39 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/24 20:49:24 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,20 @@ void	doom_exit(t_doom_nukem *doom)
 {
 	int	i;
 
-	i = 0;
-	while (i < texture_total)
-	{
+	i = -1;
+	while (++i < texture_total)
 		if (doom->sdl.textures[i] != NULL)
 			SDL_FreeSurface(doom->sdl.textures[i]);
-		i++;
-	}
 	if (doom->sdl.surface != NULL)
 		SDL_FreeSurface(doom->sdl.surface);
 	if (doom->sdl.window != NULL)
 		SDL_DestroyWindow(doom->sdl.window);
-	while (i < font_total)
-	{
+	i = -1;
+	while (++i < font_total)
 		if (doom->sdl.fonts[i] != NULL)
 			TTF_CloseFont(doom->sdl.fonts[i]);
-		i++;
-	}
+	if (doom->map != NULL)
+		free(doom->map);
 	free_editor(doom->screen);
 	IMG_Quit();
 	TTF_Quit();

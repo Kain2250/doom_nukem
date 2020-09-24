@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/17 20:44:10 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/24 21:09:08 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
 # include <stdbool.h>
 # include "errorout.h"
 # include "define_resource.h"
+# include "tree_struct.h"
 # include "libft.h"
 # include "SDL.h"
 # include "SDL_image.h"
 # include "SDL_mixer.h"
 # include "SDL_ttf.h"
 # include "SDL_net.h"
-# include <mlx.h>
 
 typedef struct		s_point
 {
@@ -148,6 +148,20 @@ typedef struct			s_new_win
 	bool				quit;
 }						t_new_win;
 
+typedef struct	s_wad
+{
+	char		wad_type[5];
+	uint32_t	dir_count;
+	uint32_t	dir_offset;
+}				t_wad;
+
+typedef struct	s_dir
+{
+	char		lump_name[9];
+	uint32_t	lump_offset;
+	uint32_t	lump_size;
+}				t_dir;
+
 typedef struct			s_doom_nukem
 {
 	struct s_sdl_sys	sdl;
@@ -155,6 +169,7 @@ typedef struct			s_doom_nukem
 	struct s_new_win	frame;
 	struct s_frames		*screen;
 	struct s_player		player;
+	uint8_t				*map;
 	bool				quit;
 }						t_doom_nukem;
 /*
@@ -261,5 +276,10 @@ int						which_button(bool *mouse);
 
 
 t_point					fill_point(int x, int y);
+
+bool					wad_loader(t_doom_nukem *doom, char *path);
+bool					wad_reader(t_doom_nukem *doom);
+uint16_t				bytes_to_short(const uint8_t *data, int offset);
+uint32_t				bytes_to_int(const uint8_t *data, int offset);
 
 #endif
