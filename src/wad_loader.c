@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 17:28:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/24 20:52:00 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/25 19:05:39 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ bool			wad_loader(t_doom_nukem *doom, char *path)
 	size_t		len_wad;
 
 	len_wad = wad_len(path);
-	doom->map = wad_load(len_wad, path);
-	if (doom->map == NULL)
+	doom->wad.map = wad_load(len_wad, path);
+	if (doom->wad.map == NULL)
 		return (false);
 	return (true);
 }

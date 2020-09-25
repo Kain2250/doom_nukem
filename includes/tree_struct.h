@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:52:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/22 19:51:19 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/25 20:13:01 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ typedef struct		s_vertex
 */
 typedef struct		s_linedef
 {
-	t_vertex		start;
-	t_vertex		finish;
+	uint16_t		start;
+	uint16_t		finish;
 	uint16_t		flags;
 	uint16_t		type;
 	uint16_t		mark_sector;
-	SDL_Surface		*front;
-	SDL_Surface		*rear;
+	uint16_t		front;
+	uint16_t		rear;
 }					t_linedef;
 /*
 ** Дерево

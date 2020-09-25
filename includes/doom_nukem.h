@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/24 21:09:08 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/25 20:35:33 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,19 +148,28 @@ typedef struct			s_new_win
 	bool				quit;
 }						t_new_win;
 
-typedef struct	s_wad
+typedef struct			s_wad_head
 {
-	char		wad_type[5];
-	uint32_t	dir_count;
-	uint32_t	dir_offset;
-}				t_wad;
+	char				wad_type[5];
+	uint32_t			dir_count;
+	uint32_t			dir_offset;
+}						t_wad_head;
 
-typedef struct	s_dir
+typedef struct			s_dir
 {
-	char		lump_name[9];
-	uint32_t	lump_offset;
-	uint32_t	lump_size;
-}				t_dir;
+	uint32_t			lump_offset;
+	uint32_t			lump_size;
+	char				lump_name[9];
+	struct s_dir		*next;
+}						t_dir;
+
+typedef struct			s_wad
+{
+	struct s_wad_head	head;
+	struct s_dir		*dir;
+	t_vertex			*vert;
+	uint8_t				*map;
+}						t_wad;
 
 typedef struct			s_doom_nukem
 {
@@ -169,7 +178,7 @@ typedef struct			s_doom_nukem
 	struct s_new_win	frame;
 	struct s_frames		*screen;
 	struct s_player		player;
-	uint8_t				*map;
+	t_wad				wad;
 	bool				quit;
 }						t_doom_nukem;
 /*
@@ -281,5 +290,13 @@ bool					wad_loader(t_doom_nukem *doom, char *path);
 bool					wad_reader(t_doom_nukem *doom);
 uint16_t				bytes_to_short(const uint8_t *data, int offset);
 uint32_t				bytes_to_int(const uint8_t *data, int offset);
+/*
+** Возвращает offset на lump с данными lable относящихся к карте name_map
+*/
+uint32_t				find_offset_lump(t_dir *dir, char *lable, char *name_map);
+
+
+void					clear_wad_dir(t_dir *dir);
+
 
 #endif

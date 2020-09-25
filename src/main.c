@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/24 21:07:31 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/25 19:38:40 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,15 @@ int					main(int ac, char **av)
 		fill_limit(&doom->player.heals, 0, 190, 200);
 		map = filemap();
 		timer_start(&time);
-		while (doom->quit == false)
-		{
-			// fps_counter(&time);
-			// draw_map(doom, map);
-			// frame_tamer(doom, doom->screen);
-			event_list(doom);
-			SDL_UpdateWindowSurface(doom->sdl.window);
-			clear_surface(doom->sdl.surface, 0);
-		}
+		// while (doom->quit == false)
+		// {
+		// 	// fps_counter(&time);
+		// 	// draw_map(doom, map);
+		// 	// frame_tamer(doom, doom->screen);
+		// 	event_list(doom);
+		// 	SDL_UpdateWindowSurface(doom->sdl.window);
+		// 	clear_surface(doom->sdl.surface, 0);
+		// }
 		doom_exit(doom);
 	}
 	else if (!av[1])

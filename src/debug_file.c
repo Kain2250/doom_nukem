@@ -6,11 +6,28 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:33:00 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/24 20:49:24 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/25 19:01:33 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
+
+void	clear_wad_dir(t_dir *dir)
+{
+	t_dir	*temp;
+	t_dir	*next;
+
+	temp = dir->next;
+	while (temp != NULL)
+	{
+		next = temp->next;
+		free(temp);
+		temp = NULL;
+		temp = next;
+	}
+	if (dir != NULL)
+		free(dir);
+}
 
 void	doom_exit(t_doom_nukem *doom)
 {
@@ -28,8 +45,9 @@ void	doom_exit(t_doom_nukem *doom)
 	while (++i < font_total)
 		if (doom->sdl.fonts[i] != NULL)
 			TTF_CloseFont(doom->sdl.fonts[i]);
-	if (doom->map != NULL)
-		free(doom->map);
+	clear_wad_dir(doom->wad.dir);
+	if (doom->wad.map != NULL)
+		free(doom->wad.map);
 	free_editor(doom->screen);
 	IMG_Quit();
 	TTF_Quit();
