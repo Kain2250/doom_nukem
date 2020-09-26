@@ -6,7 +6,7 @@
 #    By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/08/17 20:13:19 by bdrinkin         ###   ########.fr        #
+#    Updated: 2020/09/24 21:08:38 by bdrinkin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,17 @@ HEADERS = $(addprefix $(INCLUDES_DIRECTORY), $(HEADERS_LIST))
 
 # Основные файлы программы и их пути:
 SRC_DIRECTORY = src/
-SRC_LIST = *.c
+SRC_LIST = main.c \
+	debug_file.c \
+	wad_loader.c \
+	wad_reader.c \
+	bytes_shift.c \
+	tools_for_editor/*.c \
+	load_res/*.c \
+	primitives/*.c \
+	events/*.c \
+	init/*.c \
+	tools/*.c
 
 SRC = $(addprefix $(SRC_DIRECTORY), $(SRC_LIST))
 
@@ -78,7 +88,7 @@ all: $(NAME)
 $(NAME): $(LIBFT_DIRECTORY) $(SRC) $(HEADERS) $(RES)
 	@$(MAKE) -C $(LIBFT_DIRECTORY)
 	@echo "wolf3d: $(GREEN)Компиляция исполняемого файла$(RESET)\n"
-	@$(GCC) -g $(CCFLAGS) $(INCLUDES) $(LIBRARIES_LIBFT) $(FRAMEWORKS) $(OTHERS_FLAGS) $(SRC) -o $(NAME)
+	@$(GCC) $(CCFLAGS) $(INCLUDES) $(LIBRARIES_LIBFT) $(FRAMEWORKS) $(OTHERS_FLAGS) $(SRC) -o $(NAME)
 	@echo "wolf3d: $(GREEN)Компиляция завершена$(RESET)\n"
 
 $(RES):
@@ -88,6 +98,12 @@ $(RES):
 
 $(LIBFT_DIRECTORY):
 	@$(MAKE) -C $(LIBFT_DIRECTORY)
+
+debug: $(LIBFT_DIRECTORY) $(SRC) $(HEADERS) $(RES)
+	@$(MAKE) -C $(LIBFT_DIRECTORY)
+	@echo "wolf3d: $(GREEN)Компиляция исполняемого файла$(RESET)\n"
+	@$(GCC) -g $(CCFLAGS) $(INCLUDES) $(LIBRARIES_LIBFT) $(FRAMEWORKS) $(OTHERS_FLAGS) $(SRC) -o $(NAME)
+	@echo "wolf3d: $(GREEN)Компиляция завершена$(RESET)\n"
 
 clean:
 	@$(MAKE) -C $(LIBFT_DIRECTORY) clean
@@ -103,4 +119,3 @@ fclean: clean
 re:
 	@$(MAKE) fclean
 	@$(MAKE) all
-	

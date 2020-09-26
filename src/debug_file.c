@@ -6,22 +6,56 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:33:00 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/15 09:51:44 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/25 19:01:33 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
+void	clear_wad_dir(t_dir *dir)
+{
+	t_dir	*temp;
+	t_dir	*next;
+
+	temp = dir->next;
+	while (temp != NULL)
+	{
+		next = temp->next;
+		free(temp);
+		temp = NULL;
+		temp = next;
+	}
+	if (dir != NULL)
+		free(dir);
+}
+
 void	doom_exit(t_doom_nukem *doom)
 {
-	SDL_DestroyWindow(doom->sdl.window);
-	SDL_DestroyRenderer(doom->sdl.render);
+	int	i;
+
+	i = -1;
+	while (++i < texture_total)
+		if (doom->sdl.textures[i] != NULL)
+			SDL_FreeSurface(doom->sdl.textures[i]);
+	if (doom->sdl.surface != NULL)
+		SDL_FreeSurface(doom->sdl.surface);
+	if (doom->sdl.window != NULL)
+		SDL_DestroyWindow(doom->sdl.window);
+	i = -1;
+	while (++i < font_total)
+		if (doom->sdl.fonts[i] != NULL)
+			TTF_CloseFont(doom->sdl.fonts[i]);
+	clear_wad_dir(doom->wad.dir);
+	if (doom->wad.map != NULL)
+		free(doom->wad.map);
+	free_editor(doom->screen);
 	IMG_Quit();
 	TTF_Quit();
 	SDLNet_Quit();
 	Mix_Quit();
 	SDL_Quit();
-	free(doom);
+	if (doom != NULL)
+		free(doom);
 }
 
 int		put_error_sys(char *error)
