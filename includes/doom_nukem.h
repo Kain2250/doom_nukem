@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/25 20:35:33 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/26 18:19:16 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ typedef struct			s_wad
 	struct s_wad_head	head;
 	struct s_dir		*dir;
 	t_vertex			*vert;
+	t_linedef			*linedef;
 	uint8_t				*map;
 }						t_wad;
 

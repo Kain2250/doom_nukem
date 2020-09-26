@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:39:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/26 15:53:20 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/26 18:28:15 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,38 +91,44 @@ uint32_t		find_size_lump(t_dir *dir, char *lable, char *name_map)
 	return (temp->lump_size);
 }
 
-void			wad_draw_linedefs(t_doom_nukem *doom, t_vertex *vertex)
+void			wad_draw_linedefs(t_doom_nukem *doom,
+					t_vertex *vertex, char *name_map)
 {
-	t_linedef	*line;
 	uint32_t 	offset;
 	uint32_t	size;
 	uint32_t	temp_offset;
-	int			i = 0;
+	uint32_t	color;
+	int			i;
 
-	offset = find_offset_lump(doom->wad.dir, "LINEDEFS", "E1M1");
-	size = find_size_lump(doom->wad.dir, "LINEDEFS", "E1M1");
-	line = (t_linedef *)ft_memalloc(size / 14 * sizeof(t_linedef));
+	offset = find_offset_lump(doom->wad.dir, "LINEDEFS", name_map);
+	size = find_size_lump(doom->wad.dir, "LINEDEFS", name_map);
+	doom->wad.linedef = (t_linedef *)ft_memalloc(size / 14 * sizeof(t_linedef));
 	temp_offset = offset + size;
+	i = 0;
 	while (offset < temp_offset)
 	{
-		read_linedef(doom->wad.map, offset, &line[i]);
+		read_linedef(doom->wad.map, offset, &doom->wad.linedef[i]);
 		offset += 14;
 		i++;
 	}
 	i = 0;
 	while (i != size / 14)
 	{
-		draw_line(doom->sdl.surface, fill_point(abs(vertex[line[i].start].x) / 5 + 100 , abs(vertex[line[i].start].y)  / 5 - 100),
-									fill_point(abs(vertex[line[i].finish].x)  / 5 + 100, abs(vertex[line[i].finish].y)  / 5 - 100),
-									0xffffff);
+		if (doom->wad.linedef[i].rear == 65535)
+			color = 0x0000ff;
+		else
+			color = 0xffffff;
+		draw_line(doom->sdl.surface,
+			fill_point((vertex[doom->wad.linedef[i].start].x) / 5 + 200,
+					abs(vertex[doom->wad.linedef[i].start].y) / 5),
+			fill_point((vertex[doom->wad.linedef[i].finish].x) / 5 + 200,
+					abs(vertex[doom->wad.linedef[i].finish].y) / 5), color);
 		i++;
 	}
-	free(line);
 }
 
-void			wad_draw_vertex(t_doom_nukem *doom)
+void			wad_draw_vertex(t_doom_nukem *doom, char *name_map)
 {
-	t_vertex	*vertex;
 	uint32_t 	offset;
 	uint32_t	size;
 	uint32_t	temp_offset;
@@ -131,23 +137,22 @@ void			wad_draw_vertex(t_doom_nukem *doom)
 	i = 0;
 	offset = find_offset_lump(doom->wad.dir, "VERTEXES", "E1M1");
 	size = find_size_lump(doom->wad.dir, "VERTEXES", "E1M1");
-	vertex = (t_vertex *)ft_memalloc(size / 4 * sizeof(t_vertex));
+	doom->wad.vert = (t_vertex *)ft_memalloc(size / 4 * sizeof(t_vertex));
 	temp_offset = offset + size;
 	while (offset < temp_offset)
 	{
-		read_vertex(doom->wad.map, offset, &vertex[i]);
+		read_vertex(doom->wad.map, offset, &doom->wad.vert[i]);
 		offset += 4;
 		i++;
 	}
-	i = 0;
-	while (i != size / 4)
-	{
-		putpixel(doom->sdl.surface, abs(vertex[i].x) / 5 + 100,
-									abs(vertex[i].y) / 5 - 100, 0xffffff);
-		i++;
-	}
-	wad_draw_linedefs(doom, vertex);
-	// free(vertex);
+	// i = 0;
+	// while (i != size / 4)
+	// {
+	// 	draw_fill_circl(doom->sdl.surface, 1, fill_point((vertex[i].x + 4000) / 5 - 400,
+	// 								(vertex[i].y + 4000) / 5 + 300), 0xffffff);
+	// 	i++;
+	// }
+	wad_draw_linedefs(doom, doom->wad.vert, name_map);
 }
 
 
@@ -171,7 +176,7 @@ bool			wad_reader(t_doom_nukem *doom)
 			temp = temp->next;
 		}
 	}
-	wad_draw_vertex(doom);
+	wad_draw_vertex(doom, "E1M1");
 
 	return (true);
 }
