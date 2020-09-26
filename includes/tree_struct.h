@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:52:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/25 20:13:01 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/26 19:40:38 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,119 @@ typedef struct		s_linedef
 	uint16_t		front;
 	uint16_t		rear;
 }					t_linedef;
+/*
+** Сегмент
+** start_vert - Номер начальной вершины
+** finish_vert - Номер конечной вершины
+** angle - угол полного круга от -32768 до 32767
+** linedef - Номер стены
+** direction - Направление нормали (0 - одинаковое с linedef, 1 - противоположно)
+** offset - Смещение. Расстояние от linedef до начала сегмента
+*/
+typedef struct		s_seg
+{
+	uint16_t		start_vert;
+	uint16_t		finish_vert;
+	int16_t			angle;
+	uint16_t		linedef;
+	int16_t			direction;
+	uint16_t		offset;
+}					t_seg;
+/*
+** Флаги для спрайтов
+** th_skill_level1_2 - сложность 1 и 2 уровня
+** th_skill_level3 - сложность 3 уровня
+** th_skill_level4_5 - сложность 4 и 5 уровня
+** th_mute - враг ждет в засаде
+** th_single_nothing - убирает спрайты в одиночной игре
+*/
+typedef enum		e_thing_flags
+{
+	th_skill_level1_2 = 0x0001,
+	th_skill_level3 = 0x0002,
+	th_skill_level4_5 = 0x0004,
+	th_mute = 0x0008,
+	th_single_nothing = 0x0010
+}					t_thing_flags;
+/*
+** Спрайты
+** x - Позиция по x
+** y - Позиция по y
+** angle - Направление спрайта
+** type - Тип спрайта
+** flags - флаги t_thing_flags
+*/
+typedef struct		s_things
+{
+	int16_t			x;
+	int16_t			y;
+	int16_t			angle;
+	int16_t			type;
+	int16_t			flags;
+}					t_things;
+/*
+** Стороны стен
+** x - на сколько пикселей сдвинуть все текстуры с боковым определением по оси X (вправо или влево)
+** y - на сколько пикселей сдвинуть все текстуры с боковым определением по оси Y (вверх или вниз)
+** name_of_up - Название верхней текстуры 
+** name_of_low - Название нижней текстуры
+** name_of_mid - Название средней текстуры (основной)
+** sector - Номер сектора
+*/
+typedef struct		s_sidedef
+{
+	int16_t			x;
+	int16_t			y;
+	int8_t			name_of_up[8];
+	int8_t			name_of_low[8];
+	int8_t			name_of_mid[8];
+	int16_t			sector;
+}					t_sidedef;
+/*
+** Подсекторы
+** count_seg - колличество секторов в подсекторе
+** first_seg - номер первого сектора
+*/
+typedef struct		s_ssectors
+{
+	uint16_t		count_seg;
+	uint16_t		first_seg;
+}					t_ssectors;
+/*
+** Узлы - NODE
+** 
+*/
+typedef struct		s_node
+{
+	int16_t			x_sliser;
+	int16_t			y_sliser;
+	int16_t			x_sliser2;
+	int16_t			y_sliser2;
+	int16_t			right_box[4];
+	int16_t			left_box[4];
+	int16_t			right_baby;
+	int16_t			left_baby;
+}					t_node;
+/*
+** сектор
+** hight_flor - высота пола
+** hight_cell - высота потолка
+** name_tex_flor - название текстуры пола
+** name_of_cell - название текстуры потолка
+** light - уровень освещенности
+** type - тип сектора
+** tag - тэг сектора
+*/
+typedef struct		s_sector
+{
+	int16_t			hight_flor;
+	int16_t			hight_cell;
+	int8_t			name_tex_flor[8];
+	int8_t			name_of_cell[8];
+	int16_t			light;
+	int16_t			type;
+	int16_t			tag;
+}					t_sector;
 /*
 ** Дерево
 */
