@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:39:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/26 18:28:15 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/09/28 22:50:48 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ uint32_t		find_offset_lump(t_dir *dir, char *lable, char *name_map)
 	t_dir	*temp;
 
 	temp = dir;
-	while (ft_strcmp(name_map, temp->lump_name) != 0)
-		temp = temp->next;
+	if (name_map != NULL)
+		while (ft_strcmp(name_map, temp->lump_name) != 0)
+			temp = temp->next;
 	while (ft_strcmp(lable, temp->lump_name) != 0)
 		temp = temp->next;
 	return (temp->lump_offset);
@@ -84,8 +85,9 @@ uint32_t		find_size_lump(t_dir *dir, char *lable, char *name_map)
 	t_dir	*temp;
 
 	temp = dir;
-	while (ft_strcmp(name_map, temp->lump_name) != 0)
-		temp = temp->next;
+	if (name_map != NULL)
+		while (ft_strcmp(name_map, temp->lump_name) != 0)
+			temp = temp->next;
 	while (ft_strcmp(lable, temp->lump_name) != 0)
 		temp = temp->next;
 	return (temp->lump_size);
@@ -118,6 +120,8 @@ void			wad_draw_linedefs(t_doom_nukem *doom,
 			color = 0x0000ff;
 		else
 			color = 0xffffff;
+		if (doom->wad.linedef[i].type == 1)
+			color = 0xff0000;
 		draw_line(doom->sdl.surface,
 			fill_point((vertex[doom->wad.linedef[i].start].x) / 5 + 200,
 					abs(vertex[doom->wad.linedef[i].start].y) / 5),
@@ -155,6 +159,76 @@ void			wad_draw_vertex(t_doom_nukem *doom, char *name_map)
 	wad_draw_linedefs(doom, doom->wad.vert, name_map);
 }
 
+uint32_t		wad_find_texture(t_dir *dir, char *name)
+{
+	t_dir		*temp;
+
+	temp = dir;
+	while (ft_strcmp(name, temp->lump_name) != 0)
+		temp = temp->next;
+	return (temp->lump_offset);
+}
+
+void			wad_draw_texture(t_doom_nukem *doom, char *texture)
+{
+	uint32_t	offset;
+	uint32_t	size;
+	uint32_t	temp_offset;
+	int			i, j;
+	t_patch		patch;
+
+
+	offset = find_offset_lump(doom->wad.dir, texture, NULL);
+	size = find_size_lump(doom->wad.dir, texture, NULL);
+	patch.width = bytes_to_short(doom->wad.map, offset);
+	// printf("%d\n", patch.width);
+	patch.height = bytes_to_short(doom->wad.map, offset + 2);
+	// printf("%d\n", patch.height);
+	patch.left_offset = bytes_to_short(doom->wad.map, offset + 4);
+	// printf("%d\n", patch.left_offset);
+	patch.top_offset = bytes_to_short(doom->wad.map, offset + 6);
+	// printf("%d\n", patch.top_offset);
+	patch.columnoffset = (uint32_t *)ft_memalloc(sizeof(uint32_t) + patch.width);
+	i = 0;
+	temp_offset = offset + 8;
+	while (i < patch.width)
+	{
+		patch.columnoffset[i] = bytes_to_int(doom->wad.map, temp_offset);
+		temp_offset += 4;
+		i++;
+	}
+	i = 10;
+	while (i < patch.width + 10)
+	{
+		j = 10;
+		temp_offset = offset + patch.columnoffset[i - 10];
+		while (j < patch.height + 10)
+		{
+			putpixel(doom->sdl.surface, i, j, bytes_to_int(doom->wad.map, temp_offset));
+			j++;
+			temp_offset += 1;
+		}
+		i++;
+	}
+	// free(patch.columnoffset);
+}
+
+void			wad_draw_colormap(t_doom_nukem *doom)
+{
+	uint32_t	offset;
+	uint32_t	size;
+	uint32_t	temp_offset;
+	int			i = 10;
+
+	offset = find_offset_lump(doom->wad.dir, "COLORMAP", NULL);
+	size = find_size_lump(doom->wad.dir, "COLORMAP", NULL);
+	temp_offset = offset;
+	printf("%d\n", offset);//bytes_to_int(doom->wad.map, temp_offset));
+	while (i != 10)
+		putpixel(doom->sdl.surface, 149 + i++, 150, bytes_to_int(doom->wad.map, temp_offset++));
+
+
+}
 
 bool			wad_reader(t_doom_nukem *doom)
 {
@@ -163,8 +237,6 @@ bool			wad_reader(t_doom_nukem *doom)
 
 	i = -1;
 	read_head_data(doom->wad.map, 0, &doom->wad.head);
-	// wad_put(doom->wad.head.wad_type,
-		// doom->wad.head.dir_offset, doom->wad.head.dir_count);
 	doom->wad.dir = (t_dir *)ft_memalloc(sizeof(t_dir));
 	temp = doom->wad.dir;
 	while (++i < doom->wad.head.dir_count)
@@ -177,6 +249,7 @@ bool			wad_reader(t_doom_nukem *doom)
 		}
 	}
 	wad_draw_vertex(doom, "E1M1");
-
+	wad_draw_texture(doom, "DOOR2_4");
+	wad_draw_colormap(doom);
 	return (true);
 }
