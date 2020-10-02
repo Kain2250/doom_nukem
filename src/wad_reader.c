@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:39:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/29 19:53:21 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/02 18:32:54 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,17 +197,19 @@ void			wad_draw_texture(t_doom_nukem *doom, char *texture)
 		temp_offset += 4;
 		i++;
 	}
-	i = 10;
-	while (i < patch.width + 10)
+	i = 0;
+	while (i < patch.width)
 	{
-		j = 10;
-		temp_offset = offset + patch.columnoffset[i - 10];
-		while (j < patch.height + 10)
+		j = 0;
+		temp_offset = offset + patch.columnoffset[i];
+		while (j < patch.height)
 		{
+			printf("%d ", doom->wad.map[temp_offset]);
 			putpixel(doom->sdl.surface, i, j, bytes_to_int(doom->wad.map, temp_offset));
 			j++;
 			temp_offset += 1;
 		}
+		printf("\n");
 		i++;
 	}
 	// free(patch.columnoffset);
@@ -218,33 +220,37 @@ void			wad_draw_colormap(t_doom_nukem *doom)
 	uint32_t	offset;
 	uint32_t	size;
 	uint32_t	temp_offset;
-	uint32_t			i = 0;
-	// t_color		*playpal;
+	uint32_t	i = 0;
+	// t_color		playpal;
 	// int			j = 10;
 
 	offset = find_offset_lump(doom->wad.dir, "PLAYPAL", NULL);
 	size = find_size_lump(doom->wad.dir, "PLAYPAL", NULL);
 	temp_offset = offset;
 	// printf("%d\n", offset);//bytes_to_int(doom->wad.map, temp_offset));
-	// uint32_t	k = 0;
+	uint32_t	k = 0;
 	uint32_t	step;
-	while (i < 14)
+	while (i < 56)
 	{
 		step = 0;
+		// temp_offset = offset;
 		while (step < 256)
 		{
-			doom->wad.color[i][step] = temp_offset++;
-			printf("%d ", doom->wad.color[i][step]);
+			// printf("int %d\n", (doom->wad.map[temp_offset + 2] << 16) | (doom->wad.map[temp_offset + 1] << 8) | doom->wad.map[temp_offset]);
+			if (i == 13 || i == 28 || i == 43 || i == 55 || step == 255 || step == 511)
+			{
+				k = (doom->wad.map[temp_offset + 2] << 16) | (doom->wad.map[temp_offset + 1] << 8) | doom->wad.map[temp_offset];
+				temp_offset += 3;
+			}
+			putpixel(doom->sdl.surface, step, i, k);
+			// printf("%d ", doom->wad.color[i][step]);
 			// k++;
+			
 			step++;
 		}
-		printf("\n");
-		i++;
-		// playpal[i].red = (temp_offset + k);
-		// playpal[i].green = (temp_offset + k + 1);
-		// playpal[i].blue = (temp_offset + k + 2);
+		// printf("\n");
 		// k += 1;
-		// i++;
+		i++;
 	}
 }
 
@@ -266,8 +272,9 @@ bool			wad_reader(t_doom_nukem *doom)
 			temp = temp->next;
 		}
 	}
-	// wad_draw_vertex(doom, "E1M1");
+	wad_draw_vertex(doom, "E1M1");
 	// wad_draw_texture(doom, "TITLEPIC");
+	// wad_draw_texture(doom, "PLAYPAL");
 	wad_draw_colormap(doom);
 	return (true);
 }
