@@ -6,7 +6,7 @@
 #    By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/09/24 21:08:38 by bdrinkin         ###   ########.fr        #
+#    Updated: 2020/10/03 19:52:15 by bdrinkin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,15 +62,18 @@ HEADERS = $(addprefix $(INCLUDES_DIRECTORY), $(HEADERS_LIST))
 SRC_DIRECTORY = src/
 SRC_LIST = main.c \
 	debug_file.c \
-	wad_loader.c \
-	wad_reader.c \
-	bytes_shift.c \
 	tools_for_editor/*.c \
 	load_res/*.c \
 	primitives/*.c \
 	events/*.c \
 	init/*.c \
-	tools/*.c
+	tools/*.c \
+	wad/wad_loader.c \
+	wad/wad_reader.c \
+	wad/bytes_shift.c \
+	wad/draw_wad.c \
+	wad/wad_get.c
+
 
 SRC = $(addprefix $(SRC_DIRECTORY), $(SRC_LIST))
 

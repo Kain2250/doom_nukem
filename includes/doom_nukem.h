@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/29 19:53:25 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/03 19:54:23 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,10 @@ typedef struct			s_wad
 	struct s_dir		*dir;
 	t_vertex			*vert;
 	t_linedef			*linedef;
-	uint8_t				color[14][256];
+	uint32_t			color[14][256];
+	uint32_t			colormap[256][256];
+	uint16_t			bright;
+	uint16_t			stat_hit;
 	uint8_t				*map;
 }						t_wad;
 
@@ -295,8 +298,24 @@ uint32_t				bytes_to_int(const uint8_t *data, int offset);
 /*
 ** Возвращает offset на lump с данными lable относящихся к карте name_map
 */
+void					read_head_data(const uint8_t *data, int offset, t_wad_head *head);
+void					read_dir_data(const uint8_t *data, int offset, t_dir *dir);
+void					read_linedef(const uint8_t *data, int offset, t_linedef *linedef);
+void					read_vertex(const uint8_t *data, int offset, t_vertex *vertex);
 uint32_t				find_offset_lump(t_dir *dir, char *lable, char *name_map);
+uint32_t				find_size_lump(t_dir *dir, char *lable, char *name_map);
+uint32_t				wad_find_texture(t_dir *dir, char *name);
 
+void					wad_draw_patch(t_doom_nukem *doom, char *texture);
+void					wad_draw_vertex(t_doom_nukem *doom, char *name_map);
+void					wad_draw_linedefs(t_doom_nukem *doom, t_vertex *vertex);
+
+t_patch					wad_get_patch_info(const uint8_t *data,	uint32_t offset);
+void					wad_get_linedefs(t_doom_nukem *doom, char *name_map);
+void					wad_get_vertex(t_doom_nukem *doom, char *name_map);
+t_patch					wad_get_patch_info(const uint8_t *data,	uint32_t offset);
+void					wad_get_playpal(t_doom_nukem *doom);
+void					wad_get_colormap(t_doom_nukem *doom);
 
 void					clear_wad_dir(t_dir *dir);
 
