@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:49:40 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/03 20:52:42 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/04 20:46:50 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_patch			wad_get_patch_info(const uint8_t *data,	uint32_t offset)
 	patch.height = bytes_to_short(data, offset + 2);
 	patch.left_offset = bytes_to_short(data, offset + 4);
 	patch.top_offset = bytes_to_short(data, offset + 6);
-	patch.columnoffset = (uint32_t *)ft_memalloc(sizeof(uint32_t) +
+	patch.columnoffset = (uint32_t *)ft_memalloc(sizeof(uint32_t) *
 		patch.width);
 	i = 0;
 	temp_offset = offset + 8;
@@ -122,5 +122,78 @@ void			wad_get_colormap(t_doom_nukem *doom)
 			step.x++;
 		}
 		step.y++;
+	}
+}
+
+void			wad_get_textures(const uint8_t *data, uint32_t offset, t_texture_head *texture)
+{
+	uint32_t	i;
+	uint32_t	j;
+	uint32_t	temp_offset;
+
+	temp_offset = offset;
+	texture->num_texture = bytes_to_int(data, temp_offset);
+	temp_offset += 4;
+	texture->offsets = (uint32_t *)ft_memalloc(texture->num_texture * (sizeof(uint32_t)));
+	i = 0;
+	while (i < texture->num_texture)
+	{
+		texture->offsets[i] = bytes_to_int(data, temp_offset);
+		temp_offset += 4;
+		i++;
+	}
+	texture->mtexture = (t_map_texture *)ft_memalloc(sizeof(t_map_texture) * i);
+	i = 0;
+	while (i < texture->num_texture)
+	{
+		temp_offset = offset + texture->offsets[i];
+		j = 0;
+		while(j < 8)
+			texture->mtexture[i].name[j++] = data[temp_offset++];
+		texture->mtexture[i].name[j] = '\0';
+		texture->mtexture[i].masked = bytes_to_short(data, temp_offset + 2);
+		texture->mtexture[i].width = bytes_to_short(data, temp_offset + 4);
+		texture->mtexture[i].height = bytes_to_short(data, temp_offset + 6);
+		texture->mtexture[i].patchcount = bytes_to_short(data, temp_offset + 12);
+		if (texture->mtexture[i].patchcount > 0)
+			texture->mtexture[i].patches = (t_patches *)ft_memalloc(sizeof(t_patches) * texture->mtexture[i].patchcount);
+		j = 0;
+		temp_offset = temp_offset + 12;
+		while (j < texture->mtexture[i].patchcount)
+		{
+			texture->mtexture[i].patches[j].origin_x = bytes_to_short(data, temp_offset + 2);
+			texture->mtexture[i].patches[j].origin_y = bytes_to_short(data, temp_offset + 4);
+			texture->mtexture[i].patches[j].patch = bytes_to_short(data, temp_offset + 6);
+			texture->mtexture[i].patches[j].stepdir = bytes_to_short(data, temp_offset + 8);
+			texture->mtexture[i].patches[j].colormap = bytes_to_short(data, temp_offset + 10);
+			temp_offset = temp_offset + 10;
+			j++;
+		}
+		i++;
+	}
+}
+
+void			wad_get_pnames(const uint8_t *data, t_dir *dir ,t_pnames *pname)
+{
+	uint32_t	i;
+	uint32_t	j;
+	uint32_t	offset;
+	uint32_t	temp_offset;
+	
+	offset = find_offset_lump(dir, "PNAMES", NULL);
+	temp_offset = offset;
+	i = 0;
+	pname->num_map_patches = bytes_to_int(data, temp_offset);
+	pname->name = (char **)ft_memalloc(sizeof(char *) * pname->num_map_patches);
+	while (i < pname->num_map_patches)
+		pname->name[i++] = (char *)ft_memalloc(sizeof(char) * 9);
+	i = 0; 
+	temp_offset += 4;
+	while (i < pname->num_map_patches)
+	{
+		j = 0;
+		while (j < 8)
+			pname->name[i][j++] = data[temp_offset++];
+		i++;
 	}
 }

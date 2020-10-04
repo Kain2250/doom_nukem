@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:52:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/03 20:02:51 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/04 20:41:23 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,5 +237,37 @@ typedef struct		s_patch
 	int16_t			top_offset;
 	uint32_t		*columnoffset;
 }					t_patch;
+
+typedef struct		s_pnames
+{
+	uint32_t		num_map_patches;
+	char			**name;
+}					t_pnames;
+
+typedef struct		s_patches
+{
+	int16_t			origin_x;
+	int16_t			origin_y;
+	uint16_t		patch;
+	int16_t			stepdir;
+	int16_t			colormap;
+}					t_patches;
+
+typedef struct		s_map_texture
+{
+	char			name[9];
+	bool			masked;
+	int16_t			width;
+	int16_t			height;
+	uint16_t		patchcount;
+	t_patches		*patches;
+}					t_map_texture;
+
+typedef struct		s_texture_head
+{
+	uint32_t		num_texture;
+	uint32_t		*offsets;
+	t_map_texture	*mtexture;
+}					t_texture_head;
 
 #endif

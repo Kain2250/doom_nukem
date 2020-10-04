@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/03 20:45:22 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/04 20:35:48 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ int					main(int ac, char **av)
 		{
 			// fps_counter(&time);
 			// frame_tamer(doom, doom->screen);
-			wad_draw_linedefs(doom, doom->wad.vert);
-			// wad_draw_patch(doom, "VICTORY2");
+			// wad_draw_linedefs(doom, doom->wad.vert, "E1M1");
+			wad_draw_texture(doom, fill_point(50, 50), "BIGDOOR5");
+			// wad_draw_patch(doom, "STBAR");
 			event_list(doom);
 			SDL_UpdateWindowSurface(doom->sdl.window);
 			clear_surface(doom->sdl.surface, 0);

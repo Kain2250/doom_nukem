@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/03 19:54:23 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/04 20:34:02 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,10 +169,13 @@ typedef struct			s_wad
 	struct s_dir		*dir;
 	t_vertex			*vert;
 	t_linedef			*linedef;
+	t_texture_head		textures1;
+	t_texture_head		textures2;
+	t_pnames			pname;
 	uint32_t			color[14][256];
-	uint32_t			colormap[256][256];
+	uint32_t			colormap[34][256];
 	uint16_t			bright;
-	uint16_t			stat_hit;
+	uint16_t			baff;
 	uint8_t				*map;
 }						t_wad;
 
@@ -306,16 +309,19 @@ uint32_t				find_offset_lump(t_dir *dir, char *lable, char *name_map);
 uint32_t				find_size_lump(t_dir *dir, char *lable, char *name_map);
 uint32_t				wad_find_texture(t_dir *dir, char *name);
 
-void					wad_draw_patch(t_doom_nukem *doom, char *texture);
+void					wad_draw_patch(t_doom_nukem *doom, char *texture, t_point start);
 void					wad_draw_vertex(t_doom_nukem *doom, char *name_map);
-void					wad_draw_linedefs(t_doom_nukem *doom, t_vertex *vertex);
+void					wad_draw_linedefs(t_doom_nukem *doom, t_vertex *vertex, char *name_map);
+void					wad_draw_texture(t_doom_nukem *doom, t_point start, char *texture);
 
-t_patch					wad_get_patch_info(const uint8_t *data,	uint32_t offset);
+
 void					wad_get_linedefs(t_doom_nukem *doom, char *name_map);
 void					wad_get_vertex(t_doom_nukem *doom, char *name_map);
-t_patch					wad_get_patch_info(const uint8_t *data,	uint32_t offset);
+t_patch					wad_get_patch_info(const uint8_t *data,  uint32_t offset);
 void					wad_get_playpal(t_doom_nukem *doom);
 void					wad_get_colormap(t_doom_nukem *doom);
+void					wad_get_textures(const uint8_t *data, uint32_t offset, t_texture_head *texture);
+void					wad_get_pnames(const uint8_t *data, t_dir *dir ,t_pnames *pname);
 
 void					clear_wad_dir(t_dir *dir);
 
