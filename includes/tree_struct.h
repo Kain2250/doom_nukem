@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:52:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/04 20:41:23 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/05 16:33:52 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,7 +256,7 @@ typedef struct		s_patches
 typedef struct		s_map_texture
 {
 	char			name[9];
-	bool			masked;
+	uint32_t		masked;
 	int16_t			width;
 	int16_t			height;
 	uint16_t		patchcount;

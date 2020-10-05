@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:43:10 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/04 20:56:56 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/05 16:27:26 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,28 @@ void			wad_put(char *name, int offset, int size)
 void			wad_draw_patch(t_doom_nukem *doom, char *texture, t_point start)
 {
 	uint32_t	offset;
+	uint32_t	size;
 	uint32_t	temp_offset;
 	t_point		iter;
 	t_patch		patch;
 
 	offset = find_offset_lump(doom->wad.dir, texture, NULL);
+	size = find_size_lump(doom->wad.dir, texture, NULL);
 	patch = wad_get_patch_info(doom->wad.map, offset);
-	iter.y = start.y;
-	while (iter.y < patch.width + start.y)
+	iter.x = start.x;
+	while (iter.x < patch.width + start.x)
 	{
-		iter.x = start.x;
-		temp_offset = offset + patch.columnoffset[iter.y];
-		while (iter.x < patch.height + start.x)
+		iter.y = start.y;
+		temp_offset = offset + patch.columnoffset[iter.x];
+		while (iter.y < patch.height + start.y)
 		{
-			putpixel(doom->sdl.surface, iter.y, iter.x, doom->wad.color[doom->wad.baff][doom->wad.colormap[doom->wad.bright][doom->wad.map[temp_offset]]]);
-			iter.x++;
+			if (temp_offset > size + offset)
+				break ;
+			putpixel(doom->sdl.surface, iter.x, iter.y, doom->wad.color[doom->wad.baff][doom->wad.colormap[doom->wad.bright][doom->wad.map[temp_offset]]]);
+			iter.y++;
 			temp_offset += 1;
 		}
-		iter.y++;
+		iter.x++;
 	}
 }
 
@@ -62,8 +66,7 @@ void			wad_draw_texture(t_doom_nukem *doom, t_point start, char *texture)
 		put_error_sys("Error WAD - could not find texture");
 		exit (-1);
 	}
-	j = i - 1;
-	i = 0;
+	j = i; 
 	while (i < doom->wad.textures1.mtexture[j].patchcount)
 		wad_draw_patch(doom, doom->wad.pname.name[doom->wad.textures1.mtexture[j].patches[i++].patch], start);
 }
