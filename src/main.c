@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/04 20:35:48 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/09 18:57:05 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,23 @@ void				user_cursor(t_doom_nukem *doom)
 	SDL_SetCursor(curs);
 }
 
+void				wad_init_level(t_doom_nukem *doom, char *name_map)
+{
+	wad_get_things(doom, name_map);
+	wad_get_linedefs(doom, name_map);
+	wad_get_sidedefs(doom, name_map);
+	wad_get_vertex(doom, name_map);
+	wad_get_segs(doom, name_map);
+	wad_get_ssectors(doom, name_map);
+	wad_get_nodes(doom, name_map);
+	wad_get_sectors(doom, name_map);
+}
+
 int					main(int ac, char **av)
 {
 	t_doom_nukem	*doom;
 	t_timer			time;
+	char			*name_map = {"E1M1"};
 
 	if (ac == 1)
 	{
@@ -35,6 +48,7 @@ int					main(int ac, char **av)
 			return (0);
 		}
 		wad_reader(doom);
+		wad_init_level(doom, name_map);
 		SDL_GetWindowSize(doom->sdl.window, &doom->sdl.width, &doom->sdl.height);
 		user_cursor(doom);
 		SDL_SetWindowIcon(doom->sdl.window, doom->sdl.textures[texture_icon]);
@@ -45,9 +59,8 @@ int					main(int ac, char **av)
 		{
 			// fps_counter(&time);
 			// frame_tamer(doom, doom->screen);
-			// wad_draw_linedefs(doom, doom->wad.vert, "E1M1");
-			wad_draw_texture(doom, fill_point(50, 50), "BIGDOOR5");
-			// wad_draw_patch(doom, "STBAR");
+			wad_draw_linedefs(doom, doom->wad.vert, name_map);
+			// wad_draw_texture(doom, fill_point(500, 500), "BRNBIGC");
 			event_list(doom);
 			SDL_UpdateWindowSurface(doom->sdl.window);
 			clear_surface(doom->sdl.surface, 0);

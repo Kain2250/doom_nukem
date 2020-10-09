@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/04 20:34:02 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/09 18:50:58 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define DOOM_NUKEM_H
 
 # define NAME_WIN "Doom-Nukem (by Bdrinkin & Mcarc & Jthuy)"
-# define WIDTH_WIN 1500
-# define HEIGHT_WIN 1000
+# define WIDTH_WIN 2000
+# define HEIGHT_WIN 2000
 
 # include <math.h>
 # include <stdbool.h>
@@ -165,18 +165,24 @@ typedef struct			s_dir
 
 typedef struct			s_wad
 {
+	uint8_t				*map;
 	struct s_wad_head	head;
 	struct s_dir		*dir;
-	t_vertex			*vert;
-	t_linedef			*linedef;
-	t_texture_head		textures1;
-	t_texture_head		textures2;
-	t_pnames			pname;
 	uint32_t			color[14][256];
 	uint32_t			colormap[34][256];
+	t_things			*things;
+	t_linedef			*linedef;
+	t_sidedef			*sidedefs;
+	t_vertex			*vert;
+	t_seg				*segs;
+	t_ssectors			*ssectors;
+	t_node				*nodes;
+	t_sector			*sectors;
+	t_pnames			pname;
+	t_texture_head		textures1;
+	t_texture_head		textures2;
 	uint16_t			bright;
 	uint16_t			baff;
-	uint8_t				*map;
 }						t_wad;
 
 typedef struct			s_doom_nukem
@@ -303,13 +309,14 @@ uint32_t				bytes_to_int(const uint8_t *data, int offset);
 */
 void					read_head_data(const uint8_t *data, int offset, t_wad_head *head);
 void					read_dir_data(const uint8_t *data, int offset, t_dir *dir);
-void					read_linedef(const uint8_t *data, int offset, t_linedef *linedef);
-void					read_vertex(const uint8_t *data, int offset, t_vertex *vertex);
+void					wad_pars_name(const uint8_t *data, uint32_t offset, char name[9]);
+void					wad_pars_box(const uint8_t *data, uint32_t offset, int16_t box[4]);
+
 uint32_t				find_offset_lump(t_dir *dir, char *lable, char *name_map);
 uint32_t				find_size_lump(t_dir *dir, char *lable, char *name_map);
 uint32_t				wad_find_texture(t_dir *dir, char *name);
 
-void					wad_draw_patch(t_doom_nukem *doom, char *texture, t_point start);
+void					wad_draw_patch(t_doom_nukem *doom, char *texture, t_patches pth, t_point start);
 void					wad_draw_vertex(t_doom_nukem *doom, char *name_map);
 void					wad_draw_linedefs(t_doom_nukem *doom, t_vertex *vertex, char *name_map);
 void					wad_draw_texture(t_doom_nukem *doom, t_point start, char *texture);
@@ -322,6 +329,12 @@ void					wad_get_playpal(t_doom_nukem *doom);
 void					wad_get_colormap(t_doom_nukem *doom);
 void					wad_get_textures(const uint8_t *data, uint32_t offset, t_texture_head *texture);
 void					wad_get_pnames(const uint8_t *data, t_dir *dir ,t_pnames *pname);
+void					wad_get_nodes(t_doom_nukem *doom, char *map_name);
+void					wad_get_sidedefs(t_doom_nukem *doom, char *name_map);
+void					wad_get_segs(t_doom_nukem *doom, char *name_map);
+void					wad_get_ssectors(t_doom_nukem *doom, char *name_map);
+void					wad_get_sectors(t_doom_nukem *doom, char *name_map);
+void					wad_get_things(t_doom_nukem *doom, char *name_map);
 
 void					clear_wad_dir(t_dir *dir);
 

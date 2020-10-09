@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:39:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/04 19:34:21 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/09 18:51:13 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,35 @@ void			read_dir_data(const uint8_t *data, int offset, t_dir *dir)
 	dir->lump_name[8] = '\0';
 }
 
-void			read_linedef(const uint8_t *data, int offset, t_linedef *linedef)
+void			wad_pars_name(const uint8_t *data, uint32_t offset, char name[9])
 {
-	linedef->start = bytes_to_short(data, offset);
-	linedef->finish = bytes_to_short(data, offset + 2);
-	linedef->flags = bytes_to_short(data, offset + 4);
-	linedef->type = bytes_to_short(data, offset + 6);
-	linedef->mark_sector = bytes_to_short(data, offset + 8);
-	linedef->front = bytes_to_short(data, offset + 10);
-	linedef->rear = bytes_to_short(data, offset + 12);
+	int			i;
+	uint32_t	temp_offset;
+
+	i = 0;
+	temp_offset = offset;
+	while (i < 8)
+	{
+		name[i] = data[temp_offset];
+		temp_offset++;
+		i++;
+	}
 }
 
-void			read_vertex(const uint8_t *data, int offset, t_vertex *vertex)
+void			wad_pars_box(const uint8_t *data, uint32_t offset, int16_t box[4])
 {
-	vertex->x = bytes_to_short(data, offset);
-	vertex->y = bytes_to_short(data, offset + 2);
-}		
+	int			i;
+	uint32_t	temp_offset;
+
+	i = 0;
+	temp_offset = offset;
+	while (i < 4)
+	{
+		box[i] = bytes_to_short(data, temp_offset);
+		temp_offset += 2;
+		i++;
+	}
+}
 
 uint32_t		find_offset_lump(t_dir *dir, char *lable, char *name_map)
 {
@@ -124,11 +137,10 @@ bool			wad_reader(t_doom_nukem *doom)
 			temp = temp->next;
 		}
 	}
-	wad_get_vertex(doom, "E1M1");
-	wad_get_linedefs(doom, "E1M1");
 	wad_get_playpal(doom);
 	wad_get_colormap(doom);
 	wad_get_textures(doom->wad.map, find_offset_lump(doom->wad.dir, "TEXTURE1", NULL), &doom->wad.textures1);
+	wad_get_textures(doom->wad.map, find_offset_lump(doom->wad.dir, "TEXTURE2", NULL), &doom->wad.textures2);
 	wad_get_pnames(doom->wad.map, doom->wad.dir, &doom->wad.pname);
 	return (true);
 }

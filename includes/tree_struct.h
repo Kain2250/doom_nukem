@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:52:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/05 16:33:52 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/09 17:57:36 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,9 @@ typedef struct		s_sidedef
 {
 	int16_t			x;
 	int16_t			y;
-	int8_t			name_of_up[8];
-	int8_t			name_of_low[8];
-	int8_t			name_of_mid[8];
+	char			name_of_up[9];
+	char			name_of_low[9];
+	char			name_of_mid[9];
 	int16_t			sector;
 }					t_sidedef;
 /*
@@ -190,8 +190,8 @@ typedef struct		s_sector
 {
 	int16_t			hight_flor;
 	int16_t			hight_cell;
-	int8_t			name_tex_flor[8];
-	int8_t			name_of_cell[8];
+	char			name_of_flor[9];
+	char			name_of_cell[9];
 	int16_t			light;
 	int16_t			type;
 	int16_t			tag;
