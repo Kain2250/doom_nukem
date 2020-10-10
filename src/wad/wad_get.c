@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:49:40 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/09 20:44:07 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/10 21:05:50 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void			wad_get_vertex(t_doom_nukem *doom, char *name_map)
 	uint32_t 	offset;
 	uint32_t	size;
 	uint32_t	temp_offset;
-	int			i;
+	uint32_t	i;
 
 	i = 0;
 	offset = find_offset_lump(doom->wad.dir, "VERTEXES", name_map);
@@ -123,6 +123,13 @@ void			wad_get_vertex(t_doom_nukem *doom, char *name_map)
 		doom->wad.vert[i].x = bytes_to_short(doom->wad.map, offset);
 		doom->wad.vert[i].y = bytes_to_short(doom->wad.map, offset + 2);
 		offset += 4;
+		i++;
+	}
+	i = 0;
+	while (i < size / 4)
+	{
+		doom->buf1 = doom->wad.vert[i].x > doom->buf1 ? doom->buf1 : doom->wad.vert[i].x;
+		doom->buf2 = doom->wad.vert[i].y < doom->buf2 ? doom->buf2 : doom->wad.vert[i].y;
 		i++;
 	}
 }
@@ -213,23 +220,24 @@ void			wad_get_nodes(t_doom_nukem *doom, char *map_name)
 		doom->wad.nodes[i].y_sliser2 = bytes_to_short(doom->wad.map, offset + 6);
 		wad_pars_box(doom->wad.map, offset + 8, doom->wad.nodes[i].right_box);
 		wad_pars_box(doom->wad.map, offset + 16, doom->wad.nodes[i].left_box);
+		print_bit(&doom->wad.map[offset + 24]);
 		doom->wad.nodes[i].right_baby = bytes_to_ishort(doom->wad.map, offset + 24);
 		doom->wad.nodes[i].left_baby = bytes_to_ishort(doom->wad.map, offset + 26);
 		offset += 28;
 		i++;
 	}
-	i = 0;
-	while (i < size / 28)
-	{
-		printf("x_line %d,\ty_line %d,\t", doom->wad.nodes[i].x_sliser, doom->wad.nodes[i].y_sliser);
-		printf("x_line2 %d,\ty_line2 %d,\t", doom->wad.nodes[i].x_sliser2, doom->wad.nodes[i].y_sliser2);
-		printf("rigth_box_y_up %d,\trigth_box_y_dwn %d,\t", doom->wad.nodes[i].right_box[0], doom->wad.nodes[i].right_box[1]);
-		printf("rigth_box_x_left %d,\trigth_box_x_right %d,\t", doom->wad.nodes[i].right_box[2], doom->wad.nodes[i].right_box[3]);
-		printf("left_box_y_up %d,\tleft_box_y_dwn %d,\t", doom->wad.nodes[i].left_box[0], doom->wad.nodes[i].left_box[1]);
-		printf("left_box_x_left %d,\tleft_box_x_right %d,\t", doom->wad.nodes[i].left_box[2], doom->wad.nodes[i].left_box[3]);
-		printf("right_ch %d, left_ch %d\n", doom->wad.nodes[i].right_baby, doom->wad.nodes[i].left_baby);
-		i++;
-	}
+	// i = 0;
+	// while (i < size / 28)
+	// {
+	// 	printf("x_line %d,\ty_line %d,\t", doom->wad.nodes[i].x_sliser, doom->wad.nodes[i].y_sliser);
+	// 	printf("x_line2 %d,\ty_line2 %d,\t", doom->wad.nodes[i].x_sliser2, doom->wad.nodes[i].y_sliser2);
+	// 	printf("rigth_box_y_up %d,\trigth_box_y_dwn %d,\t", doom->wad.nodes[i].right_box[0], doom->wad.nodes[i].right_box[1]);
+	// 	printf("rigth_box_x_left %d,\trigth_box_x_right %d,\t", doom->wad.nodes[i].right_box[2], doom->wad.nodes[i].right_box[3]);
+	// 	printf("left_box_y_up %d,\tleft_box_y_dwn %d,\t", doom->wad.nodes[i].left_box[0], doom->wad.nodes[i].left_box[1]);
+	// 	printf("left_box_x_left %d,\tleft_box_x_right %d,\t", doom->wad.nodes[i].left_box[2], doom->wad.nodes[i].left_box[3]);
+	// 	printf("right_ch %d, left_ch %d\n", doom->wad.nodes[i].right_baby, doom->wad.nodes[i].left_baby);
+	// 	i++;
+	// }
 }
 
 void			wad_get_sectors(t_doom_nukem *doom, char *name_map)

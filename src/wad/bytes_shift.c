@@ -6,14 +6,36 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:38:16 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/09 20:43:36 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/10 15:30:20 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
+void		print_bit(void *data)
+{
+	uint16_t	size;
+	uint16_t	i;
+	uint32_t	temp;
+
+	size = sizeof(data);
+	temp = (int)data;
+	i = 0;
+	while (i < size)
+	{
+		if (i % 4 == 0)
+			write(1, " ", 1);
+		if (temp & (1 << i))
+			write(1, "1", 1);
+		else
+			write(1, "0", 1);
+		i++;
+	}
+}
+
 int16_t		bytes_to_ishort(const uint8_t *data, int offset)
 {
+	// bit &= ~(1 << 7);
 	return ((data[offset + 1] << 8) | data[offset]);
 }
 

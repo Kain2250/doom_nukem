@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/09 18:50:58 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/10 20:39:28 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,8 @@ typedef struct			s_doom_nukem
 	struct s_frames		*screen;
 	struct s_player		player;
 	t_wad				wad;
+	int					buf1;
+	int					buf2;
 	bool				quit;
 }						t_doom_nukem;
 /*
@@ -304,6 +306,7 @@ bool					wad_loader(t_doom_nukem *doom, char *path);
 bool					wad_reader(t_doom_nukem *doom);
 uint16_t				bytes_to_short(const uint8_t *data, int offset);
 uint32_t				bytes_to_int(const uint8_t *data, int offset);
+int16_t					bytes_to_ishort(const uint8_t *data, int offset);
 /*
 ** Возвращает offset на lump с данными lable относящихся к карте name_map
 */
@@ -337,6 +340,7 @@ void					wad_get_sectors(t_doom_nukem *doom, char *name_map);
 void					wad_get_things(t_doom_nukem *doom, char *name_map);
 
 void					clear_wad_dir(t_dir *dir);
+void					print_bit(void *data);
 
 
 #endif

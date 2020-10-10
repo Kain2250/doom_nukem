@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:43:10 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/07 19:42:18 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/10 21:20:20 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,10 +182,10 @@ void			wad_draw_linedefs(t_doom_nukem *doom,
 		if (doom->wad.linedef[i].type == 1)
 			color = 0xff0000;
 		draw_line(doom->sdl.surface,
-			fill_point((vertex[doom->wad.linedef[i].start].x - 5000) / 10,
-					abs(vertex[doom->wad.linedef[i].start].y - 5000) / 10),
-			fill_point((vertex[doom->wad.linedef[i].finish].x - 5000) / 10,
-					abs(vertex[doom->wad.linedef[i].finish].y - 5000) / 10), color);
+			fill_point((vertex[doom->wad.linedef[i].start].x - doom->buf1) / 10,
+					abs(vertex[doom->wad.linedef[i].start].y - doom->buf2) / 10),
+			fill_point((vertex[doom->wad.linedef[i].finish].x - doom->buf1) / 10,
+					abs(vertex[doom->wad.linedef[i].finish].y - doom->buf2) / 10), color);
 		i++;
 	}
 }
