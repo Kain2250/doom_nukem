@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:49:40 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/10 21:05:50 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/18 16:30:50 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ void			wad_get_nodes(t_doom_nukem *doom, char *map_name)
 		doom->wad.nodes[i].y_sliser2 = bytes_to_short(doom->wad.map, offset + 6);
 		wad_pars_box(doom->wad.map, offset + 8, doom->wad.nodes[i].right_box);
 		wad_pars_box(doom->wad.map, offset + 16, doom->wad.nodes[i].left_box);
-		print_bit(&doom->wad.map[offset + 24]);
+		// print_bit(&doom->wad.map[offset + 24]);
 		doom->wad.nodes[i].right_baby = bytes_to_ishort(doom->wad.map, offset + 24);
 		doom->wad.nodes[i].left_baby = bytes_to_ishort(doom->wad.map, offset + 26);
 		offset += 28;

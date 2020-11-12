@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/10 20:39:28 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/10/18 16:00:33 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define NAME_WIN "Doom-Nukem (by Bdrinkin & Mcarc & Jthuy)"
 # define WIDTH_WIN 2000
-# define HEIGHT_WIN 2000
+# define HEIGHT_WIN 1200
 
 # include <math.h>
 # include <stdbool.h>

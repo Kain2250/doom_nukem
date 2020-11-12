@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:39:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/09 18:51:13 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/12 17:37:46 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,10 @@ bool			wad_reader(t_doom_nukem *doom)
 	}
 	wad_get_playpal(doom);
 	wad_get_colormap(doom);
-	wad_get_textures(doom->wad.map, find_offset_lump(doom->wad.dir, "TEXTURE1", NULL), &doom->wad.textures1);
-	wad_get_textures(doom->wad.map, find_offset_lump(doom->wad.dir, "TEXTURE2", NULL), &doom->wad.textures2);
+	wad_get_textures(doom->wad.map, find_offset_lump(doom->wad.dir,
+		"TEXTURE1", NULL), &doom->wad.textures1);
+	wad_get_textures(doom->wad.map, find_offset_lump(doom->wad.dir,
+		"TEXTURE2", NULL), &doom->wad.textures2);
 	wad_get_pnames(doom->wad.map, doom->wad.dir, &doom->wad.pname);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/09 18:57:05 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/12 21:17:17 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ int					main(int ac, char **av)
 {
 	t_doom_nukem	*doom;
 	t_timer			time;
-	char			*name_map = {"E1M1"};
+	char			*name_map = {"E1M2"};
 
-	if (ac == 1)
+	if (ac == 2 || ac == 3)
 	{
 		doom = ft_memalloc(sizeof(t_doom_nukem));
 		init_lib_sdl(doom);
-		if (load_res(doom) == false || wad_loader(doom, "map.wad") == false)
+		if (load_res(doom) == false || wad_loader(doom, av[1]) == false)
 		{
 			doom_exit(doom);
 			return (0);
@@ -57,10 +57,13 @@ int					main(int ac, char **av)
 		timer_start(&time);
 		while (doom->quit == false)
 		{
+			int i = 150;
 			// fps_counter(&time);
 			// frame_tamer(doom, doom->screen);
 			wad_draw_linedefs(doom, doom->wad.vert, name_map);
-			// wad_draw_texture(doom, fill_point(500, 500), "BRNBIGC");
+			wad_draw_texture(doom, fill_point(500, 500), av[2]);
+			wad_draw_texture(doom, fill_point(500, 500 + i), av[2]);
+			wad_draw_texture(doom, fill_point(500, 500 + i + i), av[2]);
 			event_list(doom);
 			SDL_UpdateWindowSurface(doom->sdl.window);
 			clear_surface(doom->sdl.surface, 0);
