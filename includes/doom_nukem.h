@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/18 16:00:33 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/15 17:59:22 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,7 @@ typedef struct			s_wad
 	t_texture_head		textures2;
 	uint16_t			bright;
 	uint16_t			baff;
+	uint16_t			temp_step;
 }						t_wad;
 
 typedef struct			s_doom_nukem

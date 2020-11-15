@@ -6,7 +6,7 @@
 #    By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/10/03 19:52:15 by bdrinkin         ###   ########.fr        #
+#    Updated: 2020/11/13 17:58:16 by bdrinkin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,10 @@ SRC_LIST = main.c \
 
 
 SRC = $(addprefix $(SRC_DIRECTORY), $(SRC_LIST))
+
+OBJECTS_DIRECTORY = objects/
+OBJECTS_LIST = $(patsubst %.c, %.o, $(SOURCES_LIST))
+OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(OBJECTS_LIST))
 
 # Определение цвета вывода:
 GREEN = \033[0;32;1m

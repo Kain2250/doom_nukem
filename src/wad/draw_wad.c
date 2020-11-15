@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:43:10 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/12 20:13:59 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/15 20:54:12 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,39 @@ void			wad_draw_patch(t_doom_nukem *doom, char *texture, t_patches pth, t_point 
 
 uint32_t		rec_column(t_doom_nukem *doom, uint32_t offset, int x, int *y)
 {
+	uint16_t			iter;
 	uint16_t			col;
+	int					y_step;
+	int					y_miss;
 
-	col = doom->wad.map[offset];
-	offset += 2;
-	while (col > 0) {
+	(*y) += doom->wad.map[offset];
+	col = doom->wad.map[offset + 1];
+	y_step = 0;
+	y_miss = 0;
+	iter = 0;
+	offset += 3;
+	while (doom->wad.map[offset + 1] != 255)
+	{
 		putpixel(doom->sdl.surface, x, *y,
 			doom->wad.color[doom->wad.baff]
 			[doom->wad.colormap[doom->wad.bright]
 			[doom->wad.map[offset]]]);
-		col--;
-		offset++;
-		(*y)++;
+		++iter;
+		++offset;
+		++y_miss;
+		if (iter == col && doom->wad.map[offset + 1] != 255)
+		{
+			(*y) += doom->wad.map[offset + 1] - col + 1;
+			col = doom->wad.map[offset + 2];
+			y_step += col;
+			offset += 4;
+			iter = 0;
+		}
+		else
+			(*y)++;
 	}
-	return (offset - 1);
+	(*y) += doom->wad.temp_step - col;
+	return (offset + 2);
 }
 
 void			wad_compose_texture(t_doom_nukem *doom,
@@ -82,7 +101,7 @@ void			wad_compose_texture(t_doom_nukem *doom,
 	uint32_t	temp_offset;
 	uint32_t	i;
 	t_patch		patch;
-	uint32_t	x_temp;
+	uint16_t	x_temp, y_temp;
 
 	i = 0;
 	while (i < pth.patchcount)
@@ -90,18 +109,18 @@ void			wad_compose_texture(t_doom_nukem *doom,
 		offset = find_offset_lump(doom->wad.dir,
 			doom->wad.pname.name[pth.patches[i].patch], NULL);
 		patch = wad_get_patch_info(doom->wad.map, offset);
-		x = (pth.patches[i].origin_x <= 0) ? start.x :
-			start.x + pth.patches[i].origin_x;
+		doom->wad.temp_step = patch.height;
+		x = (pth.patches[i].origin_x <= 0) ? start.x
+			: start.x + pth.patches[i].origin_x;
 		x_temp = x;
-		while (x < patch.width + start.x + pth.patches[i].origin_x &&
-			x < pth.width + start.x)
+		while (x < patch.width + x_temp && x < pth.width + start.x)
 		{
 			temp_offset = offset + patch.columnoffset[x - x_temp];
 			y = (pth.patches[i].origin_y <= 0) ? start.y
 				: start.y + pth.patches[i].origin_y;
-			while (y < patch.height + start.y + pth.patches[i].origin_y &&
-				y < pth.height + start.y)
-				temp_offset = rec_column(doom, temp_offset + 1, x, &y);
+			y_temp = y;
+			while (y < patch.height + y_temp && y < pth.height + start.y)
+				temp_offset = rec_column(doom, temp_offset, x, &y);
 			x++;
 		}
 		i++;

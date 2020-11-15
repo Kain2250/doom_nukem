@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/12 21:17:17 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/15 17:43:52 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ int					main(int ac, char **av)
 		timer_start(&time);
 		while (doom->quit == false)
 		{
-			int i = 150;
+			// int i = 150;
 			// fps_counter(&time);
 			// frame_tamer(doom, doom->screen);
 			wad_draw_linedefs(doom, doom->wad.vert, name_map);
 			wad_draw_texture(doom, fill_point(500, 500), av[2]);
-			wad_draw_texture(doom, fill_point(500, 500 + i), av[2]);
-			wad_draw_texture(doom, fill_point(500, 500 + i + i), av[2]);
+			// wad_draw_texture(doom, fill_point(500, 500 + i), av[2]);
+			// wad_draw_texture(doom, fill_point(500, 500 + i + i), av[2]);
 			event_list(doom);
 			SDL_UpdateWindowSurface(doom->sdl.window);
 			clear_surface(doom->sdl.surface, 0);
