@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tree_struct.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kain2250 <kain2250@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 13:52:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/09 17:57:36 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/13 00:39:21 by kain2250         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TREE_STRUCT_H
 # define TREE_STRUCT_H
-
-# include "SDL.h"
-# include "SDL_image.h"
+# include <stdint.h>
 
 /*
 ** Флаги стен - Преграждает путь игрокам и монстрам

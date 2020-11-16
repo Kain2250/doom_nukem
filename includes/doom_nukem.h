@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_nukem.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kain2250 <kain2250@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/15 17:59:22 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/16 19:53:44 by kain2250         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,19 @@
 # include "define_resource.h"
 # include "tree_struct.h"
 # include "libft.h"
+# ifdef __APPLE__
 # include "SDL.h"
 # include "SDL_image.h"
 # include "SDL_mixer.h"
 # include "SDL_ttf.h"
 # include "SDL_net.h"
+# elif __linux__
+# include "SDL2/SDL.h"
+# include "SDL2/SDL_image.h"
+# include "SDL2/SDL_mixer.h"
+# include "SDL2/SDL_ttf.h"
+# include "SDL2/SDL_net.h"
+# endif
 
 typedef struct		s_point
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_wad.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kain2250 <kain2250@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:43:10 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/15 20:54:12 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/16 20:39:16 by kain2250         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void			wad_draw_patch(t_doom_nukem *doom, char *texture, t_patches pth, t_point 
 	uint32_t	temp_offset;
 	t_point		iter;
 	t_patch		patch;
+	
 
 	offset = find_offset_lump(doom->wad.dir, texture, NULL);
 	size = find_size_lump(doom->wad.dir, texture, NULL);
@@ -63,15 +64,14 @@ uint32_t		rec_column(t_doom_nukem *doom, uint32_t offset, int x, int *y)
 	int					y_step;
 	int					y_miss;
 
-	(*y) += doom->wad.map[offset];
-	col = doom->wad.map[offset + 1];
-	y_step = 0;
+	y_step = doom->wad.map[offset];
 	y_miss = 0;
+	col = doom->wad.map[offset + 1];
 	iter = 0;
 	offset += 3;
 	while (doom->wad.map[offset + 1] != 255)
 	{
-		putpixel(doom->sdl.surface, x, *y,
+		putpixel(doom->sdl.surface, x, *y + y_step,
 			doom->wad.color[doom->wad.baff]
 			[doom->wad.colormap[doom->wad.bright]
 			[doom->wad.map[offset]]]);
@@ -80,16 +80,15 @@ uint32_t		rec_column(t_doom_nukem *doom, uint32_t offset, int x, int *y)
 		++y_miss;
 		if (iter == col && doom->wad.map[offset + 1] != 255)
 		{
-			(*y) += doom->wad.map[offset + 1] - col + 1;
 			col = doom->wad.map[offset + 2];
-			y_step += col;
+			y_step = doom->wad.map[offset + 1];
 			offset += 4;
 			iter = 0;
 		}
 		else
-			(*y)++;
+			y_step++;
 	}
-	(*y) += doom->wad.temp_step - col;
+	(*y) += doom->wad.temp_step;
 	return (offset + 2);
 }
 

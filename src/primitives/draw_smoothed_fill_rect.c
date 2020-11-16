@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_smoothed_fill_rect.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kain2250 <kain2250@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 16:10:26 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/09 14:49:14 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/16 19:13:29 by kain2250         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void		draw_smooth_fill_rect(SDL_Surface *dst, t_rect *rect, Uint32 color)
 
 	rounding = (rect->w >= rect->h) ?
 		rect->w / 10 : rect->h / 10;
-	rounding = (rounding > rect->w) ? rounding = rect->w / 2 : rounding;
-	rounding = (rounding > rect->h) ? rounding = rect->h / 2 : rounding;
+	rounding = (rounding > rect->w) ? rect->w / 2 : rounding;
+	rounding = (rounding > rect->h) ? rect->h / 2 : rounding;
 	center[0].x = rect->x + rounding;
 	center[0].y = rect->y + rounding;
 	center[1].x = rect->x + rect->w - rounding;
