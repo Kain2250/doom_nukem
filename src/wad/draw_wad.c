@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_wad.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kain2250 <kain2250@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:43:10 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/16 20:39:16 by kain2250         ###   ########.fr       */
+/*   Updated: 2020/11/17 21:35:20 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,40 +24,41 @@ void			wad_put(char *name, int offset, int size)
 	ft_putchar('\n');
 }
 
-void			wad_draw_patch(t_doom_nukem *doom, char *texture, t_patches pth, t_point start)
-{
-	uint32_t	offset;
-	uint32_t	size;
-	uint32_t	temp_offset;
-	t_point		iter;
-	t_patch		patch;
+
+// void			wad_put_patch(t_doom *doom, char *texture, t_patches pth, t_point start)
+// {
+// 	uint32_t	offset;
+// 	uint32_t	size;
+// 	uint32_t	temp_offset;
+// 	t_point		iter;
+// 	t_patch		patch;
 	
 
-	offset = find_offset_lump(doom->wad.dir, texture, NULL);
-	size = find_size_lump(doom->wad.dir, texture, NULL);
-	patch = wad_get_patch_info(doom->wad.map, offset);
+// 	offset = find_offset_lump(doom->wad.dir, texture, NULL);
+// 	size = find_size_lump(doom->wad.dir, texture, NULL);
+// 	patch = wad_get_patch_info(doom->wad.map, offset);
 
-	iter.x = start.x + pth.origin_x;
-	while (iter.x < patch.width + start.x)
-	{
-		iter.y = start.y + pth.origin_y;
-		temp_offset = offset + patch.columnoffset[iter.x - (start.x + pth.origin_x)];
-		while (iter.y < patch.height + start.y)
-		{
-			if (temp_offset > size + offset)
-				break ;
-			putpixel(doom->sdl.surface, iter.x, iter.y,
-				doom->wad.color[doom->wad.baff]
-				[doom->wad.colormap[doom->wad.bright]
-				[doom->wad.map[temp_offset]]]);
-			iter.y++;
-			temp_offset += 1;
-		}
-		iter.x++;
-	}
-}
+// 	iter.x = start.x + pth.origin_x;
+// 	while (iter.x < patch.width + start.x)
+// 	{
+// 		iter.y = start.y + pth.origin_y;
+// 		temp_offset = offset + patch.columnoffset[iter.x - (start.x + pth.origin_x)];
+// 		while (iter.y < patch.height + start.y)
+// 		{
+// 			if (temp_offset > size + offset)
+// 				break ;
+// 			putpixel(doom->sdl.surface, iter.x, iter.y,
+// 				doom->wad.color[doom->wad.baff]
+// 				[doom->wad.colormap[doom->wad.bright]
+// 				[doom->wad.map[temp_offset]]]);
+// 			iter.y++;
+// 			temp_offset += 1;
+// 		}
+// 		iter.x++;
+// 	}
+// }
 
-uint32_t		rec_column(t_doom_nukem *doom, uint32_t offset, int x, int *y)
+uint32_t		rec_column(t_doom *doom, uint32_t offset, int x, int *y)
 {
 	uint16_t			iter;
 	uint16_t			col;
@@ -69,7 +70,7 @@ uint32_t		rec_column(t_doom_nukem *doom, uint32_t offset, int x, int *y)
 	col = doom->wad.map[offset + 1];
 	iter = 0;
 	offset += 3;
-	while (doom->wad.map[offset + 1] != 255)
+	while (y_miss - 1 < doom->wad.temp_step && doom->wad.map[offset + 1] != 255)
 	{
 		putpixel(doom->sdl.surface, x, *y + y_step,
 			doom->wad.color[doom->wad.baff]
@@ -92,8 +93,27 @@ uint32_t		rec_column(t_doom_nukem *doom, uint32_t offset, int x, int *y)
 	return (offset + 2);
 }
 
-void			wad_compose_texture(t_doom_nukem *doom,
-					t_map_texture pth, t_point start)
+void			wad_draw_patch(t_doom *doom, t_point start, char *pnames)
+{
+	uint32_t	offset;
+	uint32_t	temp_offset;
+	t_patch		patch;
+	int			i;
+	int			y;
+
+	i = 0;
+	offset = find_offset_lump(doom->wad.dir, pnames, NULL);
+	patch = wad_get_patch_info(doom->wad.map, offset);
+	doom->wad.temp_step = patch.height;
+	while (i < patch.width)
+	{
+		y = start.y;
+		temp_offset = rec_column(doom, offset + patch.columnoffset[i++], start.x, &y);
+		start.x++;
+	}
+}
+
+void			wad_compose_texture(t_doom *doom, t_map_texture pth, t_point start)
 {
 	int32_t		x, y;
 	uint32_t	offset;
@@ -108,7 +128,7 @@ void			wad_compose_texture(t_doom_nukem *doom,
 		offset = find_offset_lump(doom->wad.dir,
 			doom->wad.pname.name[pth.patches[i].patch], NULL);
 		patch = wad_get_patch_info(doom->wad.map, offset);
-		doom->wad.temp_step = patch.height;
+		doom->wad.temp_step = pth.height;
 		x = (pth.patches[i].origin_x <= 0) ? start.x
 			: start.x + pth.patches[i].origin_x;
 		x_temp = x;
@@ -126,7 +146,7 @@ void			wad_compose_texture(t_doom_nukem *doom,
 	}
 }
 
-void			wad_draw_texture(t_doom_nukem *doom,
+void			wad_draw_texture(t_doom *doom,
 					t_point start, char *texture)
 {
 	uint32_t	i;
@@ -151,7 +171,7 @@ void			wad_draw_texture(t_doom_nukem *doom,
 		wad_compose_texture(doom, doom->wad.textures1.mtexture[i], start);	
 }
 
-void			wad_draw_linedefs(t_doom_nukem *doom,
+void			wad_draw_linedefs(t_doom *doom,
 					t_vertex *vertex, char *name_map)
 {
 	uint16_t	i;

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:39:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/12 17:37:46 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/17 21:01:24 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ uint32_t		wad_find_texture(t_dir *dir, char *name)
 	return (temp->lump_offset);
 }
 
-bool			wad_reader(t_doom_nukem *doom)
+bool			wad_reader(t_doom *doom)
 {
 	t_dir		*temp;
 	size_t		i;

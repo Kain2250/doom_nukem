@@ -6,13 +6,13 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:49:40 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/18 16:30:50 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/17 21:01:24 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void			wad_get_things(t_doom_nukem *doom, char *name_map)
+void			wad_get_things(t_doom *doom, char *name_map)
 {
 	uint32_t 	offset;
 	uint32_t	size;
@@ -47,7 +47,7 @@ void			wad_get_things(t_doom_nukem *doom, char *name_map)
 	// }
 }
 
-void			wad_get_linedefs(t_doom_nukem *doom, char *name_map)
+void			wad_get_linedefs(t_doom *doom, char *name_map)
 {
 	uint32_t 	offset;
 	uint32_t	size;
@@ -73,7 +73,7 @@ void			wad_get_linedefs(t_doom_nukem *doom, char *name_map)
 	}
 }
 
-void			wad_get_sidedefs(t_doom_nukem *doom, char *name_map)
+void			wad_get_sidedefs(t_doom *doom, char *name_map)
 {
 	uint32_t	offset;
 	uint32_t	temp_offset;
@@ -106,7 +106,7 @@ void			wad_get_sidedefs(t_doom_nukem *doom, char *name_map)
 	// }
 }
 
-void			wad_get_vertex(t_doom_nukem *doom, char *name_map)
+void			wad_get_vertex(t_doom *doom, char *name_map)
 {
 	uint32_t 	offset;
 	uint32_t	size;
@@ -134,7 +134,7 @@ void			wad_get_vertex(t_doom_nukem *doom, char *name_map)
 	}
 }
 
-void			wad_get_segs(t_doom_nukem *doom, char *name_map)
+void			wad_get_segs(t_doom *doom, char *name_map)
 {
 	uint32_t	offset;
 	uint32_t	temp_offset;
@@ -171,7 +171,7 @@ void			wad_get_segs(t_doom_nukem *doom, char *name_map)
 	// }
 }
 
-void			wad_get_ssectors(t_doom_nukem *doom, char *name_map)
+void			wad_get_ssectors(t_doom *doom, char *name_map)
 {
 	uint32_t	offset;
 	uint32_t	temp_offset;
@@ -200,7 +200,7 @@ void			wad_get_ssectors(t_doom_nukem *doom, char *name_map)
 	// }
 }
 
-void			wad_get_nodes(t_doom_nukem *doom, char *map_name)
+void			wad_get_nodes(t_doom *doom, char *map_name)
 {
 	uint32_t	offset;
 	uint32_t	temp_offset;
@@ -240,7 +240,7 @@ void			wad_get_nodes(t_doom_nukem *doom, char *map_name)
 	// }
 }
 
-void			wad_get_sectors(t_doom_nukem *doom, char *name_map)
+void			wad_get_sectors(t_doom *doom, char *name_map)
 {
 	uint32_t	offset;
 	uint32_t	temp_offset;
@@ -302,7 +302,7 @@ t_patch			wad_get_patch_info(const uint8_t *data,	uint32_t offset)
 	return (patch);
 }
 
-void			wad_get_playpal(t_doom_nukem *doom)
+void			wad_get_playpal(t_doom *doom)
 {
 	uint32_t	offset;
 	uint32_t	size;
@@ -328,7 +328,7 @@ void			wad_get_playpal(t_doom_nukem *doom)
 	}
 }
 
-void			wad_get_colormap(t_doom_nukem *doom)
+void			wad_get_colormap(t_doom *doom)
 {
 	uint32_t	offset;
 	uint32_t	size;

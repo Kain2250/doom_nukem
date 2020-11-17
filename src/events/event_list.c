@@ -6,13 +6,13 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 09:15:51 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/17 20:44:53 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/17 21:01:24 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-bool			event_exit(t_doom_nukem *doom)
+bool			event_exit(t_doom *doom)
 {
 	if ((doom->sdl.event.type == SDL_QUIT ||
 		doom->sdl.state[SDL_SCANCODE_ESCAPE]) && doom->frame.quit == true)
@@ -102,7 +102,7 @@ void			close_new_win(t_new_win *frame)
 	frame->quit = true;
 }
 
-void			keybord_events(t_doom_nukem *doom)
+void			keybord_events(t_doom *doom)
 {
 	if (doom->sdl.state[SDL_SCANCODE_N] && doom->frame.win == NULL)
 		open_new_win(&doom->frame, doom->sdl.fonts[font_button]);
@@ -123,7 +123,7 @@ void			keybord_events(t_doom_nukem *doom)
 	}
 }
 
-void			event_list(t_doom_nukem *doom)
+void			event_list(t_doom *doom)
 {
 	SDL_PollEvent(&doom->sdl.event);
 	// SDL_PumpEvents();

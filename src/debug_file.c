@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:33:00 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/10 15:31:55 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/17 21:01:19 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	clear_wad_struct(t_wad wad)
 	free(wad.sectors);
 }
 
-void	doom_exit(t_doom_nukem *doom)
+void	doom_exit(t_doom *doom)
 {
 	int	i;
 

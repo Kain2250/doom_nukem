@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom_nukem.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kain2250 <kain2250@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/16 19:53:44 by kain2250         ###   ########.fr       */
+/*   Updated: 2020/11/17 21:23:14 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ typedef struct			s_wad
 	uint16_t			temp_step;
 }						t_wad;
 
-typedef struct			s_doom_nukem
+typedef struct			s_doom
 {
 	struct s_sdl_sys	sdl;
 	struct s_mouse		mouse;
@@ -205,7 +205,7 @@ typedef struct			s_doom_nukem
 	int					buf1;
 	int					buf2;
 	bool				quit;
-}						t_doom_nukem;
+}						t_doom;
 /*
 ** main.c
 */
@@ -213,17 +213,17 @@ int						main(int ac, char **av);
 /*
 ** debug_file.c
 */
-void					doom_exit(t_doom_nukem *doom);
+void					doom_exit(t_doom *doom);
 int						put_error_sys(char *error);
 bool					put_error_sdl(char *error, const char *error_sdl);
 /*
 ** event_list.c
 */
-void					event_list(t_doom_nukem *doom);
+void					event_list(t_doom *doom);
 /*
 ** init_sdl.c
 */
-bool					init_lib_sdl(t_doom_nukem *doom);
+bool					init_lib_sdl(t_doom *doom);
 /*
 ** struct_timer.c
 */
@@ -242,7 +242,7 @@ void					fps_counter(t_timer *time);
 /*
 ** load_res/load_res.c
 */
-bool					load_res(t_doom_nukem *doom);
+bool					load_res(t_doom *doom);
 SDL_Surface				*load_surface(char *path, SDL_Surface *screen_surface);
 /*
 ** tools_for_editor/tools.c
@@ -271,8 +271,8 @@ void					free_editor(t_frames *frame_table);
 t_frames				*new_frame(t_rect rect, Uint32 color,
 							struct s_block *blocks);
 t_block					*new_block(int type, t_rect rect, SDL_Surface *pic);
-void					frame_tamer(t_doom_nukem *doom, t_frames *frame_table);
-t_frames				*init_editor(t_doom_nukem *doom);
+void					frame_tamer(t_doom *doom, t_frames *frame_table);
+t_frames				*init_editor(t_doom *doom);
 void					scale_rect_texture(SDL_Surface *dst, t_mouse mouse, SDL_Surface *src);
 
 void					if_rect(SDL_Surface *src, t_rect *rsrc,
@@ -302,7 +302,7 @@ float					interpolate(t_limit_f x, t_limit_f c);
 void					fill_limit(t_limit *data, int min, int cur, int max);
 void					fill_limit_f(t_limit_f *data, float min, float cur, float max);
 
-void					mouse_events(t_doom_nukem *doom);
+void					mouse_events(t_doom *doom);
 bool					is_button_area(t_rect *area, t_mouse mouse);
 void					is_mouse_presed(t_mouse *mouse);
 bool					is_slidebar_area(t_rect *area, t_mouse mouse);
@@ -311,8 +311,8 @@ int						which_button(bool *mouse);
 
 t_point					fill_point(int x, int y);
 
-bool					wad_loader(t_doom_nukem *doom, char *path);
-bool					wad_reader(t_doom_nukem *doom);
+bool					wad_loader(t_doom *doom, char *path);
+bool					wad_reader(t_doom *doom);
 uint16_t				bytes_to_short(const uint8_t *data, int offset);
 uint32_t				bytes_to_int(const uint8_t *data, int offset);
 int16_t					bytes_to_ishort(const uint8_t *data, int offset);
@@ -328,25 +328,26 @@ uint32_t				find_offset_lump(t_dir *dir, char *lable, char *name_map);
 uint32_t				find_size_lump(t_dir *dir, char *lable, char *name_map);
 uint32_t				wad_find_texture(t_dir *dir, char *name);
 
-void					wad_draw_patch(t_doom_nukem *doom, char *texture, t_patches pth, t_point start);
-void					wad_draw_vertex(t_doom_nukem *doom, char *name_map);
-void					wad_draw_linedefs(t_doom_nukem *doom, t_vertex *vertex, char *name_map);
-void					wad_draw_texture(t_doom_nukem *doom, t_point start, char *texture);
+void					wad_put_patch(t_doom *doom, char *texture, t_patches pth, t_point start);
+void					wad_draw_vertex(t_doom *doom, char *name_map);
+void					wad_draw_linedefs(t_doom *doom, t_vertex *vertex, char *name_map);
+void					wad_draw_texture(t_doom *doom, t_point start, char *texture);
+void					wad_draw_patch(t_doom *doom, t_point start, char *pnames);
 
 
-void					wad_get_linedefs(t_doom_nukem *doom, char *name_map);
-void					wad_get_vertex(t_doom_nukem *doom, char *name_map);
+void					wad_get_linedefs(t_doom *doom, char *name_map);
+void					wad_get_vertex(t_doom *doom, char *name_map);
 t_patch					wad_get_patch_info(const uint8_t *data,  uint32_t offset);
-void					wad_get_playpal(t_doom_nukem *doom);
-void					wad_get_colormap(t_doom_nukem *doom);
+void					wad_get_playpal(t_doom *doom);
+void					wad_get_colormap(t_doom *doom);
 void					wad_get_textures(const uint8_t *data, uint32_t offset, t_texture_head *texture);
 void					wad_get_pnames(const uint8_t *data, t_dir *dir ,t_pnames *pname);
-void					wad_get_nodes(t_doom_nukem *doom, char *map_name);
-void					wad_get_sidedefs(t_doom_nukem *doom, char *name_map);
-void					wad_get_segs(t_doom_nukem *doom, char *name_map);
-void					wad_get_ssectors(t_doom_nukem *doom, char *name_map);
-void					wad_get_sectors(t_doom_nukem *doom, char *name_map);
-void					wad_get_things(t_doom_nukem *doom, char *name_map);
+void					wad_get_nodes(t_doom *doom, char *map_name);
+void					wad_get_sidedefs(t_doom *doom, char *name_map);
+void					wad_get_segs(t_doom *doom, char *name_map);
+void					wad_get_ssectors(t_doom *doom, char *name_map);
+void					wad_get_sectors(t_doom *doom, char *name_map);
+void					wad_get_things(t_doom *doom, char *name_map);
 
 void					clear_wad_dir(t_dir *dir);
 void					print_bit(void *data);

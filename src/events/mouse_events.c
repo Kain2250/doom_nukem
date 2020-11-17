@@ -6,19 +6,19 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 14:40:45 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/10 15:33:54 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/17 21:01:24 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-static void	button_rigth_event(t_doom_nukem *doom)
+static void	button_rigth_event(t_doom *doom)
 {
 	(void)doom;
 	scale_frame(doom->sdl.surface, doom->mouse, 0x00ff00, draw_rect);
 }
 
-static void	button_left_event(t_doom_nukem *doom)
+static void	button_left_event(t_doom *doom)
 {
 	(void)doom;
 	if (is_slidebar_area(doom->screen->blocks->rect_block, doom->mouse))
@@ -28,13 +28,13 @@ static void	button_left_event(t_doom_nukem *doom)
 		scale_frame(doom->sdl.surface, doom->mouse, 0xabfbc, &draw_feel_rect);
 }
 
-static void	button_midle_event(t_doom_nukem *doom)
+static void	button_midle_event(t_doom *doom)
 {
 	(void)doom;
 	drag_and_drop(doom->sdl.textures[texture_test], doom->sdl.surface);
 }
 
-void		mouse_events(t_doom_nukem *doom)
+void		mouse_events(t_doom *doom)
 {
 	int		button;
 
