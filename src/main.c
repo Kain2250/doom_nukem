@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/17 22:01:31 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/18 21:20:25 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ int					main(int ac, char **av)
 {
 	t_doom	*doom;
 	t_timer			time;
+	t_timer			fps;
+
 	char			*name_map = {"E1M6"};
+	SDL_Surface		*sprite[8];
+	// SDL_Surface		*texture;
 
 	if (ac == 2 || ac == 3)
 	{
@@ -55,21 +59,31 @@ int					main(int ac, char **av)
 		doom->screen = init_editor(doom);
 		fill_limit(&doom->player.heals, 0, 190, 200);
 		timer_start(&time);
+		// texture = wad_draw_texture(doom, fill_point(0, 0), av[2]);
+		sprite[0] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG1");
+		sprite[1] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG2");
+		sprite[2] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG3");
+		sprite[3] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG4");
+		sprite[4] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG5");
+		sprite[5] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG6");
+		sprite[6] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG7");
+		sprite[7] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG8");
+		int	i = 0;
+		timer_start(&fps);
 		while (doom->quit == false)
 		{
-			int i = 150;
-			// fps_counter(&time);
-			// frame_tamer(doom, doom->screen);
+			fps_counter(&time);
+			frame_tamer(doom, doom->screen);
 			// wad_draw_linedefs(doom, doom->wad.vert, name_map);
-			wad_draw_texture(doom, fill_point(500, 500), av[2]);
-			wad_draw_texture(doom, fill_point(500 + i, 500), "MIDVINE2");
-			wad_draw_patch(doom, fill_point(500, 500 + i + i), "CYBRE8");
-			wad_draw_patch(doom, fill_point(500, 500 + i), "SHTGA0");
-			wad_draw_patch(doom, fill_point(500 + i, 500 + i), "SHTGB0");
-			wad_draw_patch(doom, fill_point(500 + i + i, 500 + i), "SHTGC0");
-			wad_draw_patch(doom, fill_point(500+ i + i + i, 500 + i), "SHTGD0");
-
-			// wad_draw_texture(doom, fill_point(500, 500 + i + i), av[2]);
+			blit_surf_scaled(sprite[i], NULL, doom->sdl.surface, &((t_rect){500 - sprite[i]->w * 2 / 2 , 500 - sprite[i]->h * 2 / 2, sprite[i]->w * 2, sprite[i]->h * 2, false}));
+			if (get_ticks(&fps) >= 100)
+			{
+				++i;
+				timer_stop(&fps);
+				timer_start(&fps);
+				if (i >= 8)
+					i = 0;
+			}
 			event_list(doom);
 			SDL_UpdateWindowSurface(doom->sdl.window);
 			clear_surface(doom->sdl.surface, 0);

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:30:01 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/17 21:01:24 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/18 22:32:16 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ bool			init_sdl(t_doom *doom)
 		return (false);
 	if ((doom->sdl.surface = SDL_GetWindowSurface(doom->sdl.window)) == NULL)
 		return (false);
+	doom->sdl.surface = SDL_CreateRGBSurfaceWithFormatFrom(doom->sdl.surface->pixels, doom->sdl.surface->w, doom->sdl.surface->h, 32, doom->sdl.surface->pitch, SDL_PIXELFORMAT_BGRA32);
 	return (true);
 }
 

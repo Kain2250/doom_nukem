@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:43:10 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/17 21:35:20 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/18 22:33:58 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void			wad_put(char *name, int offset, int size)
 // 	}
 // }
 
-uint32_t		rec_column(t_doom *doom, uint32_t offset, int x, int *y)
+uint32_t		rec_column(t_doom *doom, uint32_t offset, t_crd crd, SDL_Surface *surface)
 {
 	uint16_t			iter;
 	uint16_t			col;
@@ -72,7 +72,7 @@ uint32_t		rec_column(t_doom *doom, uint32_t offset, int x, int *y)
 	offset += 3;
 	while (y_miss - 1 < doom->wad.temp_step && doom->wad.map[offset + 1] != 255)
 	{
-		putpixel(doom->sdl.surface, x, *y + y_step,
+		putpixel(surface, crd.x, *crd.y + y_step,
 			doom->wad.color[doom->wad.baff]
 			[doom->wad.colormap[doom->wad.bright]
 			[doom->wad.map[offset]]]);
@@ -89,31 +89,38 @@ uint32_t		rec_column(t_doom *doom, uint32_t offset, int x, int *y)
 		else
 			y_step++;
 	}
-	(*y) += doom->wad.temp_step;
+	(*crd.y) += doom->wad.temp_step;
 	return (offset + 2);
 }
 
-void			wad_draw_patch(t_doom *doom, t_point start, char *pnames)
+SDL_Surface		*wad_draw_patch(t_doom *doom, t_point start, char *pnames)
 {
 	uint32_t	offset;
 	uint32_t	temp_offset;
 	t_patch		patch;
 	int			i;
 	int			y;
+	SDL_Surface	*ret;
 
 	i = 0;
 	offset = find_offset_lump(doom->wad.dir, pnames, NULL);
 	patch = wad_get_patch_info(doom->wad.map, offset);
+	ret = SDL_CreateRGBSurfaceWithFormat(0, patch.width, patch.height,
+		32, SDL_PIXELFORMAT_BGRA32);
+	// clear_surface(ret, 0x00ff00);
 	doom->wad.temp_step = patch.height;
 	while (i < patch.width)
 	{
 		y = start.y;
-		temp_offset = rec_column(doom, offset + patch.columnoffset[i++], start.x, &y);
+		temp_offset = rec_column(doom, offset + patch.columnoffset[i++],
+			(t_crd){start.x, &y}, ret);
 		start.x++;
 	}
+	return (ret);
 }
 
-void			wad_compose_texture(t_doom *doom, t_map_texture pth, t_point start)
+void			wad_compose_texture(t_doom *doom, t_map_texture pth,
+					t_point start, SDL_Surface *surface)
 {
 	int32_t		x, y;
 	uint32_t	offset;
@@ -139,17 +146,17 @@ void			wad_compose_texture(t_doom *doom, t_map_texture pth, t_point start)
 				: start.y + pth.patches[i].origin_y;
 			y_temp = y;
 			while (y < patch.height + y_temp && y < pth.height + start.y)
-				temp_offset = rec_column(doom, temp_offset, x, &y);
+				temp_offset = rec_column(doom, temp_offset, (t_crd){x, &y}, surface);
 			x++;
 		}
 		i++;
 	}
 }
 
-void			wad_draw_texture(t_doom *doom,
-					t_point start, char *texture)
+SDL_Surface		*wad_draw_texture(t_doom *doom, t_point start, char *texture)
 {
 	uint32_t	i;
+	SDL_Surface	*ret;
 
 	i = 0;
 	if (texture == NULL)
@@ -164,11 +171,20 @@ void			wad_draw_texture(t_doom *doom,
 			ft_strcmp(doom->wad.textures2.mtexture[i].name, texture) != 0)
 			i++;
 		if (i >= doom->wad.textures2.num_texture)
-			exit (put_error_sys("Error WAD - could not find texture") * -1);
-		wad_compose_texture(doom, doom->wad.textures2.mtexture[i], start);
+			exit(put_error_sys("Error WAD - could not find texture") * -1);
+		ret = SDL_CreateRGBSurfaceWithFormat(0,
+			doom->wad.textures2.mtexture[i].width,
+			doom->wad.textures2.mtexture[i].height, 32, SDL_PIXELFORMAT_RGBA32);
+		wad_compose_texture(doom, doom->wad.textures2.mtexture[i], start, ret);
 	}
 	else
-		wad_compose_texture(doom, doom->wad.textures1.mtexture[i], start);	
+	{
+		ret = SDL_CreateRGBSurfaceWithFormat(0,
+			doom->wad.textures1.mtexture[i].width,
+			doom->wad.textures1.mtexture[i].height, 32, SDL_PIXELFORMAT_RGBA32);
+		wad_compose_texture(doom, doom->wad.textures1.mtexture[i], start, ret);
+	}
+	return (ret);	
 }
 
 void			wad_draw_linedefs(t_doom *doom,

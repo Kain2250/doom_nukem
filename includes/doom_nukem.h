@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/17 21:23:14 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/18 21:23:02 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct			s_color
 	Uint8				red;
 	Uint8				green;
 	Uint8				blue;
+	Uint8				alpha;
 }						t_color;
 
 typedef struct			s_player
@@ -193,6 +194,13 @@ typedef struct			s_wad
 	uint16_t			baff;
 	uint16_t			temp_step;
 }						t_wad;
+
+typedef struct			s_crd
+{
+	int					x;
+	int					*y;
+}						t_crd;
+
 
 typedef struct			s_doom
 {
@@ -331,8 +339,8 @@ uint32_t				wad_find_texture(t_dir *dir, char *name);
 void					wad_put_patch(t_doom *doom, char *texture, t_patches pth, t_point start);
 void					wad_draw_vertex(t_doom *doom, char *name_map);
 void					wad_draw_linedefs(t_doom *doom, t_vertex *vertex, char *name_map);
-void					wad_draw_texture(t_doom *doom, t_point start, char *texture);
-void					wad_draw_patch(t_doom *doom, t_point start, char *pnames);
+SDL_Surface				*wad_draw_texture(t_doom *doom, t_point start, char *texture);
+SDL_Surface				*wad_draw_patch(t_doom *doom, t_point start, char *pnames);
 
 
 void					wad_get_linedefs(t_doom *doom, char *name_map);
