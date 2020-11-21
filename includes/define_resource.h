@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 15:07:49 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/03 14:54:55 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/21 21:20:02 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 # define FONT_BUTTON "resource/font/button.otf"
 # define FONT_TEXT "resource/font/robotron.otf"
+
+# include "sprite_kit.h"
 
 typedef enum		e_texture
 {

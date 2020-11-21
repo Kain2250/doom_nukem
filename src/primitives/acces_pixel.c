@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 18:10:36 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/18 22:26:47 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/21 16:12:39 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,27 +35,44 @@ Uint32				get_pixel(SDL_Surface *surface, int x, int y)
 	return (0);
 }
 
+void			put_pixel_sprite(t_sprite *sprite, int x, int y, uint32_t color)
+{
+	int			i;
+
+	if (x > 0 && x <= WIDTH_WIN && y > 0 && y < HEIGHT_WIN)
+	{
+		i = (x * 4) + (y * sprite->w);
+		sprite->pixel[i] = color;
+		sprite->pixel[i] = color >> 8;
+		sprite->pixel[i] = color >> 16;
+		sprite->pixel[i] = 0;
+	}
+}
+
 void				putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 {
 	int				bpp;
 	Uint8			*p;
 
-	bpp = surface->format->BytesPerPixel;
-	p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
-	if (bpp == 1)
-		*p = pixel;
-	if (bpp == 2)
-		*(Uint16 *)p = pixel;
-	else if (bpp == 3)
+	if (x > 0 && x <= WIDTH_WIN && y > 0 && y < HEIGHT_WIN)
 	{
-		p[0] = (SDL_BYTEORDER == SDL_BIG_ENDIAN) ?
-			(pixel >> 16) & 0xff : pixel & 0xff;
-		p[1] = (pixel >> 8) & 0xff;
-		p[2] = (SDL_BYTEORDER == SDL_BIG_ENDIAN) ?
-			pixel & 0xff : (pixel >> 16) & 0xff;
+		bpp = surface->format->BytesPerPixel;
+		p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
+		if (bpp == 1)
+			*p = pixel;
+		if (bpp == 2)
+			*(Uint16 *)p = pixel;
+		else if (bpp == 3)
+		{
+			p[0] = (SDL_BYTEORDER == SDL_BIG_ENDIAN) ?
+				(pixel >> 16) & 0xff : pixel & 0xff;
+			p[1] = (pixel >> 8) & 0xff;
+			p[2] = (SDL_BYTEORDER == SDL_BIG_ENDIAN) ?
+				pixel & 0xff : (pixel >> 16) & 0xff;
+		}
+		else if (bpp == 4)
+			*(Uint32 *)p = pixel;
 	}
-	else if (bpp == 4)
-		*(Uint32 *)p = pixel;
 }
 
 t_color				color32_to_8(Uint32 color)

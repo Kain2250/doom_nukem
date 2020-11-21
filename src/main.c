@@ -6,11 +6,12 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/18 21:20:25 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/21 21:35:03 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
+
 
 void				user_cursor(t_doom *doom)
 {
@@ -32,14 +33,22 @@ void				wad_init_level(t_doom *doom, char *name_map)
 	wad_get_sectors(doom, name_map);
 }
 
+void				skin(t_doom *doom)
+{
+	SDL_GetWindowSize(doom->sdl.window, &doom->sdl.width, &doom->sdl.height);
+	user_cursor(doom);
+	SDL_SetWindowIcon(doom->sdl.window, doom->sdl.textures[texture_icon]);
+	fill_limit(&doom->player.heals, 0, 190, 200);
+}
+
+
+
 int					main(int ac, char **av)
 {
 	t_doom	*doom;
-	t_timer			time;
-	t_timer			fps;
 
-	char			*name_map = {"E1M6"};
-	SDL_Surface		*sprite[8];
+	// char			*name_map = {"E1M6"};
+	SDL_Surface		*sprite[9];
 	// SDL_Surface		*texture;
 
 	if (ac == 2 || ac == 3)
@@ -52,39 +61,36 @@ int					main(int ac, char **av)
 			return (0);
 		}
 		wad_reader(doom);
-		wad_init_level(doom, name_map);
-		SDL_GetWindowSize(doom->sdl.window, &doom->sdl.width, &doom->sdl.height);
-		user_cursor(doom);
-		SDL_SetWindowIcon(doom->sdl.window, doom->sdl.textures[texture_icon]);
+		// wad_init_level(doom, name_map);
+		skin(doom);
 		doom->screen = init_editor(doom);
-		fill_limit(&doom->player.heals, 0, 190, 200);
-		timer_start(&time);
+		doom->wad.baff = 0;
+		doom->wad.bright = 0;
+		t_sprite *sprites = (t_sprite *)ft_memalloc(sizeof(t_sprite));
 		// texture = wad_draw_texture(doom, fill_point(0, 0), av[2]);
-		sprite[0] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG1");
-		sprite[1] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG2");
-		sprite[2] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG3");
-		sprite[3] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG4");
-		sprite[4] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG5");
-		sprite[5] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG6");
-		sprite[6] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG7");
-		sprite[7] = wad_draw_patch(doom, fill_point(0, 0), "CYBRG8");
-		int	i = 0;
-		timer_start(&fps);
+
+		int i = 0;
+		while (i < (int)sizeof(array) / 8)
+		{
+			sprite[i] = wad_draw_patch(doom, array[i], &doom->test[i]);
+			++i;
+		}
+		int k = 100;
+		timer_start(&doom->time);
 		while (doom->quit == false)
 		{
-			fps_counter(&time);
+			// fps_counter(&doom->time);
 			frame_tamer(doom, doom->screen);
 			// wad_draw_linedefs(doom, doom->wad.vert, name_map);
-			blit_surf_scaled(sprite[i], NULL, doom->sdl.surface, &((t_rect){500 - sprite[i]->w * 2 / 2 , 500 - sprite[i]->h * 2 / 2, sprite[i]->w * 2, sprite[i]->h * 2, false}));
-			if (get_ticks(&fps) >= 100)
-			{
-				++i;
-				timer_stop(&fps);
-				timer_start(&fps);
-				if (i >= 8)
-					i = 0;
-			}
+			draw_sprite(doom, sprite, (t_rect){600, 500, 1, 1, false}, 100);
+			draw_sprite(doom, sprite, (t_rect){600 + k, 500, 1, 1, false}, 100);
+			draw_sprite(doom, sprite, (t_rect){600 + k + k, 500, 1, 1, false}, 100);
+			draw_sprite(doom, sprite, (t_rect){600 + k + k + k, 500, 1, 1, false}, 100);
+			draw_sprite(doom, sprite, (t_rect){600 + k + k + k, 500 + k, 1, 1, false}, 100);
+			draw_sprite(doom, sprite, (t_rect){600 + k + k + k, 500 + k + k, 1, 1, false}, 100);
+
 			event_list(doom);
+			// SDL_RenderPresent(doom->sdl.render);
 			SDL_UpdateWindowSurface(doom->sdl.window);
 			clear_surface(doom->sdl.surface, 0);
 		}

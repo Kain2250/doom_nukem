@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/18 21:23:02 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/21 21:24:15 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # include "SDL2/SDL_ttf.h"
 # include "SDL2/SDL_net.h"
 # endif
+
+
 
 typedef struct		s_point
 {
@@ -130,6 +132,21 @@ typedef struct			s_player
 	t_limit				heals;
 }						t_player;
 
+typedef struct			s_name_s
+{
+	char				name[9];
+}						t_name_s;
+
+typedef struct			s_sprite
+{
+	uint8_t				pixel[1];
+	int32_t				w;
+	int32_t				h;
+	int32_t				left_offset;
+	int32_t				top_offset;
+}						t_sprite;
+
+
 typedef struct			s_sdl_sys
 {
 	SDL_Window			*window;
@@ -209,7 +226,9 @@ typedef struct			s_doom
 	struct s_new_win	frame;
 	struct s_frames		*screen;
 	struct s_player		player;
+	t_timer				time;
 	t_wad				wad;
+	t_sprite			test[15];
 	int					buf1;
 	int					buf2;
 	bool				quit;
@@ -340,7 +359,9 @@ void					wad_put_patch(t_doom *doom, char *texture, t_patches pth, t_point start
 void					wad_draw_vertex(t_doom *doom, char *name_map);
 void					wad_draw_linedefs(t_doom *doom, t_vertex *vertex, char *name_map);
 SDL_Surface				*wad_draw_texture(t_doom *doom, t_point start, char *texture);
-SDL_Surface				*wad_draw_patch(t_doom *doom, t_point start, char *pnames);
+SDL_Surface				*wad_draw_patch(t_doom *doom, char *pnames, t_sprite *sprite);
+void					put_pixel_sprite(t_sprite *sprite, int x, int y, uint32_t color);
+void					draw_sprite(t_doom *doom, SDL_Surface **sprite, t_rect rect, Uint32 delay);
 
 
 void					wad_get_linedefs(t_doom *doom, char *name_map);

@@ -6,7 +6,7 @@
 #    By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/11/13 17:58:16 by bdrinkin         ###   ########.fr        #
+#    Updated: 2020/11/21 17:11:11 by bdrinkin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = doom-nukem
 RES = resource
 
 # Флаги компиляции:
-GCC = gcc
+GCC = gcc -O2
 CCFLAGS = -Wall -Wextra -Werror
 OTHERS_FLAGS = -lm
 
@@ -72,7 +72,8 @@ SRC_LIST = main.c \
 	wad/wad_reader.c \
 	wad/bytes_shift.c \
 	wad/draw_wad.c \
-	wad/wad_get.c
+	wad/wad_get.c \
+	wad/draw_sprite.c
 
 
 SRC = $(addprefix $(SRC_DIRECTORY), $(SRC_LIST))
