@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/21 21:24:15 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/25 22:23:27 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "errorout.h"
 # include "define_resource.h"
 # include "tree_struct.h"
+# include "sprite_kit.h"
 # include "libft.h"
 # ifdef __APPLE__
 # include "SDL.h"
@@ -36,8 +37,6 @@
 # include "SDL2/SDL_ttf.h"
 # include "SDL2/SDL_net.h"
 # endif
-
-
 
 typedef struct		s_point
 {
@@ -131,21 +130,6 @@ typedef struct			s_player
 {
 	t_limit				heals;
 }						t_player;
-
-typedef struct			s_name_s
-{
-	char				name[9];
-}						t_name_s;
-
-typedef struct			s_sprite
-{
-	uint8_t				pixel[1];
-	int32_t				w;
-	int32_t				h;
-	int32_t				left_offset;
-	int32_t				top_offset;
-}						t_sprite;
-
 
 typedef struct			s_sdl_sys
 {
