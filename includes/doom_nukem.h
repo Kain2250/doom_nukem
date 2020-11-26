@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/25 22:23:27 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/26 20:25:01 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "define_resource.h"
 # include "tree_struct.h"
 # include "sprite_kit.h"
+# include "rect.h"
 # include "libft.h"
 # ifdef __APPLE__
 # include "SDL.h"
@@ -37,50 +38,6 @@
 # include "SDL2/SDL_ttf.h"
 # include "SDL2/SDL_net.h"
 # endif
-
-typedef struct		s_point
-{
-	int				x;
-	int				y;
-}					t_point;
-
-typedef struct		s_pointf
-{
-	double			x;
-	double			y;
-}					t_pointf;
-
-typedef struct		s_rect
-{
-	int				x;
-	int				y;
-	int				w;
-	int				h;
-	bool			free;
-}					t_rect;
-
-typedef struct		s_rectf
-{
-	double			x;
-	double			y;
-	double			w;
-	double			h;
-	bool			free;
-}					t_rectf;
-
-typedef struct			s_limit
-{
-	int					cur;
-	int					max;
-	int					min;
-}						t_limit;
-
-typedef struct			s_limit_f
-{
-	float				cur;
-	float				max;
-	float				min;
-}						t_limit_f;
 
 typedef struct		s_block
 {
@@ -345,7 +302,7 @@ void					wad_draw_linedefs(t_doom *doom, t_vertex *vertex, char *name_map);
 SDL_Surface				*wad_draw_texture(t_doom *doom, t_point start, char *texture);
 SDL_Surface				*wad_draw_patch(t_doom *doom, char *pnames, t_sprite *sprite);
 void					put_pixel_sprite(t_sprite *sprite, int x, int y, uint32_t color);
-void					draw_sprite(t_doom *doom, SDL_Surface **sprite, t_rect rect, Uint32 delay);
+// void					draw_sprite(t_doom *doom, SDL_Surface **sprite, t_rect rect, Uint32 delay);
 
 
 void					wad_get_linedefs(t_doom *doom, char *name_map);

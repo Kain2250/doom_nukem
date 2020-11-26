@@ -6,7 +6,7 @@
 #    By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/11/21 17:11:11 by bdrinkin         ###   ########.fr        #
+#    Updated: 2020/11/26 20:11:37 by bdrinkin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,6 @@ RESET = \033[0m
 all: $(NAME)
 
 $(NAME): $(LIBFT_DIRECTORY) $(SRC) $(HEADERS) $(RES)
-	@$(MAKE) -C $(LIBFT_DIRECTORY)
 	@echo "wolf3d: $(GREEN)Компиляция исполняемого файла$(RESET)\n"
 	@$(GCC) $(CCFLAGS) $(INCLUDES) $(LIBRARIES_LIBFT) $(FRAMEWORKS) $(OTHERS_FLAGS) $(SRC) -o $(NAME)
 	@echo "wolf3d: $(GREEN)Компиляция завершена$(RESET)\n"

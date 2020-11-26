@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 18:10:36 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/21 16:12:39 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/26 20:18:17 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,9 @@ Uint32				get_pixel(SDL_Surface *surface, int x, int y)
 	return (0);
 }
 
-void			put_pixel_sprite(t_sprite *sprite, int x, int y, uint32_t color)
+uint32_t			get_pixel_sprite(t_sprite *sprite, int x, int y)
 {
-	int			i;
-
-	if (x > 0 && x <= WIDTH_WIN && y > 0 && y < HEIGHT_WIN)
-	{
-		i = (x * 4) + (y * sprite->w);
-		sprite->pixel[i] = color;
-		sprite->pixel[i] = color >> 8;
-		sprite->pixel[i] = color >> 16;
-		sprite->pixel[i] = 0;
-	}
+	return (sprite->pixel[y * sprite->w + x]);
 }
 
 void				putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)

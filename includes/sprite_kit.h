@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 19:37:12 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/25 23:32:00 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/26 20:26:33 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,14 @@
 /* Бензопила - анимация атаки*/
 # define S_SAW_G	"SAWGA0", "SAWGB0", NULL, NULL, NULL
 
+# ifdef __APPLE__
+# include "SDL.h"
+# elif __linux__
+# include "SDL2/SDL.h"
+# endif
+
 # include <stdint.h>
+# include "rect.h"
 
 typedef struct			s_name_s
 {
@@ -67,12 +74,16 @@ typedef struct			s_name_s
 
 typedef struct			s_sprite
 {
-	char				name[9];
+	char				*name;
 	uint32_t			*pixel;
 	int32_t				w;
 	int32_t				h;
 	int32_t				left_offset;
 	int32_t				top_offset;
 }						t_sprite;
+
+uint32_t				get_pixel_sprite(t_sprite *surface, int x, int y);
+void					blit_sprite_scaled(t_sprite *src, t_rect *rsrc,
+							SDL_Surface *dst, t_rect *rdst);
 
 #endif

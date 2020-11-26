@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/25 23:39:04 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/26 21:35:07 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,9 @@ static void				put_column(t_doom *doom, uint32_t offset,
 	offset += 3;
 	while (y_miss - 1 < sprite->h && doom->wad.map[offset + 1] != 255)
 	{
-		sprite->pixel[x * sprite->h + y_step] = doom->wad.color[doom->wad.baff]
+		sprite->pixel[y_step * sprite->w + x] = doom->wad.color[doom->wad.baff]
 			[doom->wad.colormap[doom->wad.bright]
 			[doom->wad.map[offset]]];
-		// put_pixel_sprite(sprite, x, y_step,
-		// 	doom->wad.color[doom->wad.baff]
-		// 	[doom->wad.colormap[doom->wad.bright]
-		// 	[doom->wad.map[offset]]]);
 		++iter;
 		++offset;
 		++y_miss;
@@ -85,6 +81,34 @@ static void				put_column(t_doom *doom, uint32_t offset,
 	}
 }
 
+void				draw_sprite(t_sprite *sprite, SDL_Surface *screen,
+						t_rect rect)
+{
+	int				x;
+	int				y;
+	uint32_t		color;
+
+	x = 0;
+	rect.x += sprite->left_offset - sprite->w;
+	rect.y += sprite->top_offset - sprite->h;
+	while (x < sprite->w)
+	{
+		y = 0;
+		while (y < sprite->h)
+		{
+			color = get_pixel_sprite(sprite, x, y);
+			if (color == 0xFFFFFFFF)
+			{
+				++y;
+				continue ;
+			}
+			putpixel(screen, rect.x + x, rect.y + y, color);
+			++y;
+		}
+		++x;
+	}
+}
+
 t_sprite			*sprite_create(t_doom *doom, char *name)
 {
 	t_sprite		*sprite;
@@ -96,14 +120,15 @@ t_sprite			*sprite_create(t_doom *doom, char *name)
 		return (NULL);
 	offset = find_offset_lump(doom->wad.dir, name, NULL);
 	patch = wad_get_patch_info(doom->wad.map, offset);
-	// sprite->name = ft_strcpy(sprite->name, name);
+	sprite->name = ft_strdup(name);
 	sprite->h = patch.height;
 	sprite->w = patch.width;
 	sprite->left_offset = patch.left_offset;
 	sprite->top_offset = patch.top_offset;
 	sprite->pixel = (uint32_t *)malloc(sizeof(uint32_t) *
 		(sprite->w * sprite->h));
-	// sprite->pixel = ft_memset(sprite->pixel, 0xFFFFFFFF, sprite->w * sprite->h);
+	sprite->pixel = ft_memset(sprite->pixel, 0xFFFFFFFF,
+		sizeof(uint32_t) * sprite->w * sprite->h);
 	x = -1;
 	while (++x < patch.width)
 		put_column(doom, offset + patch.columnoffset[x], x, sprite);
@@ -115,7 +140,7 @@ int					main(int ac, char **av)
 {
 	t_doom	*doom;
 
-	// char			*name_map = {"E1M6"};
+	// char			*name_map = {"E1M1"};
 	// SDL_Surface		*sprite[9];
 	// SDL_Surface		*texture;
 
@@ -136,7 +161,7 @@ int					main(int ac, char **av)
 		doom->wad.bright = 0;
 		// texture = wad_draw_texture(doom, fill_point(0, 0), av[2]);
 
-		t_sprite *sprites = sprite_create(doom, "SAWGD0");
+		t_sprite *sprites = sprite_create(doom, "POSSE1");
 		// int i = 0;
 
 		// while (i < sprites->h)
@@ -160,30 +185,17 @@ int					main(int ac, char **av)
 		while (doom->quit == false)
 		{
 			// fps_counter(&doom->time);
-			frame_tamer(doom, doom->screen);
+			// frame_tamer(doom, doom->screen);
 			// wad_draw_linedefs(doom, doom->wad.vert, name_map);
+			draw_rect(doom->sdl.surface, &(t_rect){.x = WIDTH_WIN / 2 - 100 / 2, .y = HEIGHT_WIN / 2 - 100 / 2, 100, 100}, 0xffffff, 1);
+			blit_sprite_scaled(sprites, NULL, doom->sdl.surface, &(t_rect){WIDTH_WIN / 2, HEIGHT_WIN / 2, sprites->w * 4, sprites->h * 4, false});
+			draw_sprite(sprites, doom->sdl.surface, (t_rect){.x = WIDTH_WIN / 2, .y = HEIGHT_WIN / 2});
 			// draw_sprite(doom, sprite, (t_rect){600, 500, 1, 1, false}, 100);
 			// draw_sprite(doom, sprite, (t_rect){600 + k, 500, 1, 1, false}, 100);
 			// draw_sprite(doom, sprite, (t_rect){600 + k + k, 500, 1, 1, false}, 100);
 			// draw_sprite(doom, sprite, (t_rect){600 + k + k + k, 500, 1, 1, false}, 100);
 			// draw_sprite(doom, sprite, (t_rect){600 + k + k + k, 500 + k, 1, 1, false}, 100);
 			// draw_sprite(doom, sprite, (t_rect){600 + k + k + k, 500 + k + k, 1, 1, false}, 100);
-			int x = 0;
-			while (x < sprites->w)
-			{
-				int y = 0;
-				while (y < sprites->h)
-				{
-					// if (sprites->pixel[i * sprites->w + x] == 0xFFFFFFFF)
-					// {
-					// 	++x;
-					// 	continue;
-					// }
-					putpixel(doom->sdl.surface, 500 + x, 500 + y, sprites->pixel[y * sprites->w + x]);
-					++y;
-				}
-				++x;
-			}
 
 			event_list(doom);
 			// SDL_RenderPresent(doom->sdl.render);
