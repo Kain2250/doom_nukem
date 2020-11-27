@@ -6,16 +6,20 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/26 20:25:01 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/27 20:51:34 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_NUKEM_H
 # define DOOM_NUKEM_H
 
-# define NAME_WIN "Doom-Nukem (by Bdrinkin & Mcarc & Jthuy)"
-# define WIDTH_WIN 2000
-# define HEIGHT_WIN 1200
+# define NAME_WIN "Doom-Nukem (by Bdrinkin & Jthuy & Vneelix && Nsena)"
+// # define WIDTH_WIN 320
+// # define HEIGHT_WIN 200
+# define WIDTH_WIN 1500
+# define HEIGHT_WIN 1000
+# define HALF_WIDTH WIDTH_WIN / 2
+# define HALF_HEIGHT HEIGHT_WIN / 2
 
 # include <math.h>
 # include <stdbool.h>
@@ -302,7 +306,7 @@ void					wad_draw_linedefs(t_doom *doom, t_vertex *vertex, char *name_map);
 SDL_Surface				*wad_draw_texture(t_doom *doom, t_point start, char *texture);
 SDL_Surface				*wad_draw_patch(t_doom *doom, char *pnames, t_sprite *sprite);
 void					put_pixel_sprite(t_sprite *sprite, int x, int y, uint32_t color);
-// void					draw_sprite(t_doom *doom, SDL_Surface **sprite, t_rect rect, Uint32 delay);
+void					draw_sprite_anim(t_doom *doom, t_sprite **sprite, Uint32 delay);
 
 
 void					wad_get_linedefs(t_doom *doom, char *name_map);

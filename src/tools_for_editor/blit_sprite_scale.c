@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 21:03:55 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/26 21:34:19 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/27 19:59:00 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,29 +56,29 @@ static void			while_scale_pic(t_sprite *src, t_rect *rsrc,
 	}
 }
 
-void				blit_sprite_scaled(t_sprite *src, t_rect *rsrc,
-						SDL_Surface *dst, t_rect *rdst)
+void				blit_gan_scaled(t_sprite *src, SDL_Surface *dst)
 {
-	t_rect			tmp_rsrc;
-	t_rect			tmp_rdst;
-	int32_t			tmp_top_offset;
-	int32_t			tmp_left_offset;
+	t_rect			rsrc;
+	t_rect			rdst;
 
-	tmp_top_offset = src->top_offset;
-	tmp_left_offset = src->left_offset;
-	if (rsrc == NULL)
-		tmp_rsrc = (t_rect){0, 0, src->w, src->h, false};
-	if (rdst == NULL)
-		tmp_rdst = (t_rect){0, 0, dst->w, dst->h, false};
-	else
-	{
-		// src->left_offset += src->w - rdst->w;
-		// src->top_offset += src->h - rdst->h;
-		rdst->x += src->left_offset - rdst->w / 2;
-		rdst->y += src->top_offset - rdst->h / 2;
-	}
-	while_scale_pic(src, rsrc != NULL ? rsrc : &tmp_rsrc,
-		dst, rdst != NULL ? rdst : &tmp_rdst);
-	src->top_offset = tmp_top_offset;
-	src->left_offset = tmp_left_offset;
+	rsrc = (t_rect){0, 0, src->w, src->h, false};
+	rdst.w = src->w * WIDTH_WIN / 320;
+	rdst.h = src->h * HEIGHT_WIN / 200;
+	rdst.x = -(WIDTH_WIN * src->left_offset / 320);
+	rdst.y = -(HEIGHT_WIN * src->top_offset / 200);
+	while_scale_pic(src, &rsrc, dst, &rdst);
+}
+
+void				blit_hud_scaled(t_sprite *src, SDL_Surface *dst, t_hud *status)
+{
+	t_rect			rsrc;
+	t_rect			rdst;
+
+	rsrc = (t_rect){0, 0, src->w, src->h, false};
+	rdst.w = src->w * WIDTH_WIN / 320;
+	rdst.h = src->h * HEIGHT_WIN / 200;
+	rdst.x = 0;
+	rdst.y = HEIGHT_WIN - rdst.h;
+	while_scale_pic(src, &rsrc, dst, &rdst);
+	(void)status;
 }

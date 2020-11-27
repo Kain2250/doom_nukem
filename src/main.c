@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/26 21:35:07 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/27 20:53:20 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ void				draw_sprite(t_sprite *sprite, SDL_Surface *screen,
 	uint32_t		color;
 
 	x = 0;
-	rect.x += sprite->left_offset - sprite->w;
-	rect.y += sprite->top_offset - sprite->h;
+	rect.x -= sprite->left_offset;
+	rect.y -= sprite->top_offset;
 	while (x < sprite->w)
 	{
 		y = 0;
@@ -141,8 +141,6 @@ int					main(int ac, char **av)
 	t_doom	*doom;
 
 	// char			*name_map = {"E1M1"};
-	// SDL_Surface		*sprite[9];
-	// SDL_Surface		*texture;
 
 	if (ac == 2 || ac == 3)
 	{
@@ -161,44 +159,46 @@ int					main(int ac, char **av)
 		doom->wad.bright = 0;
 		// texture = wad_draw_texture(doom, fill_point(0, 0), av[2]);
 
-		t_sprite *sprites = sprite_create(doom, "POSSE1");
-		// int i = 0;
+		t_sprite	**sprites;
+		char		**name;
+		int			i = 0;
 
-		// while (i < sprites->h)
-		// {
-		// 	int x = 0;
-		// 	while (x < sprites->w)
-		// 	{
-		// 		putpixel(doom->sdl.surface, 800 + x, 800 + i, sprites->pixel[i * x]);
-		// 		x++;
-		// 	}
-		// 	i++;
-		// }
-		// i = 0;
-		// while (i < (int)sizeof(array) / 8)
-		// {
-		// 	sprite[i] = wad_draw_patch(doom, array[i], &doom->test[i]);
-		// 	++i;
-		// }
-		// int k = 100;
+		name = (char **)ft_memalloc(sizeof(char *));
+		while (i < SAW)
+		{
+			name[i] = ft_memalloc(sizeof(char) * 9);
+			++i;
+		}
+		i = 0;
+		sprites = (t_sprite **)ft_memalloc(sizeof(t_sprite *));
+		while (i <= SAW)
+		{
+			sprites[i] = (t_sprite *)ft_memalloc(sizeof(t_sprite));
+			++i;
+		}
+		name[0] = "SAWGC0";
+		name[1] = "SAWGD0";
+
+		i = 0;
+		while (i < SAW)
+			(sprites[i] = sprite_create(doom, name[i])) && ++i;
+		sprites[i] = NULL;
+
+		t_sprite *hud = sprite_create(doom, "STBAR");
 		timer_start(&doom->time);
 		while (doom->quit == false)
 		{
 			// fps_counter(&doom->time);
 			// frame_tamer(doom, doom->screen);
 			// wad_draw_linedefs(doom, doom->wad.vert, name_map);
-			draw_rect(doom->sdl.surface, &(t_rect){.x = WIDTH_WIN / 2 - 100 / 2, .y = HEIGHT_WIN / 2 - 100 / 2, 100, 100}, 0xffffff, 1);
-			blit_sprite_scaled(sprites, NULL, doom->sdl.surface, &(t_rect){WIDTH_WIN / 2, HEIGHT_WIN / 2, sprites->w * 4, sprites->h * 4, false});
-			draw_sprite(sprites, doom->sdl.surface, (t_rect){.x = WIDTH_WIN / 2, .y = HEIGHT_WIN / 2});
-			// draw_sprite(doom, sprite, (t_rect){600, 500, 1, 1, false}, 100);
-			// draw_sprite(doom, sprite, (t_rect){600 + k, 500, 1, 1, false}, 100);
-			// draw_sprite(doom, sprite, (t_rect){600 + k + k, 500, 1, 1, false}, 100);
-			// draw_sprite(doom, sprite, (t_rect){600 + k + k + k, 500, 1, 1, false}, 100);
-			// draw_sprite(doom, sprite, (t_rect){600 + k + k + k, 500 + k, 1, 1, false}, 100);
-			// draw_sprite(doom, sprite, (t_rect){600 + k + k + k, 500 + k + k, 1, 1, false}, 100);
+			draw_line(doom->sdl.surface, (t_point){HALF_WIDTH, 0}, (t_point){HALF_WIDTH, HEIGHT_WIN}, 0xffffff);
+			draw_line(doom->sdl.surface, (t_point){0, HALF_HEIGHT}, (t_point){WIDTH_WIN, HALF_HEIGHT}, 0xffffff);
+
+			draw_sprite_anim(doom, sprites, 200);
+			// blit_gan_scaled(sprites[i], doom->sdl.surface);
+			blit_hud_scaled(hud, doom->sdl.surface, NULL);
 
 			event_list(doom);
-			// SDL_RenderPresent(doom->sdl.render);
 			SDL_UpdateWindowSurface(doom->sdl.window);
 			clear_surface(doom->sdl.surface, 0);
 		}

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 20:22:43 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/26 20:24:31 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/27 19:38:59 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,18 @@ typedef struct		s_rectf
 	bool			free;
 }					t_rectf;
 
-typedef struct			s_limit
+typedef struct		s_limit
 {
-	int					cur;
-	int					max;
-	int					min;
-}						t_limit;
+	int				cur;
+	int				max;
+	int				min;
+}					t_limit;
 
-typedef struct			s_limit_f
+typedef struct		s_limit_f
 {
-	double				cur;
-	double				max;
-	double				min;
-}						t_limit_f;
+	double			cur;
+	double			max;
+	double			min;
+}					t_limit_f;
 
 #endif

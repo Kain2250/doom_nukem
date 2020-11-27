@@ -6,14 +6,14 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 19:37:12 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/26 20:26:33 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/27 20:16:15 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SPRITE_KIT_H
 # define SPRITE_KIT_H
 
-# define PEH 1
+# define PEH 5
 /*Пехотинец - 1 фаза состояние покоя*/
 # define S_PEH_1	"POSSE1", "POSSE2E8", "POSSE3E7", "POSSE4E6", "POSSE5"
 /*Пехотинец - 2 фаза движения*/
@@ -31,7 +31,7 @@
 /*Пехотинец - анимация смерти*/
 # define S_PEH_D	"POSSH0", "POSSI0", "POSSJ0", "POSSK0", "POSSL0"
 
-# define IMP 2
+# define IMP 5
 /*Имп - 1 фаза состояние покоя*/
 # define S_IMP_1	"TROOE1", "TROOE2E8", "TROOE3E7", "TROOE4E6", "TROOE5"
 /*Имп - 2 фаза движения*/
@@ -49,6 +49,7 @@
 /*Имп - анимация смерти*/
 # define S_IMP_D	"TROOI0", "TROOJ0", "TROOK0", "TROOL0", "TROOM0"
 
+# define SAW 2
 /* Бензопила - анимация покоя*/
 # define S_SAW_S	"SAWGC0", "SAWGD0", NULL, NULL, NULL
 /* Бензопила - анимация атаки*/
@@ -63,27 +64,38 @@
 # include <stdint.h>
 # include "rect.h"
 
-typedef struct			s_name_s
+typedef struct		s_name_s
 {
-	char				name0[9];
-	char				name1[9];
-	char				name2[9];
-	char				name3[9];
-	char				name4[9];
-}						t_name_s;
+	char			name0[9];
+	char			name1[9];
+	char			name2[9];
+	char			name3[9];
+	char			name4[9];
+}					t_name_s;
 
-typedef struct			s_sprite
+typedef struct		s_sprite
 {
-	char				*name;
-	uint32_t			*pixel;
-	int32_t				w;
-	int32_t				h;
-	int32_t				left_offset;
-	int32_t				top_offset;
-}						t_sprite;
+	char			*name;
+	uint32_t		*pixel;
+	int32_t			w;
+	int32_t			h;
+	int32_t			left_offset;
+	int32_t			top_offset;
+}					t_sprite;
 
-uint32_t				get_pixel_sprite(t_sprite *surface, int x, int y);
-void					blit_sprite_scaled(t_sprite *src, t_rect *rsrc,
-							SDL_Surface *dst, t_rect *rdst);
+typedef struct		s_hud
+{
+	t_limit			health;
+	t_limit			shield;
+	t_limit			ammo;
+	t_sprite		*gun;
+}					t_hud;
+
+uint32_t			get_pixel_sprite(t_sprite *surface, int x, int y);
+void				blit_sprite_scaled(t_sprite *src, t_rect *rsrc,
+						SDL_Surface *dst, t_rect *rdst);
+void				blit_gan_scaled(t_sprite *src, SDL_Surface *dst);
+void				blit_hud_scaled(t_sprite *src, SDL_Surface *dst,
+						t_hud *status);
 
 #endif
