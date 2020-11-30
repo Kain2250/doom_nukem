@@ -6,13 +6,13 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:30:01 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/18 20:08:34 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/20 12:51:10 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-bool			init_sdl(t_doom_nukem *doom)
+bool			init_sdl(t_doom *doom)
 {
 	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO |
 			SDL_INIT_EVENTS) == -1)
@@ -23,10 +23,13 @@ bool			init_sdl(t_doom_nukem *doom)
 		return (false);
 	if ((doom->sdl.surface = SDL_GetWindowSurface(doom->sdl.window)) == NULL)
 		return (false);
+		if ((doom->sdl.render = SDL_CreateSoftwareRenderer(doom->sdl.surface)) == NULL)
+		return (false);
+	doom->sdl.surface = SDL_CreateRGBSurfaceWithFormatFrom(doom->sdl.surface->pixels, doom->sdl.surface->w, doom->sdl.surface->h, 32, doom->sdl.surface->pitch, SDL_PIXELFORMAT_BGRA32);
 	return (true);
 }
 
-bool			init_sdl_image(t_doom_nukem *doom)
+bool			init_sdl_image(t_doom *doom)
 {
 	if (!(IMG_Init(IMG_INIT_JPG) & IMG_INIT_JPG))
 		return (false);
@@ -34,7 +37,7 @@ bool			init_sdl_image(t_doom_nukem *doom)
 	return (true);
 }
 
-bool			init_sdl_mixer(t_doom_nukem *doom)
+bool			init_sdl_mixer(t_doom *doom)
 {
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 		return (false);
@@ -42,7 +45,7 @@ bool			init_sdl_mixer(t_doom_nukem *doom)
 	return (true);
 }
 
-bool			init_sdl_ttf(t_doom_nukem *doom)
+bool			init_sdl_ttf(t_doom *doom)
 {
 	if (TTF_Init() == -1)
 		return (false);
@@ -50,7 +53,7 @@ bool			init_sdl_ttf(t_doom_nukem *doom)
 	return (true);
 }
 
-bool			init_sdl_net(t_doom_nukem *doom)
+bool			init_sdl_net(t_doom *doom)
 {
 	if (SDLNet_Init() == -1)
 		return (false);
@@ -58,7 +61,7 @@ bool			init_sdl_net(t_doom_nukem *doom)
 	return (true);
 }
 
-bool			init_lib_sdl(t_doom_nukem *doom)
+bool			init_lib_sdl(t_doom *doom)
 {
 	if (init_sdl(doom) == false)
 		return (put_error_sdl(ERR_INIT_SDL, SDL_GetError()));

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   blit_surf_scale.c                                  :+:      :+:    :+:   */
+/*   blit_sprite_scale.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 21:03:55 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/26 20:04:44 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/27 19:59:00 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_rectf		check_scale_delta(t_rect *rdst, t_rect *rsrc)
 	return (delta);
 }
 
-static void			while_scale_pic(SDL_Surface *src, t_rect *rsrc,
+static void			while_scale_pic(t_sprite *src, t_rect *rsrc,
 					SDL_Surface *dst, t_rect *rdst)
 {
 	t_pointf		crd[2];
@@ -43,26 +43,42 @@ static void			while_scale_pic(SDL_Surface *src, t_rect *rsrc,
 		crd[1].x = rsrc->x;
 		while (crd[0].x < rdst->w || crd[0].x < rdst->x + rdst->w)
 		{
-			color = get_pixel(src, crd[1].x, crd[1].y);
+			color = get_pixel_sprite(src, crd[1].x, crd[1].y);
+			if (color == 0xFFFFFFFF)
+			{
+				(crd[1].x += delta.w) && crd[0].x++;
+				continue ;
+			}
 			putpixel(dst, crd[0].x, crd[0].y, color);
-			crd[1].x += delta.w;
-			crd[0].x++;
+			(crd[1].x += delta.w) && crd[0].x++;
 		}
-		crd[1].y += delta.h;
-		crd[0].y++;
+		(crd[1].y += delta.h) && crd[0].y++;
 	}
 }
 
-void				blit_surf_scaled(SDL_Surface *src, t_rect *rsrc,
-					SDL_Surface *dst, t_rect *rdst)
+void				blit_gan_scaled(t_sprite *src, SDL_Surface *dst)
 {
-	t_rect			tmp_rsrc;
-	t_rect			tmp_rdst;
+	t_rect			rsrc;
+	t_rect			rdst;
 
-	if (rsrc == NULL)
-		tmp_rsrc = (t_rect){0, 0, src->w, src->h, false};
-	if (rdst == NULL)
-		tmp_rdst = (t_rect){0, 0, dst->w, dst->h, false};
-	while_scale_pic(src, rsrc != NULL ? rsrc : &tmp_rsrc,
-		dst, rdst != NULL ? rdst : &tmp_rdst);
+	rsrc = (t_rect){0, 0, src->w, src->h, false};
+	rdst.w = src->w * WIDTH_WIN / 320;
+	rdst.h = src->h * HEIGHT_WIN / 200;
+	rdst.x = -(WIDTH_WIN * src->left_offset / 320);
+	rdst.y = -(HEIGHT_WIN * src->top_offset / 200);
+	while_scale_pic(src, &rsrc, dst, &rdst);
+}
+
+void				blit_hud_scaled(t_sprite *src, SDL_Surface *dst, t_hud *status)
+{
+	t_rect			rsrc;
+	t_rect			rdst;
+
+	rsrc = (t_rect){0, 0, src->w, src->h, false};
+	rdst.w = src->w * WIDTH_WIN / 320;
+	rdst.h = src->h * HEIGHT_WIN / 200;
+	rdst.x = 0;
+	rdst.y = HEIGHT_WIN - rdst.h;
+	while_scale_pic(src, &rsrc, dst, &rdst);
+	(void)status;
 }

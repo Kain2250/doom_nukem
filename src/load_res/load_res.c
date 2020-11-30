@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 15:00:44 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/10 15:57:09 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/17 21:01:24 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static bool		load_texture(SDL_Surface *textures[texture_total],
 	return (true);
 }
 
-bool			load_res(t_doom_nukem *doom)
+bool			load_res(t_doom *doom)
 {
 	if (load_texture(doom->sdl.textures, doom->sdl.surface) == false)
 		return (put_error_sdl(ERR_LOAD_IMG, IMG_GetError()));

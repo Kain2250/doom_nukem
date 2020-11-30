@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 17:28:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/25 19:05:39 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/30 18:17:27 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,22 @@ static size_t	wad_len(char *path)
 	len = 0;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-	{
-		ft_putstr("file_no_open\n");
-		exit(0);
-	}
+		exit(put_error_sys("file_no_open") - 1);
 	else
 	{
 		wad_file = (uint8_t *)ft_memalloc(50 * sizeof(uint8_t));
 		temp_len = read(fd, wad_file, 50);
-		while (temp_len > 0)
+		if (temp_len > 5 && (ft_strnequ((char*)wad_file, "IWAD", 4)))
 		{
-			len += temp_len;
-			temp_len = read(fd, wad_file, 50);
+			while (temp_len > 0)
+			{
+				len += temp_len;
+				temp_len = read(fd, wad_file, 50);
+			}
+			free(wad_file);
 		}
-		free(wad_file);
+		else
+			exit(put_error_sys("file_no_WAD") - 1);
 	}
 	close(fd);
 	return (len);
@@ -59,13 +61,13 @@ static uint8_t	*wad_load(size_t size, char *path)
 	return (data);
 }
 
-bool			wad_loader(t_doom_nukem *doom, char *path)
+bool			wad_loader(t_wad *wad, char *path)
 {
 	size_t		len_wad;
 
 	len_wad = wad_len(path);
-	doom->wad.map = wad_load(len_wad, path);
-	if (doom->wad.map == NULL)
+	wad->map = wad_load(len_wad, path);
+	if (wad->map == NULL)
 		return (false);
 	return (true);
 }

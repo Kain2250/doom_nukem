@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:33:00 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/26 18:21:43 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/17 21:01:19 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,19 @@ void	clear_wad_dir(t_dir *dir)
 		free(dir);
 }
 
-void	doom_exit(t_doom_nukem *doom)
+void	clear_wad_struct(t_wad wad)
+{
+	free(wad.things);
+	free(wad.linedef);
+	free(wad.vert);
+	free(wad.sidedefs);
+	free(wad.segs);
+	free(wad.ssectors);
+	free(wad.nodes);
+	free(wad.sectors);
+}
+
+void	doom_exit(t_doom *doom)
 {
 	int	i;
 
@@ -45,9 +57,8 @@ void	doom_exit(t_doom_nukem *doom)
 	while (++i < font_total)
 		if (doom->sdl.fonts[i] != NULL)
 			TTF_CloseFont(doom->sdl.fonts[i]);
-	clear_wad_dir(doom->wad.dir);
-	free(doom->wad.linedef);
-	free(doom->wad.vert);
+	// clear_wad_dir(doom->wad.dir);
+	// clear_wad_struct(doom->wad);
 	if (doom->wad.map != NULL)
 		free(doom->wad.map);
 	free_editor(doom->screen);

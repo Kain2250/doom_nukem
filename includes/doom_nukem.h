@@ -6,72 +6,43 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/26 18:19:16 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/30 18:02:17 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_NUKEM_H
 # define DOOM_NUKEM_H
 
-# define NAME_WIN "Doom-Nukem (by Bdrinkin & Mcarc & Jthuy)"
+# define NAME_WIN "Doom-Nukem (by Bdrinkin & Jthuy & Vneelix && Nsena)"
+// # define WIDTH_WIN 320
+// # define HEIGHT_WIN 200
 # define WIDTH_WIN 1500
 # define HEIGHT_WIN 1000
+# define HALF_WIDTH WIDTH_WIN / 2
+# define HALF_HEIGHT HEIGHT_WIN / 2
 
 # include <math.h>
 # include <stdbool.h>
 # include "errorout.h"
 # include "define_resource.h"
 # include "tree_struct.h"
+# include "sprite_kit.h"
+# include "rect.h"
+# include "wad.h"
 # include "libft.h"
-# include "SDL.h"
-# include "SDL_image.h"
-# include "SDL_mixer.h"
-# include "SDL_ttf.h"
-# include "SDL_net.h"
-
-typedef struct		s_point
-{
-	int				x;
-	int				y;
-}					t_point;
-
-typedef struct		s_pointf
-{
-	double			x;
-	double			y;
-}					t_pointf;
-
-typedef struct		s_rect
-{
-	int				x;
-	int				y;
-	int				w;
-	int				h;
-	bool			free;
-}					t_rect;
-
-typedef struct		s_rectf
-{
-	double			x;
-	double			y;
-	double			w;
-	double			h;
-	bool			free;
-}					t_rectf;
-
-typedef struct			s_limit
-{
-	int					cur;
-	int					max;
-	int					min;
-}						t_limit;
-
-typedef struct			s_limit_f
-{
-	float				cur;
-	float				max;
-	float				min;
-}						t_limit_f;
+# ifdef __APPLE__
+#  include "SDL.h"
+#  include "SDL_image.h"
+#  include "SDL_mixer.h"
+#  include "SDL_ttf.h"
+#  include "SDL_net.h"
+# elif __linux__
+#  include "SDL2/SDL.h"
+#  include "SDL2/SDL_image.h"
+#  include "SDL2/SDL_mixer.h"
+#  include "SDL2/SDL_ttf.h"
+#  include "SDL2/SDL_net.h"
+# endif
 
 typedef struct		s_block
 {
@@ -114,6 +85,7 @@ typedef struct			s_color
 	Uint8				red;
 	Uint8				green;
 	Uint8				blue;
+	Uint8				alpha;
 }						t_color;
 
 typedef struct			s_player
@@ -148,40 +120,28 @@ typedef struct			s_new_win
 	bool				quit;
 }						t_new_win;
 
-typedef struct			s_wad_head
-{
-	char				wad_type[5];
-	uint32_t			dir_count;
-	uint32_t			dir_offset;
-}						t_wad_head;
 
-typedef struct			s_dir
-{
-	uint32_t			lump_offset;
-	uint32_t			lump_size;
-	char				lump_name[9];
-	struct s_dir		*next;
-}						t_dir;
 
-typedef struct			s_wad
+typedef struct			s_crd
 {
-	struct s_wad_head	head;
-	struct s_dir		*dir;
-	t_vertex			*vert;
-	t_linedef			*linedef;
-	uint8_t				*map;
-}						t_wad;
+	int					x;
+	int					*y;
+}						t_crd;
 
-typedef struct			s_doom_nukem
+typedef struct			s_doom
 {
 	struct s_sdl_sys	sdl;
 	struct s_mouse		mouse;
 	struct s_new_win	frame;
 	struct s_frames		*screen;
 	struct s_player		player;
+	t_timer				time;
 	t_wad				wad;
+	t_sprite			test[15];
+	int					buf1;
+	int					buf2;
 	bool				quit;
-}						t_doom_nukem;
+}						t_doom;
 /*
 ** main.c
 */
@@ -189,17 +149,15 @@ int						main(int ac, char **av);
 /*
 ** debug_file.c
 */
-void					doom_exit(t_doom_nukem *doom);
-int						put_error_sys(char *error);
-bool					put_error_sdl(char *error, const char *error_sdl);
+void					doom_exit(t_doom *doom);
 /*
 ** event_list.c
 */
-void					event_list(t_doom_nukem *doom);
+void					event_list(t_doom *doom);
 /*
 ** init_sdl.c
 */
-bool					init_lib_sdl(t_doom_nukem *doom);
+bool					init_lib_sdl(t_doom *doom);
 /*
 ** struct_timer.c
 */
@@ -218,7 +176,7 @@ void					fps_counter(t_timer *time);
 /*
 ** load_res/load_res.c
 */
-bool					load_res(t_doom_nukem *doom);
+bool					load_res(t_doom *doom);
 SDL_Surface				*load_surface(char *path, SDL_Surface *screen_surface);
 /*
 ** tools_for_editor/tools.c
@@ -247,8 +205,8 @@ void					free_editor(t_frames *frame_table);
 t_frames				*new_frame(t_rect rect, Uint32 color,
 							struct s_block *blocks);
 t_block					*new_block(int type, t_rect rect, SDL_Surface *pic);
-void					frame_tamer(t_doom_nukem *doom, t_frames *frame_table);
-t_frames				*init_editor(t_doom_nukem *doom);
+void					frame_tamer(t_doom *doom, t_frames *frame_table);
+t_frames				*init_editor(t_doom *doom);
 void					scale_rect_texture(SDL_Surface *dst, t_mouse mouse, SDL_Surface *src);
 
 void					if_rect(SDL_Surface *src, t_rect *rsrc,
@@ -259,8 +217,6 @@ void					blit_surf_scaled(SDL_Surface *src, t_rect *rsrc,
 void					blit_surface(SDL_Surface *src, t_rect *rsrc,
 							SDL_Surface *dst, t_rect *rdst);
 
-t_rect					*rect_fill(int x, int y, int w, int h);
-t_rect					rect_fill_no_malloc(int x, int y, int w, int h);
 void					draw_line(SDL_Surface *dst, t_point start, t_point end, Uint32 color);
 void					draw_circl(SDL_Surface *dst, int radius,
 							t_point center, Uint32 color);
@@ -275,29 +231,27 @@ void					put_button(SDL_Surface *dst, t_rect *rect,
 
 void					put_slide_bar(SDL_Surface *dst, t_rect *rect, t_limit *data, Uint32 color);
 float					interpolate(t_limit_f x, t_limit_f c);
-void					fill_limit(t_limit *data, int min, int cur, int max);
-void					fill_limit_f(t_limit_f *data, float min, float cur, float max);
 
-void					mouse_events(t_doom_nukem *doom);
+void					mouse_events(t_doom *doom);
 bool					is_button_area(t_rect *area, t_mouse mouse);
 void					is_mouse_presed(t_mouse *mouse);
 bool					is_slidebar_area(t_rect *area, t_mouse mouse);
 int						which_button(bool *mouse);
 
 
-t_point					fill_point(int x, int y);
+void					wad_put_patch(t_doom *doom, char *texture, t_patches pth, t_point start);
+void					wad_draw_vertex(t_doom *doom, char *name_map);
+void					wad_draw_linedefs(t_wad wad,
+						t_vertex *vertex, SDL_Surface *surface, char *name_map);
+SDL_Surface				*wad_draw_texture(t_doom *doom, t_point start, char *texture);
+SDL_Surface				*wad_draw_patch(t_wad wad, char *pnames, t_sprite *sprite);
+void					put_pixel_sprite(t_sprite *sprite, int x, int y, uint32_t color);
+void					draw_sprite_anim(t_doom *doom, t_sprite **sprite, Uint32 delay);
 
-bool					wad_loader(t_doom_nukem *doom, char *path);
-bool					wad_reader(t_doom_nukem *doom);
-uint16_t				bytes_to_short(const uint8_t *data, int offset);
-uint32_t				bytes_to_int(const uint8_t *data, int offset);
-/*
-** Возвращает offset на lump с данными lable относящихся к карте name_map
-*/
-uint32_t				find_offset_lump(t_dir *dir, char *lable, char *name_map);
 
 
 void					clear_wad_dir(t_dir *dir);
+void					print_bit(void *data);
 
 
 #endif

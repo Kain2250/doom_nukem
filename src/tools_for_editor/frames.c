@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 20:37:35 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/17 21:37:43 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/17 21:01:24 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_frames		*new_frame(t_rect rect, Uint32 color,
 	return (src);
 }
 
-void			frame_tamer(t_doom_nukem *doom, t_frames *frame_table)
+void			frame_tamer(t_doom *doom, t_frames *frame_table)
 {
 	t_frames	*temp;
 	t_block		*temp_block;

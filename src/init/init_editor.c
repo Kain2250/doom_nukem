@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 19:24:18 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/17 21:43:06 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/17 21:01:24 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_block			*new_block(int type, t_rect rect, SDL_Surface *pic)
 	return (block);
 }
 
-t_frames		*init_editor(t_doom_nukem *doom)
+t_frames		*init_editor(t_doom *doom)
 {
 	t_frames	*frame_table;
 	t_frames	*temp;

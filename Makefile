@@ -6,7 +6,7 @@
 #    By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/09/24 21:08:38 by bdrinkin         ###   ########.fr        #
+#    Updated: 2020/11/30 18:08:54 by bdrinkin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = doom-nukem
 RES = resource
 
 # Флаги компиляции:
-GCC = gcc
+GCC = gcc -O0
 CCFLAGS = -Wall -Wextra -Werror
 OTHERS_FLAGS = -lm
 
@@ -62,17 +62,25 @@ HEADERS = $(addprefix $(INCLUDES_DIRECTORY), $(HEADERS_LIST))
 SRC_DIRECTORY = src/
 SRC_LIST = main.c \
 	debug_file.c \
-	wad_loader.c \
-	wad_reader.c \
-	bytes_shift.c \
 	tools_for_editor/*.c \
 	load_res/*.c \
 	primitives/*.c \
 	events/*.c \
 	init/*.c \
-	tools/*.c
+	tools/*.c \
+	wad/wad_loader.c \
+	wad/wad_reader.c \
+	wad/bytes_shift.c \
+	wad/draw_wad.c \
+	wad/wad_get.c \
+	wad/draw_sprite.c
+
 
 SRC = $(addprefix $(SRC_DIRECTORY), $(SRC_LIST))
+
+OBJECTS_DIRECTORY = objects/
+OBJECTS_LIST = $(patsubst %.c, %.o, $(SOURCES_LIST))
+OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(OBJECTS_LIST))
 
 # Определение цвета вывода:
 GREEN = \033[0;32;1m
@@ -86,7 +94,6 @@ RESET = \033[0m
 all: $(NAME)
 
 $(NAME): $(LIBFT_DIRECTORY) $(SRC) $(HEADERS) $(RES)
-	@$(MAKE) -C $(LIBFT_DIRECTORY)
 	@echo "wolf3d: $(GREEN)Компиляция исполняемого файла$(RESET)\n"
 	@$(GCC) $(CCFLAGS) $(INCLUDES) $(LIBRARIES_LIBFT) $(FRAMEWORKS) $(OTHERS_FLAGS) $(SRC) -o $(NAME)
 	@echo "wolf3d: $(GREEN)Компиляция завершена$(RESET)\n"
