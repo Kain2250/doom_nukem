@@ -6,13 +6,14 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:39:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/17 21:01:24 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/30 18:26:13 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom_nukem.h"
+#include "wad.h"
 
-void			read_head_data(const uint8_t *data, int offset, t_wad_head *head)
+void			read_head_data(const uint8_t *data,
+					int offset, t_wad_head *head)
 {
 	head->wad_type[0] = data[offset];
 	head->wad_type[1] = data[offset + 1];
@@ -38,7 +39,8 @@ void			read_dir_data(const uint8_t *data, int offset, t_dir *dir)
 	dir->lump_name[8] = '\0';
 }
 
-void			wad_pars_name(const uint8_t *data, uint32_t offset, char name[9])
+void			wad_pars_name(const uint8_t *data,
+					uint32_t offset, char name[9])
 {
 	int			i;
 	uint32_t	temp_offset;
@@ -53,7 +55,8 @@ void			wad_pars_name(const uint8_t *data, uint32_t offset, char name[9])
 	}
 }
 
-void			wad_pars_box(const uint8_t *data, uint32_t offset, int16_t box[4])
+void			wad_pars_box(const uint8_t *data,
+					uint32_t offset, int16_t box[4])
 {
 	int			i;
 	uint32_t	temp_offset;
@@ -119,30 +122,30 @@ uint32_t		wad_find_texture(t_dir *dir, char *name)
 	return (temp->lump_offset);
 }
 
-bool			wad_reader(t_doom *doom)
+bool			wad_reader(t_wad *wad)
 {
 	t_dir		*temp;
 	size_t		i;
 
 	i = -1;
-	read_head_data(doom->wad.map, 0, &doom->wad.head);
-	doom->wad.dir = (t_dir *)ft_memalloc(sizeof(t_dir));
-	temp = doom->wad.dir;
-	while (++i < doom->wad.head.dir_count)
+	read_head_data(wad->map, 0, &wad->head);
+	wad->dir = (t_dir *)ft_memalloc(sizeof(t_dir));
+	temp = wad->dir;
+	while (++i < wad->head.dir_count)
 	{
-		read_dir_data(doom->wad.map, doom->wad.head.dir_offset + i * 16, temp);
-		if (i + 1 != doom->wad.head.dir_count)
+		read_dir_data(wad->map, wad->head.dir_offset + i * 16, temp);
+		if (i + 1 != wad->head.dir_count)
 		{
 			temp->next = (t_dir *)ft_memalloc(sizeof(t_dir));
 			temp = temp->next;
 		}
 	}
-	wad_get_playpal(doom);
-	wad_get_colormap(doom);
-	wad_get_textures(doom->wad.map, find_offset_lump(doom->wad.dir,
-		"TEXTURE1", NULL), &doom->wad.textures1);
-	wad_get_textures(doom->wad.map, find_offset_lump(doom->wad.dir,
-		"TEXTURE2", NULL), &doom->wad.textures2);
-	wad_get_pnames(doom->wad.map, doom->wad.dir, &doom->wad.pname);
+	wad_get_playpal(wad);
+	wad_get_colormap(wad);
+	wad_get_textures(wad->map, find_offset_lump(wad->dir,
+		"TEXTURE1", NULL), &wad->textures1);
+	wad_get_textures(wad->map, find_offset_lump(wad->dir,
+		"TEXTURE2", NULL), &wad->textures2);
+	wad_get_pnames(wad->map, wad->dir, &wad->pname);
 	return (true);
 }

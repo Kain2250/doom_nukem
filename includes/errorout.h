@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 15:59:58 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/29 18:16:22 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/30 18:02:22 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,8 @@
 # define ERR_CAPTURE_MOUSE "\033[0;31;1mFailed to make mouse capture\033[0m"
 
 # define USAGE_DOOM "No input mapfile.\n\tUsage: ./doom-nulem map"
+
+int						put_error_sys(char *error);
+bool					put_error_sdl(char *error, const char *error_sdl);
 
 #endif

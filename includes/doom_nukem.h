@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/27 20:51:34 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/30 18:02:17 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,20 @@
 # include "tree_struct.h"
 # include "sprite_kit.h"
 # include "rect.h"
+# include "wad.h"
 # include "libft.h"
 # ifdef __APPLE__
-# include "SDL.h"
-# include "SDL_image.h"
-# include "SDL_mixer.h"
-# include "SDL_ttf.h"
-# include "SDL_net.h"
+#  include "SDL.h"
+#  include "SDL_image.h"
+#  include "SDL_mixer.h"
+#  include "SDL_ttf.h"
+#  include "SDL_net.h"
 # elif __linux__
-# include "SDL2/SDL.h"
-# include "SDL2/SDL_image.h"
-# include "SDL2/SDL_mixer.h"
-# include "SDL2/SDL_ttf.h"
-# include "SDL2/SDL_net.h"
+#  include "SDL2/SDL.h"
+#  include "SDL2/SDL_image.h"
+#  include "SDL2/SDL_mixer.h"
+#  include "SDL2/SDL_ttf.h"
+#  include "SDL2/SDL_net.h"
 # endif
 
 typedef struct		s_block
@@ -119,50 +120,13 @@ typedef struct			s_new_win
 	bool				quit;
 }						t_new_win;
 
-typedef struct			s_wad_head
-{
-	char				wad_type[5];
-	uint32_t			dir_count;
-	uint32_t			dir_offset;
-}						t_wad_head;
 
-typedef struct			s_dir
-{
-	uint32_t			lump_offset;
-	uint32_t			lump_size;
-	char				lump_name[9];
-	struct s_dir		*next;
-}						t_dir;
-
-typedef struct			s_wad
-{
-	uint8_t				*map;
-	struct s_wad_head	head;
-	struct s_dir		*dir;
-	uint32_t			color[14][256];
-	uint32_t			colormap[34][256];
-	t_things			*things;
-	t_linedef			*linedef;
-	t_sidedef			*sidedefs;
-	t_vertex			*vert;
-	t_seg				*segs;
-	t_ssectors			*ssectors;
-	t_node				*nodes;
-	t_sector			*sectors;
-	t_pnames			pname;
-	t_texture_head		textures1;
-	t_texture_head		textures2;
-	uint16_t			bright;
-	uint16_t			baff;
-	uint16_t			temp_step;
-}						t_wad;
 
 typedef struct			s_crd
 {
 	int					x;
 	int					*y;
 }						t_crd;
-
 
 typedef struct			s_doom
 {
@@ -186,8 +150,6 @@ int						main(int ac, char **av);
 ** debug_file.c
 */
 void					doom_exit(t_doom *doom);
-int						put_error_sys(char *error);
-bool					put_error_sdl(char *error, const char *error_sdl);
 /*
 ** event_list.c
 */
@@ -255,8 +217,6 @@ void					blit_surf_scaled(SDL_Surface *src, t_rect *rsrc,
 void					blit_surface(SDL_Surface *src, t_rect *rsrc,
 							SDL_Surface *dst, t_rect *rdst);
 
-t_rect					*rect_fill(int x, int y, int w, int h);
-t_rect					rect_fill_no_malloc(int x, int y, int w, int h);
 void					draw_line(SDL_Surface *dst, t_point start, t_point end, Uint32 color);
 void					draw_circl(SDL_Surface *dst, int radius,
 							t_point center, Uint32 color);
@@ -271,8 +231,6 @@ void					put_button(SDL_Surface *dst, t_rect *rect,
 
 void					put_slide_bar(SDL_Surface *dst, t_rect *rect, t_limit *data, Uint32 color);
 float					interpolate(t_limit_f x, t_limit_f c);
-void					fill_limit(t_limit *data, int min, int cur, int max);
-void					fill_limit_f(t_limit_f *data, float min, float cur, float max);
 
 void					mouse_events(t_doom *doom);
 bool					is_button_area(t_rect *area, t_mouse mouse);
@@ -281,47 +239,16 @@ bool					is_slidebar_area(t_rect *area, t_mouse mouse);
 int						which_button(bool *mouse);
 
 
-t_point					fill_point(int x, int y);
-
-bool					wad_loader(t_doom *doom, char *path);
-bool					wad_reader(t_doom *doom);
-uint16_t				bytes_to_short(const uint8_t *data, int offset);
-uint32_t				bytes_to_int(const uint8_t *data, int offset);
-int16_t					bytes_to_ishort(const uint8_t *data, int offset);
-/*
-** Возвращает offset на lump с данными lable относящихся к карте name_map
-*/
-void					read_head_data(const uint8_t *data, int offset, t_wad_head *head);
-void					read_dir_data(const uint8_t *data, int offset, t_dir *dir);
-void					wad_pars_name(const uint8_t *data, uint32_t offset, char name[9]);
-void					wad_pars_box(const uint8_t *data, uint32_t offset, int16_t box[4]);
-
-uint32_t				find_offset_lump(t_dir *dir, char *lable, char *name_map);
-uint32_t				find_size_lump(t_dir *dir, char *lable, char *name_map);
-uint32_t				wad_find_texture(t_dir *dir, char *name);
-
 void					wad_put_patch(t_doom *doom, char *texture, t_patches pth, t_point start);
 void					wad_draw_vertex(t_doom *doom, char *name_map);
-void					wad_draw_linedefs(t_doom *doom, t_vertex *vertex, char *name_map);
+void					wad_draw_linedefs(t_wad wad,
+						t_vertex *vertex, SDL_Surface *surface, char *name_map);
 SDL_Surface				*wad_draw_texture(t_doom *doom, t_point start, char *texture);
-SDL_Surface				*wad_draw_patch(t_doom *doom, char *pnames, t_sprite *sprite);
+SDL_Surface				*wad_draw_patch(t_wad wad, char *pnames, t_sprite *sprite);
 void					put_pixel_sprite(t_sprite *sprite, int x, int y, uint32_t color);
 void					draw_sprite_anim(t_doom *doom, t_sprite **sprite, Uint32 delay);
 
 
-void					wad_get_linedefs(t_doom *doom, char *name_map);
-void					wad_get_vertex(t_doom *doom, char *name_map);
-t_patch					wad_get_patch_info(const uint8_t *data,  uint32_t offset);
-void					wad_get_playpal(t_doom *doom);
-void					wad_get_colormap(t_doom *doom);
-void					wad_get_textures(const uint8_t *data, uint32_t offset, t_texture_head *texture);
-void					wad_get_pnames(const uint8_t *data, t_dir *dir ,t_pnames *pname);
-void					wad_get_nodes(t_doom *doom, char *map_name);
-void					wad_get_sidedefs(t_doom *doom, char *name_map);
-void					wad_get_segs(t_doom *doom, char *name_map);
-void					wad_get_ssectors(t_doom *doom, char *name_map);
-void					wad_get_sectors(t_doom *doom, char *name_map);
-void					wad_get_things(t_doom *doom, char *name_map);
 
 void					clear_wad_dir(t_dir *dir);
 void					print_bit(void *data);

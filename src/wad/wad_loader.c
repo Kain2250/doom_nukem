@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 17:28:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/17 21:01:24 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/30 18:17:27 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ static uint8_t	*wad_load(size_t size, char *path)
 	return (data);
 }
 
-bool			wad_loader(t_doom *doom, char *path)
+bool			wad_loader(t_wad *wad, char *path)
 {
 	size_t		len_wad;
 
 	len_wad = wad_len(path);
-	doom->wad.map = wad_load(len_wad, path);
-	if (doom->wad.map == NULL)
+	wad->map = wad_load(len_wad, path);
+	if (wad->map == NULL)
 		return (false);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 19:37:12 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/27 20:16:15 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/28 13:39:03 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,6 @@
 
 # include <stdint.h>
 # include "rect.h"
-
-typedef struct		s_name_s
-{
-	char			name0[9];
-	char			name1[9];
-	char			name2[9];
-	char			name3[9];
-	char			name4[9];
-}					t_name_s;
 
 typedef struct		s_sprite
 {

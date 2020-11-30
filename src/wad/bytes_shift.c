@@ -6,11 +6,11 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:38:16 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/10/18 16:30:24 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/28 13:19:31 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom_nukem.h"
+#include "wad.h"
 
 // void		print_bit(void *data)
 // {
@@ -32,12 +32,6 @@
 // 		i++;
 // 	}
 // }
-
-int16_t		bytes_to_ishort(const uint8_t *data, int offset)
-{
-	// bit &= ~(1 << 7);
-	return ((data[offset + 1] << 8) | data[offset]);
-}
 
 uint16_t	bytes_to_short(const uint8_t *data, int offset)
 {

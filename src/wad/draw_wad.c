@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:43:10 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/21 16:34:20 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/30 17:53:39 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void			wad_put(char *name, int offset, int size)
 // 	t_patch		patch;
 //
 //
-// 	offset = find_offset_lump(doom->wad.dir, texture, NULL);
-// 	size = find_size_lump(doom->wad.dir, texture, NULL);
-// 	patch = wad_get_patch_info(doom->wad.map, offset);
+// 	offset = find_offset_lump(wad.dir, texture, NULL);
+// 	size = find_size_lump(wad.dir, texture, NULL);
+// 	patch = wad_get_patch_info(wad.map, offset);
 //
 // 	iter.x = start.x + pth.origin_x;
 // 	while (iter.x < patch.width + start.x)
@@ -46,10 +46,10 @@ void			wad_put(char *name, int offset, int size)
 // 		{
 // 			if (temp_offset > size + offset)
 // 				break ;
-// 			putpixel(doom->sdl.surface, iter.x, iter.y,
-// 				doom->wad.color[doom->wad.baff]
-// 				[doom->wad.colormap[doom->wad.bright]
-// 				[doom->wad.map[temp_offset]]]);
+// 			putpixel(surface, iter.x, iter.y,
+// 				wad.color[wad.baff]
+// 				[wad.colormap[wad.bright]
+// 				[wad.map[temp_offset]]]);
 // 			iter.y++;
 // 			temp_offset += 1;
 // 		}
@@ -57,42 +57,42 @@ void			wad_put(char *name, int offset, int size)
 // 	}
 // }
 
-uint32_t		rec_column(t_doom *doom, uint32_t offset, t_crd crd, SDL_Surface *surface)
+uint32_t		rec_column(t_wad wad, uint32_t offset, t_crd crd, SDL_Surface *surface)
 {
 	uint16_t			iter;
 	uint16_t			col;
 	int					y_step;
 	int					y_miss;
 
-	y_step = doom->wad.map[offset];
+	y_step = wad.map[offset];
 	y_miss = 0;
-	col = doom->wad.map[offset + 1];
+	col = wad.map[offset + 1];
 	iter = 0;
 	offset += 3;
-	while (y_miss - 1 < doom->wad.temp_step && doom->wad.map[offset + 1] != 255)
+	while (y_miss - 1 < wad.temp_step && wad.map[offset + 1] != 255)
 	{
 		putpixel(surface, crd.x, *crd.y + y_step,
-			doom->wad.color[doom->wad.baff]
-			[doom->wad.colormap[doom->wad.bright]
-			[doom->wad.map[offset]]]);
+			wad.color[wad.baff]
+			[wad.colormap[wad.bright]
+			[wad.map[offset]]]);
 		++iter;
 		++offset;
 		++y_miss;
-		if (iter == col && doom->wad.map[offset + 1] != 255)
+		if (iter == col && wad.map[offset + 1] != 255)
 		{
-			col = doom->wad.map[offset + 2];
-			y_step = doom->wad.map[offset + 1];
+			col = wad.map[offset + 2];
+			y_step = wad.map[offset + 1];
 			offset += 4;
 			iter = 0;
 		}
 		else
 			y_step++;
 	}
-	(*crd.y) += doom->wad.temp_step;
+	(*crd.y) += wad.temp_step;
 	return (offset + 2);
 }
 
-SDL_Surface		*wad_draw_patch(t_doom *doom, char *pnames, t_sprite *sprite)
+SDL_Surface		*wad_draw_patch(t_wad wad, char *pnames, t_sprite *sprite)
 {
 	uint32_t	offset;
 	t_patch		patch;
@@ -101,18 +101,18 @@ SDL_Surface		*wad_draw_patch(t_doom *doom, char *pnames, t_sprite *sprite)
 	SDL_Surface	*ret;
 
 	i = 0;
-	offset = find_offset_lump(doom->wad.dir, pnames, NULL);
-	patch = wad_get_patch_info(doom->wad.map, offset);
+	offset = find_offset_lump(wad.dir, pnames, NULL);
+	patch = wad_get_patch_info(wad.map, offset);
 	sprite->left_offset = patch.left_offset;
 	sprite->top_offset = patch.top_offset;
 	ret = SDL_CreateRGBSurfaceWithFormat(0, patch.width, patch.height,
 		32, SDL_PIXELFORMAT_BGRA32);
-	doom->wad.temp_step = patch.height;
+	wad.temp_step = patch.height;
 	start.x = 0;
 	while (i < patch.width)
 	{
 		start.y = 0;
-		rec_column(doom, offset + patch.columnoffset[i++],
+		rec_column(wad, offset + patch.columnoffset[i++],
 			(t_crd){start.x, &start.y}, ret);
 		start.x++;
 	}
@@ -121,29 +121,29 @@ SDL_Surface		*wad_draw_patch(t_doom *doom, char *pnames, t_sprite *sprite)
 
 
 
-void			wad_draw_linedefs(t_doom *doom,
-					t_vertex *vertex, char *name_map)
+void			wad_draw_linedefs(t_wad wad,
+					t_vertex *vertex, SDL_Surface *surface, char *name_map)
 {
 	uint16_t	i;
 	uint32_t	color;
 	uint32_t	size;
 
-	size = find_size_lump(doom->wad.dir, "LINEDEFS", name_map);
+	size = find_size_lump(wad.dir, "LINEDEFS", name_map);
 	size /= 14;
 	i = 0;
 	while (i < size)
 	{
-		if (doom->wad.linedef[i].rear == 65535)
+		if (wad.linedef[i].rear == 65535)
 			color = 0x0000ff;
 		else
 			color = 0xffffff;
-		if (doom->wad.linedef[i].type == 1)
+		if (wad.linedef[i].type == 1)
 			color = 0xff0000;
-		draw_line(doom->sdl.surface,
-			fill_point((vertex[doom->wad.linedef[i].start].x - doom->buf1) / 10,
-					abs(vertex[doom->wad.linedef[i].start].y - doom->buf2) / 10),
-			fill_point((vertex[doom->wad.linedef[i].finish].x - doom->buf1) / 10,
-					abs(vertex[doom->wad.linedef[i].finish].y - doom->buf2) / 10), color);
+		draw_line(surface,
+			fill_point((vertex[wad.linedef[i].start].x - wad.buf1) / 10,
+					abs(vertex[wad.linedef[i].start].y - wad.buf2) / 10),
+			fill_point((vertex[wad.linedef[i].finish].x - wad.buf1) / 10,
+					abs(vertex[wad.linedef[i].finish].y - wad.buf2) / 10), color);
 		i++;
 	}
 }

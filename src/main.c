@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/27 20:53:20 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/30 18:26:38 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ void				user_cursor(t_doom *doom)
 	SDL_SetCursor(curs);
 }
 
-void				wad_init_level(t_doom *doom, char *name_map)
+void				wad_init_level(t_wad *wad, char *name_map)
 {
-	wad_get_things(doom, name_map);
-	wad_get_linedefs(doom, name_map);
-	wad_get_sidedefs(doom, name_map);
-	wad_get_vertex(doom, name_map);
-	wad_get_segs(doom, name_map);
-	wad_get_ssectors(doom, name_map);
-	wad_get_nodes(doom, name_map);
-	wad_get_sectors(doom, name_map);
+	wad_get_things(wad, name_map);
+	wad_get_linedefs(wad, name_map);
+	wad_get_sidedefs(wad, name_map);
+	wad_get_vertex(wad, name_map);
+	wad_get_segs(wad, name_map);
+	wad_get_ssectors(wad, name_map);
+	wad_get_nodes(wad, name_map);
+	wad_get_sectors(wad, name_map);
 }
 
 void				skin(t_doom *doom)
@@ -136,23 +136,24 @@ t_sprite			*sprite_create(t_doom *doom, char *name)
 	return (sprite);
 }
 
+
 int					main(int ac, char **av)
 {
 	t_doom	*doom;
 
-	// char			*name_map = {"E1M1"};
+	char			*name_map = {"E1M1"};
 
 	if (ac == 2 || ac == 3)
 	{
 		doom = ft_memalloc(sizeof(t_doom));
 		init_lib_sdl(doom);
-		if (load_res(doom) == false || wad_loader(doom, av[1]) == false)
+		if (load_res(doom) == false | wad_loader(&doom->wad, av[1]) == false)
 		{
 			doom_exit(doom);
 			return (0);
 		}
-		wad_reader(doom);
-		// wad_init_level(doom, name_map);
+		wad_reader(&doom->wad);
+		wad_init_level(&doom->wad, name_map);
 		skin(doom);
 		doom->screen = init_editor(doom);
 		doom->wad.baff = 0;
@@ -169,6 +170,8 @@ int					main(int ac, char **av)
 			name[i] = ft_memalloc(sizeof(char) * 9);
 			++i;
 		}
+		name[0] = "SAWGC0";
+		name[1] = "SAWGD0";
 		i = 0;
 		sprites = (t_sprite **)ft_memalloc(sizeof(t_sprite *));
 		while (i <= SAW)
@@ -176,8 +179,6 @@ int					main(int ac, char **av)
 			sprites[i] = (t_sprite *)ft_memalloc(sizeof(t_sprite));
 			++i;
 		}
-		name[0] = "SAWGC0";
-		name[1] = "SAWGD0";
 
 		i = 0;
 		while (i < SAW)
@@ -185,12 +186,13 @@ int					main(int ac, char **av)
 		sprites[i] = NULL;
 
 		t_sprite *hud = sprite_create(doom, "STBAR");
+
 		timer_start(&doom->time);
 		while (doom->quit == false)
 		{
 			// fps_counter(&doom->time);
 			// frame_tamer(doom, doom->screen);
-			// wad_draw_linedefs(doom, doom->wad.vert, name_map);
+			wad_draw_linedefs(doom->wad, doom->wad.vert, doom->sdl.surface, name_map);
 			draw_line(doom->sdl.surface, (t_point){HALF_WIDTH, 0}, (t_point){HALF_WIDTH, HEIGHT_WIN}, 0xffffff);
 			draw_line(doom->sdl.surface, (t_point){0, HALF_HEIGHT}, (t_point){WIDTH_WIN, HALF_HEIGHT}, 0xffffff);
 

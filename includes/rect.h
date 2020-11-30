@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 20:22:43 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/27 19:38:59 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/11/30 18:01:32 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,13 @@ typedef struct		s_limit_f
 	double			max;
 	double			min;
 }					t_limit_f;
+
+void					fill_limit(t_limit *data, int min, int cur, int max);
+void					fill_limit_f(t_limit_f *data, float min,
+							float cur, float max);
+t_rect					*rect_fill(int x, int y, int w, int h);
+t_rect					rect_fill_no_malloc(int x, int y, int w, int h);
+t_point					fill_point(int x, int y);
+
 
 #endif

@@ -6,7 +6,7 @@
 #    By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/11/26 20:11:37 by bdrinkin         ###   ########.fr        #
+#    Updated: 2020/11/30 18:08:54 by bdrinkin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = doom-nukem
 RES = resource
 
 # Флаги компиляции:
-GCC = gcc -O2
+GCC = gcc -O0
 CCFLAGS = -Wall -Wextra -Werror
 OTHERS_FLAGS = -lm
 
