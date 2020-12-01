@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/30 18:02:17 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/01 19:07:25 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,9 +246,12 @@ void					wad_draw_linedefs(t_wad wad,
 SDL_Surface				*wad_draw_texture(t_doom *doom, t_point start, char *texture);
 SDL_Surface				*wad_draw_patch(t_wad wad, char *pnames, t_sprite *sprite);
 void					put_pixel_sprite(t_sprite *sprite, int x, int y, uint32_t color);
-void					draw_sprite_anim(t_doom *doom, t_sprite **sprite, Uint32 delay);
+void					draw_gun_anim(t_doom *doom, t_sprite **sprite, Uint32 delay);
 
-
+void					draw_sprite_anim(t_doom *doom, t_sprite **sprite, Uint32 delay, t_rectf rect);
+void					put_column(t_wad *wad, uint32_t offset,
+							int x, t_sprite *sprite);
+void					wad_destroy_patch(t_patch patch);
 
 void					clear_wad_dir(t_dir *dir);
 void					print_bit(void *data);

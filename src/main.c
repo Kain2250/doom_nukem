@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/30 18:26:38 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/01 21:10:34 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void				wad_destroy_patch(t_patch patch)
 	ft_bzero(&patch, sizeof(patch));
 }
 
-static void				put_column(t_doom *doom, uint32_t offset,
+void				put_column(t_wad *wad, uint32_t offset,
 							int x, t_sprite *sprite)
 {
 	uint16_t			iter;
@@ -56,23 +56,20 @@ static void				put_column(t_doom *doom, uint32_t offset,
 	int					y_step;
 	int					y_miss;
 
-	y_step = doom->wad.map[offset];
+	y_step = wad->map[offset];
 	y_miss = 0;
-	col = doom->wad.map[offset + 1];
+	col = wad->map[offset + 1];
 	iter = 0;
 	offset += 3;
-	while (y_miss - 1 < sprite->h && doom->wad.map[offset + 1] != 255)
+	while (y_miss - 1 < sprite->h && wad->map[offset + 1] != 255)
 	{
-		sprite->pixel[y_step * sprite->w + x] = doom->wad.color[doom->wad.baff]
-			[doom->wad.colormap[doom->wad.bright]
-			[doom->wad.map[offset]]];
-		++iter;
-		++offset;
-		++y_miss;
-		if (iter == col && doom->wad.map[offset + 1] != 255)
+		sprite->pixel[y_step * sprite->w + x] = wad->color[wad->baff]
+			[wad->colormap[wad->bright][wad->map[offset]]];
+		++iter && ++offset && ++y_miss;
+		if (iter == col && wad->map[offset + 1] != 255)
 		{
-			col = doom->wad.map[offset + 2];
-			y_step = doom->wad.map[offset + 1];
+			col = wad->map[offset + 2];
+			y_step = wad->map[offset + 1];
 			offset += 4;
 			iter = 0;
 		}
@@ -109,7 +106,7 @@ void				draw_sprite(t_sprite *sprite, SDL_Surface *screen,
 	}
 }
 
-t_sprite			*sprite_create(t_doom *doom, char *name)
+t_sprite			*sprite_create(t_wad *wad, char *name)
 {
 	t_sprite		*sprite;
 	t_patch			patch;
@@ -118,9 +115,9 @@ t_sprite			*sprite_create(t_doom *doom, char *name)
 
 	if (!(sprite = (t_sprite *)ft_memalloc(sizeof(t_sprite))))
 		return (NULL);
-	offset = find_offset_lump(doom->wad.dir, name, NULL);
-	patch = wad_get_patch_info(doom->wad.map, offset);
-	sprite->name = ft_strdup(name);
+	offset = find_offset_lump(wad->dir, name, NULL);
+	patch = wad_get_patch_info(wad->map, offset);
+	sprite->name = name;
 	sprite->h = patch.height;
 	sprite->w = patch.width;
 	sprite->left_offset = patch.left_offset;
@@ -131,17 +128,16 @@ t_sprite			*sprite_create(t_doom *doom, char *name)
 		sizeof(uint32_t) * sprite->w * sprite->h);
 	x = -1;
 	while (++x < patch.width)
-		put_column(doom, offset + patch.columnoffset[x], x, sprite);
+		put_column(wad, offset + patch.columnoffset[x], x, sprite);
 	wad_destroy_patch(patch);
 	return (sprite);
 }
-
 
 int					main(int ac, char **av)
 {
 	t_doom	*doom;
 
-	char			*name_map = {"E1M1"};
+	// char			*name_map = {"E1M1"};
 
 	if (ac == 2 || ac == 3)
 	{
@@ -153,52 +149,43 @@ int					main(int ac, char **av)
 			return (0);
 		}
 		wad_reader(&doom->wad);
-		wad_init_level(&doom->wad, name_map);
+		// wad_init_level(&doom->wad, name_map);
 		skin(doom);
-		doom->screen = init_editor(doom);
-		doom->wad.baff = 0;
-		doom->wad.bright = 0;
-		// texture = wad_draw_texture(doom, fill_point(0, 0), av[2]);
+		// doom->screen = init_editor(doom);
 
 		t_sprite	**sprites;
 		char		**name;
-		int			i = 0;
+		int			i = -1;
 
-		name = (char **)ft_memalloc(sizeof(char *));
-		while (i < SAW)
-		{
+		name = (char **)ft_memalloc(sizeof(char *) * (PEH));
+		while (++i < PEH)
 			name[i] = ft_memalloc(sizeof(char) * 9);
-			++i;
-		}
-		name[0] = "SAWGC0";
-		name[1] = "SAWGD0";
-		i = 0;
-		sprites = (t_sprite **)ft_memalloc(sizeof(t_sprite *));
-		while (i <= SAW)
-		{
+		name[0] = S_PEH_D;
+		i = -1;
+		sprites = (t_sprite **)ft_memalloc(sizeof(t_sprite *) * (PEH + 1));
+		while (++i <= PEH)
 			sprites[i] = (t_sprite *)ft_memalloc(sizeof(t_sprite));
-			++i;
-		}
-
-		i = 0;
-		while (i < SAW)
-			(sprites[i] = sprite_create(doom, name[i])) && ++i;
+		i = -1;
+		while (++i < PEH)
+			sprites[i] = sprite_create(&doom->wad, name[i]);
 		sprites[i] = NULL;
 
-		t_sprite *hud = sprite_create(doom, "STBAR");
+		t_wad_hud *hud = init_hud(&doom->wad);
 
 		timer_start(&doom->time);
 		while (doom->quit == false)
 		{
 			// fps_counter(&doom->time);
 			// frame_tamer(doom, doom->screen);
-			wad_draw_linedefs(doom->wad, doom->wad.vert, doom->sdl.surface, name_map);
+			// wad_draw_linedefs(doom->wad, doom->wad.vert, doom->sdl.surface, name_map);
 			draw_line(doom->sdl.surface, (t_point){HALF_WIDTH, 0}, (t_point){HALF_WIDTH, HEIGHT_WIN}, 0xffffff);
 			draw_line(doom->sdl.surface, (t_point){0, HALF_HEIGHT}, (t_point){WIDTH_WIN, HALF_HEIGHT}, 0xffffff);
-
-			draw_sprite_anim(doom, sprites, 200);
+			
+			// blit_sprite_scale(enemy, doom->sdl.surface, &((t_rect){HALF_WIDTH, HALF_HEIGHT, 20, 20, false}));
+			draw_sprite_anim(doom, sprites, 125, (t_rectf){HALF_WIDTH, HALF_WIDTH, 1, 1, false});
 			// blit_gan_scaled(sprites[i], doom->sdl.surface);
-			blit_hud_scaled(hud, doom->sdl.surface, NULL);
+			blit_hud_scaled(hud->stbar, doom->sdl.surface, NULL);
+			blit_sprite_scale()
 
 			event_list(doom);
 			SDL_UpdateWindowSurface(doom->sdl.window);

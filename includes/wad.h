@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 12:14:39 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/30 18:26:26 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/01 20:45:32 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdbool.h>
 # include "tree_struct.h"
 # include "rect.h"
+# include "sprite_kit.h"
 # include "libft.h"
 # include "errorout.h"
 # ifdef __APPLE__
@@ -39,6 +40,23 @@ typedef struct			s_dir
 	char				lump_name[9];
 	struct s_dir		*next;
 }						t_dir;
+
+typedef struct			s_wad_digit
+{
+	uint8_t				*name;
+	uint32_t			*pixel;
+	int32_t				w;
+	int32_t				h;
+	int32_t				x;
+	int32_t				y;
+}						t_wad_digit;
+
+typedef struct			s_wad_hud
+{
+	t_sprite			*stbar;
+	t_wad_digit			**digit;
+	t_wad_digit			**big_digit;
+}						t_wad_hud;
 
 typedef struct			s_wad
 {
@@ -95,5 +113,11 @@ void					wad_pars_box(const uint8_t *data, uint32_t offset, int16_t box[4]);
 uint32_t				find_offset_lump(t_dir *dir, char *lable, char *name_map);
 uint32_t				find_size_lump(t_dir *dir, char *lable, char *name_map);
 uint32_t				wad_find_texture(t_dir *dir, char *name);
+t_sprite				*sprite_create(t_wad *wad, char *name);
+t_wad_hud				*init_hud(t_wad *wad);
+void					put_column(t_wad *wad, uint32_t offset,
+							int x, t_sprite *sprite);
+void					wad_destroy_patch(t_patch patch);
+
 
 #endif

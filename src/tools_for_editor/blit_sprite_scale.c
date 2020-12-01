@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 21:03:55 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/27 19:59:00 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/01 20:41:33 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ static void			while_scale_pic(t_sprite *src, t_rect *rsrc,
 	delta = check_scale_delta(rdst, rsrc);
 	crd[0].y = rdst->y;
 	crd[1].y = rsrc->y;
-	while (crd[0].y < rdst->h || crd[0].y < rdst->y + rdst->h)
+	while (crd[1].y < rsrc->h || crd[0].y < rdst->y + rdst->h)
 	{
 		crd[0].x = rdst->x;
 		crd[1].x = rsrc->x;
-		while (crd[0].x < rdst->w || crd[0].x < rdst->x + rdst->w)
+		while (crd[1].x < rsrc->w || crd[0].x < rdst->x + rdst->w)
 		{
 			color = get_pixel_sprite(src, crd[1].x, crd[1].y);
 			if (color == 0xFFFFFFFF)
@@ -81,4 +81,20 @@ void				blit_hud_scaled(t_sprite *src, SDL_Surface *dst, t_hud *status)
 	rdst.y = HEIGHT_WIN - rdst.h;
 	while_scale_pic(src, &rsrc, dst, &rdst);
 	(void)status;
+}
+
+void				blit_sprite_scale(t_sprite *src, SDL_Surface *dst,
+						t_rectf rdst)
+{
+	t_rect			rsrc;
+	t_rect			rdst_temp;
+
+	// rdst_temp.w = src->w * rdst.w * WIDTH_WIN / 320;
+	// rdst_temp.h = src->h * rdst.h * HEIGHT_WIN / 200;
+	rdst_temp.w = WIDTH_WIN * src->w / 320 * rdst.w;
+	rdst_temp.h = HEIGHT_WIN * src->h / 200 * rdst.h;
+	rdst_temp.x = rdst.x - (WIDTH_WIN * src->left_offset / 320);
+	rdst_temp.y = rdst.y - (HEIGHT_WIN * src->top_offset / 200);
+	rsrc = (t_rect){0, 0, src->w, src->h, false};
+	while_scale_pic(src, &rsrc, dst, &rdst_temp);
 }

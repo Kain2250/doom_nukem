@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 18:10:36 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/26 20:18:17 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/01 14:56:40 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void				putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 	int				bpp;
 	Uint8			*p;
 
-	if (x > 0 && x <= WIDTH_WIN && y > 0 && y < HEIGHT_WIN)
+	if (x > 0 && x < WIDTH_WIN && y > 0 && y < HEIGHT_WIN)
 	{
 		bpp = surface->format->BytesPerPixel;
 		p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
