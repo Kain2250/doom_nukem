@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 19:37:12 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/03 20:16:31 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/10 19:40:23 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,15 +155,16 @@ typedef struct		s_wad_player
 {
 	t_limit			health;
 	t_limit			shield;
-	t_limit			ammo;
+	t_limit			ammo[4];
+	uint8_t			cur_gan;
+	t_wad_sprite	**gun;
 }					t_wad_player;
 
 uint32_t			get_pixel_sprite(t_wad_sprite *surface, int x, int y);
 void				blit_sprite_scaled(t_wad_sprite *src, t_rect *rsrc,
 						SDL_Surface *dst, t_rect *rdst);
 void				blit_gan_scaled(t_wad_sprite *src, SDL_Surface *dst);
-void				blit_hud_scaled(t_wad_sprite *src, SDL_Surface *dst,
-						t_wad_hud *status);
+void				blit_hud_scaled(t_wad_sprite *src, SDL_Surface *dst);
 void				blit_sprite_scale(t_wad_sprite *src,
 						SDL_Surface *dst, t_rectf rdst);
 

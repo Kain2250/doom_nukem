@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 09:15:51 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/10 18:15:40 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/10 20:11:13 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,13 @@ void			close_new_win(t_new_win *frame)
 
 void			keybord_events(t_doom *doom)
 {
-	if (doom->sdl.state[SDL_SCANCODE_N] && doom->frame.win == NULL)
-		open_new_win(&doom->frame, doom->sdl.fonts[font_button]);
-	if ((doom->sdl.state[SDL_SCANCODE_C] ||
-		doom->sdl.state[SDL_SCANCODE_ESCAPE]) && doom->frame.win != NULL)
-		close_new_win(&doom->frame);
-	if (doom->sdl.state[SDL_SCANCODE_T] && doom->frame.win != NULL)
-		SDL_SetWindowTitle(doom->frame.win, "Change_name_win");
+	// if (doom->sdl.state[SDL_SCANCODE_N] && doom->frame.win == NULL)
+	// 	open_new_win(&doom->frame, doom->sdl.fonts[font_button]);
+	// if ((doom->sdl.state[SDL_SCANCODE_C] ||
+	// 	doom->sdl.state[SDL_SCANCODE_ESCAPE]) && doom->frame.win != NULL)
+	// 	close_new_win(&doom->frame);
+	// if (doom->sdl.state[SDL_SCANCODE_T] && doom->frame.win != NULL)
+	// 	SDL_SetWindowTitle(doom->frame.win, "Change_name_win");
 	if (doom->sdl.state[SDL_SCANCODE_D] && doom->frame.win == NULL)
 	{
 		if (doom->player.health.cur < doom->player.health.max)
@@ -122,9 +122,17 @@ void			keybord_events(t_doom *doom)
 			doom->player.health.cur--;
 	}
 	if (doom->sdl.state[SDL_SCANCODE_E])
-		NULL;
+		doom->player.ammo[doom->player.cur_gan].cur += (doom->player.ammo[doom->player.cur_gan].cur < doom->player.ammo[doom->player.cur_gan].max) ? 1 : 0;
 	if (doom->sdl.state[SDL_SCANCODE_Q])
-		NULL;
+		doom->player.ammo[doom->player.cur_gan].cur -= (doom->player.ammo[doom->player.cur_gan].cur > doom->player.ammo[doom->player.cur_gan].min) ? 1 : 0;
+	if (doom->sdl.state[SDL_SCANCODE_1])
+		doom->player.cur_gan = 0;
+	else if (doom->sdl.state[SDL_SCANCODE_2])
+		doom->player.cur_gan = 1;
+	else if (doom->sdl.state[SDL_SCANCODE_3])
+		doom->player.cur_gan = 2;
+	else if (doom->sdl.state[SDL_SCANCODE_4])
+		doom->player.cur_gan = 3;
 }
 
 void			event_list(t_doom *doom)

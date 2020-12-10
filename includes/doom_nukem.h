@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/10 16:45:52 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/10 20:30:40 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct			s_doom
 	struct s_frames		*screen;
 	struct s_wad_player	player;
 	t_timer				time;
+	t_timer				fps;
 	t_wad				wad;
 	t_wad_sprite		test[15];
 	int					buf1;

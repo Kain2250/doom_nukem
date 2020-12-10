@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 21:03:55 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/10 18:41:58 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/10 19:10:03 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void				blit_gan_scaled(t_wad_sprite *src, SDL_Surface *dst)
 	while_scale_pic(src, &rsrc, dst, &rdst);
 }
 
-void				blit_hud_scaled(t_wad_sprite *src, SDL_Surface *dst, t_wad_hud *status)
+void				blit_hud_scaled(t_wad_sprite *src, SDL_Surface *dst)
 {
 	t_rect			rsrc;
 	t_rect			rdst;
@@ -80,7 +80,6 @@ void				blit_hud_scaled(t_wad_sprite *src, SDL_Surface *dst, t_wad_hud *status)
 	rdst.x = 0;
 	rdst.y = HEIGHT_WIN - rdst.h;
 	while_scale_pic(src, &rsrc, dst, &rdst);
-	(void)status;
 }
 
 void				blit_sprite_scale(t_wad_sprite *src, SDL_Surface *dst,

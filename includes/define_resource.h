@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 15:07:49 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/10 19:01:40 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/10 19:23:26 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define HEIGHT_WIN 768
 # define HALF_WIDTH WIDTH_WIN / 2
 # define HALF_HEIGHT HEIGHT_WIN / 2
+# define HALF_R_WIDTH HALF_WIDTH
+# define HALF_R_HEIGHT (HEIGHT_WIN - HEIGHT_WIN * 0.155) / 2
 # define SCALING_W(a) a * WIDTH_WIN / 320
 # define SCALING_H(a) a * HEIGHT_WIN / 200
 

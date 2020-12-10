@@ -6,7 +6,7 @@
 #    By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/21 19:14:26 by kain2250          #+#    #+#              #
-#    Updated: 2020/12/01 19:02:56 by bdrinkin         ###   ########.fr        #
+#    Updated: 2020/12/10 21:10:33 by bdrinkin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,9 @@ SRC_LIST = main.c \
 	wad/wad_get.c \
 	wad/draw_sprite.c \
 	wad/init_hud.c \
-	wad/draw_hud.c
+	wad/draw_hud.c \
+	wad/wad_sprite.c \
+	wad/wad_main_menu.c
 
 
 SRC = $(addprefix $(SRC_DIRECTORY), $(SRC_LIST))

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 12:14:39 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/10 18:12:40 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/10 21:14:19 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ typedef struct			s_wad_dir
 	char				lump_name[9];
 	struct s_wad_dir	*next;
 }						t_wad_dir;
+
+typedef struct			s_wad_menu
+{
+	t_wad_sprite		*background;
+	t_wad_sprite		**buttons;
+}						t_wad_menu;
 
 typedef struct			s_wad
 {
@@ -104,5 +110,7 @@ void					put_column(t_wad *wad, uint32_t offset,
 void					wad_destroy_patch(t_patch patch);
 void					draw_hud(SDL_Surface *screen, t_wad_hud *hud, t_wad_player status);
 
+void					wad_draw_menu(SDL_Surface *screen, t_wad *wad, t_wad_menu *menu);
+t_wad_menu				*wad_init_menu(t_wad *wad);
 
 #endif
