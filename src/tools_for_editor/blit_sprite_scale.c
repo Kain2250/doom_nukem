@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 21:03:55 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/01 20:41:33 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/10 18:41:58 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_rectf		check_scale_delta(t_rect *rdst, t_rect *rsrc)
 	return (delta);
 }
 
-static void			while_scale_pic(t_sprite *src, t_rect *rsrc,
+static void			while_scale_pic(t_wad_sprite *src, t_rect *rsrc,
 					SDL_Surface *dst, t_rect *rdst)
 {
 	t_pointf		crd[2];
@@ -56,45 +56,43 @@ static void			while_scale_pic(t_sprite *src, t_rect *rsrc,
 	}
 }
 
-void				blit_gan_scaled(t_sprite *src, SDL_Surface *dst)
+void				blit_gan_scaled(t_wad_sprite *src, SDL_Surface *dst)
 {
 	t_rect			rsrc;
 	t_rect			rdst;
 
 	rsrc = (t_rect){0, 0, src->w, src->h, false};
-	rdst.w = src->w * WIDTH_WIN / 320;
-	rdst.h = src->h * HEIGHT_WIN / 200;
-	rdst.x = -(WIDTH_WIN * src->left_offset / 320);
-	rdst.y = -(HEIGHT_WIN * src->top_offset / 200);
+	rdst.w = SCALING_W(src->w);
+	rdst.h = SCALING_H(src->h);
+	rdst.x = -(SCALING_W(src->left_offset));
+	rdst.y = -(SCALING_H(src->top_offset));
 	while_scale_pic(src, &rsrc, dst, &rdst);
 }
 
-void				blit_hud_scaled(t_sprite *src, SDL_Surface *dst, t_hud *status)
+void				blit_hud_scaled(t_wad_sprite *src, SDL_Surface *dst, t_wad_hud *status)
 {
 	t_rect			rsrc;
 	t_rect			rdst;
 
 	rsrc = (t_rect){0, 0, src->w, src->h, false};
-	rdst.w = src->w * WIDTH_WIN / 320;
-	rdst.h = src->h * HEIGHT_WIN / 200;
+	rdst.w = SCALING_W(src->w);
+	rdst.h = SCALING_H(src->h);
 	rdst.x = 0;
 	rdst.y = HEIGHT_WIN - rdst.h;
 	while_scale_pic(src, &rsrc, dst, &rdst);
 	(void)status;
 }
 
-void				blit_sprite_scale(t_sprite *src, SDL_Surface *dst,
+void				blit_sprite_scale(t_wad_sprite *src, SDL_Surface *dst,
 						t_rectf rdst)
 {
 	t_rect			rsrc;
 	t_rect			rdst_temp;
 
-	// rdst_temp.w = src->w * rdst.w * WIDTH_WIN / 320;
-	// rdst_temp.h = src->h * rdst.h * HEIGHT_WIN / 200;
-	rdst_temp.w = WIDTH_WIN * src->w / 320 * rdst.w;
-	rdst_temp.h = HEIGHT_WIN * src->h / 200 * rdst.h;
-	rdst_temp.x = rdst.x - (WIDTH_WIN * src->left_offset / 320);
-	rdst_temp.y = rdst.y - (HEIGHT_WIN * src->top_offset / 200);
+	rdst_temp.w = SCALING_W(src->w) * rdst.w;
+	rdst_temp.h = SCALING_H(src->h) * rdst.h;
+	rdst_temp.x = rdst.x - SCALING_W(src->left_offset);
+	rdst_temp.y = rdst.y - SCALING_H(src->top_offset);
 	rsrc = (t_rect){0, 0, src->w, src->h, false};
 	while_scale_pic(src, &rsrc, dst, &rdst_temp);
 }

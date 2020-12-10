@@ -6,16 +6,16 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:33:00 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/17 21:01:19 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/02 13:44:15 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void	clear_wad_dir(t_dir *dir)
+void	clear_wad_dir(t_wad_dir *dir)
 {
-	t_dir	*temp;
-	t_dir	*next;
+	t_wad_dir	*temp;
+	t_wad_dir	*next;
 
 	temp = dir->next;
 	while (temp != NULL)

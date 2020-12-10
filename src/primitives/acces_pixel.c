@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 18:10:36 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/01 14:56:40 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/02 13:42:53 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ Uint32				get_pixel(SDL_Surface *surface, int x, int y)
 	return (0);
 }
 
-uint32_t			get_pixel_sprite(t_sprite *sprite, int x, int y)
+uint32_t			get_pixel_sprite(t_wad_sprite *sprite, int x, int y)
 {
 	return (sprite->pixel[y * sprite->w + x]);
 }

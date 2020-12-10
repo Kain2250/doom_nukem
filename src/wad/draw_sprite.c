@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 14:35:50 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/01 20:35:25 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/02 13:42:53 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void				draw_sprite_sdl(t_doom *doom, SDL_Surface **sprite, t_rect rect, Uint32 
 	}
 }
 
-void				draw_gun_anim(t_doom *doom, t_sprite **sprite, Uint32 delay)
+void				draw_gun_anim(t_doom *doom, t_wad_sprite **sprite, Uint32 delay)
 {
 	static int		i = 0;
 
@@ -48,7 +48,7 @@ void				draw_gun_anim(t_doom *doom, t_sprite **sprite, Uint32 delay)
 	}
 }
 
-void				draw_sprite_anim(t_doom *doom, t_sprite **sprite, Uint32 delay, t_rectf rect)
+void				draw_sprite_anim(t_doom *doom, t_wad_sprite **sprite, Uint32 delay, t_rectf rect)
 {
 	static int		i = 0;
 	static bool		turn = true;

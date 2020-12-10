@@ -9,6 +9,7 @@
         "doom_nukem.h": "c",
         "ios": "c",
         "__tuple": "c",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "algorithm": "cpp"
     }
 }

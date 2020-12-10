@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 15:07:49 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/21 21:20:02 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/10 19:01:40 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,15 @@
 
 # define FONT_BUTTON "resource/font/button.otf"
 # define FONT_TEXT "resource/font/robotron.otf"
+
+# define NAME_WIN "Doom-Nukem (by Bdrinkin & Jthuy & Vneelix && Nsena)"
+
+# define WIDTH_WIN 1024
+# define HEIGHT_WIN 768
+# define HALF_WIDTH WIDTH_WIN / 2
+# define HALF_HEIGHT HEIGHT_WIN / 2
+# define SCALING_W(a) a * WIDTH_WIN / 320
+# define SCALING_H(a) a * HEIGHT_WIN / 200
 
 # include "sprite_kit.h"
 

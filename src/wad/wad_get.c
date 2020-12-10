@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:49:40 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/30 18:25:33 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/02 13:44:15 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -399,7 +399,7 @@ void			wad_get_textures(const uint8_t *data, uint32_t offset, t_texture_head *te
 	}
 }
 
-void			wad_get_pnames(const uint8_t *data, t_dir *dir, t_pnames *pname)
+void			wad_get_pnames(const uint8_t *data, t_wad_dir *dir, t_pnames *pname)
 {
 	uint32_t	i;
 	uint32_t	j;

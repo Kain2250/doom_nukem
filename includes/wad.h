@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 12:14:39 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/01 20:45:32 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/10 18:12:40 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "sprite_kit.h"
 # include "libft.h"
 # include "errorout.h"
+# include "define_resource.h"
 # ifdef __APPLE__
 #  include "SDL.h"
 # elif __linux__
@@ -33,36 +34,19 @@ typedef struct			s_wad_head
 	uint32_t			dir_offset;
 }						t_wad_head;
 
-typedef struct			s_dir
+typedef struct			s_wad_dir
 {
 	uint32_t			lump_offset;
 	uint32_t			lump_size;
 	char				lump_name[9];
-	struct s_dir		*next;
-}						t_dir;
-
-typedef struct			s_wad_digit
-{
-	uint8_t				*name;
-	uint32_t			*pixel;
-	int32_t				w;
-	int32_t				h;
-	int32_t				x;
-	int32_t				y;
-}						t_wad_digit;
-
-typedef struct			s_wad_hud
-{
-	t_sprite			*stbar;
-	t_wad_digit			**digit;
-	t_wad_digit			**big_digit;
-}						t_wad_hud;
+	struct s_wad_dir	*next;
+}						t_wad_dir;
 
 typedef struct			s_wad
 {
 	uint8_t				*map;
 	struct s_wad_head	head;
-	struct s_dir		*dir;
+	struct s_wad_dir	*dir;
 	uint32_t			color[14][256];
 	uint32_t			colormap[34][256];
 	t_things			*things;
@@ -97,7 +81,7 @@ t_patch					wad_get_patch_info(const uint8_t *data,  uint32_t offset);
 void					wad_get_playpal(t_wad *wad);
 void					wad_get_colormap(t_wad *wad);
 void					wad_get_textures(const uint8_t *data, uint32_t offset, t_texture_head *texture);
-void					wad_get_pnames(const uint8_t *data, t_dir *dir ,t_pnames *pname);
+void					wad_get_pnames(const uint8_t *data, t_wad_dir *dir ,t_pnames *pname);
 void					wad_get_nodes(t_wad *wad, char *map_name);
 void					wad_get_sidedefs(t_wad *wad, char *name_map);
 void					wad_get_segs(t_wad *wad, char *name_map);
@@ -106,18 +90,19 @@ void					wad_get_sectors(t_wad *wad, char *name_map);
 void					wad_get_things(t_wad *wad, char *name_map);
 
 void					read_head_data(const uint8_t *data, int offset, t_wad_head *head);
-void					read_dir_data(const uint8_t *data, int offset, t_dir *dir);
+void					read_dir_data(const uint8_t *data, int offset, t_wad_dir *dir);
 void					wad_pars_name(const uint8_t *data, uint32_t offset, char name[9]);
 void					wad_pars_box(const uint8_t *data, uint32_t offset, int16_t box[4]);
 
-uint32_t				find_offset_lump(t_dir *dir, char *lable, char *name_map);
-uint32_t				find_size_lump(t_dir *dir, char *lable, char *name_map);
-uint32_t				wad_find_texture(t_dir *dir, char *name);
-t_sprite				*sprite_create(t_wad *wad, char *name);
+uint32_t				find_offset_lump(t_wad_dir *dir, char *lable, char *name_map);
+uint32_t				find_size_lump(t_wad_dir *dir, char *lable, char *name_map);
+uint32_t				wad_find_texture(t_wad_dir *dir, char *name);
+t_wad_sprite				*sprite_create(t_wad *wad, char *name);
 t_wad_hud				*init_hud(t_wad *wad);
 void					put_column(t_wad *wad, uint32_t offset,
-							int x, t_sprite *sprite);
+							int x, t_wad_sprite *sprite);
 void					wad_destroy_patch(t_patch patch);
+void					draw_hud(SDL_Surface *screen, t_wad_hud *hud, t_wad_player status);
 
 
 #endif

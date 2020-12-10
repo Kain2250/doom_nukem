@@ -6,12 +6,11 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/01 21:10:34 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/10 18:12:45 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-
 
 void				user_cursor(t_doom *doom)
 {
@@ -38,7 +37,7 @@ void				skin(t_doom *doom)
 	SDL_GetWindowSize(doom->sdl.window, &doom->sdl.width, &doom->sdl.height);
 	user_cursor(doom);
 	SDL_SetWindowIcon(doom->sdl.window, doom->sdl.textures[texture_icon]);
-	fill_limit(&doom->player.heals, 0, 190, 200);
+	fill_limit(&doom->player.health, 0, 190, 200);
 }
 
 void				wad_destroy_patch(t_patch patch)
@@ -49,12 +48,12 @@ void				wad_destroy_patch(t_patch patch)
 }
 
 void				put_column(t_wad *wad, uint32_t offset,
-							int x, t_sprite *sprite)
+							int x, t_wad_sprite *sprite)
 {
-	uint16_t			iter;
-	uint16_t			col;
-	int					y_step;
-	int					y_miss;
+	uint16_t		iter;
+	uint16_t		col;
+	int				y_step;
+	int				y_miss;
 
 	y_step = wad->map[offset];
 	y_miss = 0;
@@ -78,7 +77,7 @@ void				put_column(t_wad *wad, uint32_t offset,
 	}
 }
 
-void				draw_sprite(t_sprite *sprite, SDL_Surface *screen,
+void				draw_sprite(t_wad_sprite *sprite, SDL_Surface *screen,
 						t_rect rect)
 {
 	int				x;
@@ -106,14 +105,14 @@ void				draw_sprite(t_sprite *sprite, SDL_Surface *screen,
 	}
 }
 
-t_sprite			*sprite_create(t_wad *wad, char *name)
+t_wad_sprite		*sprite_create(t_wad *wad, char *name)
 {
-	t_sprite		*sprite;
+	t_wad_sprite	*sprite;
 	t_patch			patch;
 	uint32_t		offset;
 	int				x;
 
-	if (!(sprite = (t_sprite *)ft_memalloc(sizeof(t_sprite))))
+	if (!(sprite = (t_wad_sprite *)ft_memalloc(sizeof(t_wad_sprite))))
 		return (NULL);
 	offset = find_offset_lump(wad->dir, name, NULL);
 	patch = wad_get_patch_info(wad->map, offset);
@@ -135,7 +134,7 @@ t_sprite			*sprite_create(t_wad *wad, char *name)
 
 int					main(int ac, char **av)
 {
-	t_doom	*doom;
+	t_doom			*doom;
 
 	// char			*name_map = {"E1M1"};
 
@@ -148,12 +147,12 @@ int					main(int ac, char **av)
 			doom_exit(doom);
 			return (0);
 		}
+		skin(doom);
 		wad_reader(&doom->wad);
 		// wad_init_level(&doom->wad, name_map);
-		skin(doom);
 		// doom->screen = init_editor(doom);
 
-		t_sprite	**sprites;
+		t_wad_sprite	**sprites;
 		char		**name;
 		int			i = -1;
 
@@ -162,9 +161,9 @@ int					main(int ac, char **av)
 			name[i] = ft_memalloc(sizeof(char) * 9);
 		name[0] = S_PEH_D;
 		i = -1;
-		sprites = (t_sprite **)ft_memalloc(sizeof(t_sprite *) * (PEH + 1));
+		sprites = (t_wad_sprite **)ft_memalloc(sizeof(t_wad_sprite *) * (PEH + 1));
 		while (++i <= PEH)
-			sprites[i] = (t_sprite *)ft_memalloc(sizeof(t_sprite));
+			sprites[i] = (t_wad_sprite *)ft_memalloc(sizeof(t_wad_sprite));
 		i = -1;
 		while (++i < PEH)
 			sprites[i] = sprite_create(&doom->wad, name[i]);
@@ -181,12 +180,8 @@ int					main(int ac, char **av)
 			draw_line(doom->sdl.surface, (t_point){HALF_WIDTH, 0}, (t_point){HALF_WIDTH, HEIGHT_WIN}, 0xffffff);
 			draw_line(doom->sdl.surface, (t_point){0, HALF_HEIGHT}, (t_point){WIDTH_WIN, HALF_HEIGHT}, 0xffffff);
 			
-			// blit_sprite_scale(enemy, doom->sdl.surface, &((t_rect){HALF_WIDTH, HALF_HEIGHT, 20, 20, false}));
-			draw_sprite_anim(doom, sprites, 125, (t_rectf){HALF_WIDTH, HALF_WIDTH, 1, 1, false});
-			// blit_gan_scaled(sprites[i], doom->sdl.surface);
-			blit_hud_scaled(hud->stbar, doom->sdl.surface, NULL);
-			blit_sprite_scale()
-
+			draw_sprite_anim(doom, sprites, 125, (t_rectf){HALF_WIDTH, HALF_WIDTH, 1, 1});
+			draw_hud(doom->sdl.surface, hud, doom->player);
 			event_list(doom);
 			SDL_UpdateWindowSurface(doom->sdl.window);
 			clear_surface(doom->sdl.surface, 0);

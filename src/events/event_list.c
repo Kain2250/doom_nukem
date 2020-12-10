@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 09:15:51 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/17 21:01:24 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/10 18:15:40 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,14 +113,18 @@ void			keybord_events(t_doom *doom)
 		SDL_SetWindowTitle(doom->frame.win, "Change_name_win");
 	if (doom->sdl.state[SDL_SCANCODE_D] && doom->frame.win == NULL)
 	{
-		if (doom->player.heals.cur < doom->player.heals.max)
-			doom->player.heals.cur++;
+		if (doom->player.health.cur < doom->player.health.max)
+			doom->player.health.cur++;
 	}
 	if (doom->sdl.state[SDL_SCANCODE_A] && doom->frame.win == NULL)
 	{
-		if (doom->player.heals.cur > doom->player.heals.min)
-			doom->player.heals.cur--;
+		if (doom->player.health.cur > doom->player.health.min)
+			doom->player.health.cur--;
 	}
+	if (doom->sdl.state[SDL_SCANCODE_E])
+		NULL;
+	if (doom->sdl.state[SDL_SCANCODE_Q])
+		NULL;
 }
 
 void			event_list(t_doom *doom)

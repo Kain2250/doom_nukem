@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:39:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/30 18:26:13 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/02 13:44:15 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void			read_head_data(const uint8_t *data,
 	head->dir_offset = bytes_to_int(data, offset + 8);
 }
 
-void			read_dir_data(const uint8_t *data, int offset, t_dir *dir)
+void			read_dir_data(const uint8_t *data, int offset, t_wad_dir *dir)
 {
 	dir->lump_offset = bytes_to_int(data, offset);
 	dir->lump_size = bytes_to_int(data, offset + 4);
@@ -71,9 +71,9 @@ void			wad_pars_box(const uint8_t *data,
 	}
 }
 
-uint32_t		find_offset_lump(t_dir *dir, char *lable, char *name_map)
+uint32_t		find_offset_lump(t_wad_dir *dir, char *lable, char *name_map)
 {
-	t_dir	*temp;
+	t_wad_dir	*temp;
 
 	temp = dir;
 	if (name_map != NULL)
@@ -89,9 +89,9 @@ uint32_t		find_offset_lump(t_dir *dir, char *lable, char *name_map)
 	return (temp->lump_offset);
 }
 
-uint32_t		find_size_lump(t_dir *dir, char *lable, char *name_map)
+uint32_t		find_size_lump(t_wad_dir *dir, char *lable, char *name_map)
 {
-	t_dir	*temp;
+	t_wad_dir	*temp;
 
 	temp = dir;
 	if (name_map != NULL)
@@ -107,9 +107,9 @@ uint32_t		find_size_lump(t_dir *dir, char *lable, char *name_map)
 	return (temp->lump_size);
 }
 
-uint32_t		wad_find_texture(t_dir *dir, char *name)
+uint32_t		wad_find_texture(t_wad_dir *dir, char *name)
 {
-	t_dir		*temp;
+	t_wad_dir		*temp;
 
 	temp = dir;
 	while (temp != NULL && ft_strcmp(name, temp->lump_name) != 0)
@@ -124,19 +124,19 @@ uint32_t		wad_find_texture(t_dir *dir, char *name)
 
 bool			wad_reader(t_wad *wad)
 {
-	t_dir		*temp;
+	t_wad_dir		*temp;
 	size_t		i;
 
 	i = -1;
 	read_head_data(wad->map, 0, &wad->head);
-	wad->dir = (t_dir *)ft_memalloc(sizeof(t_dir));
+	wad->dir = (t_wad_dir *)ft_memalloc(sizeof(t_wad_dir));
 	temp = wad->dir;
 	while (++i < wad->head.dir_count)
 	{
 		read_dir_data(wad->map, wad->head.dir_offset + i * 16, temp);
 		if (i + 1 != wad->head.dir_count)
 		{
-			temp->next = (t_dir *)ft_memalloc(sizeof(t_dir));
+			temp->next = (t_wad_dir *)ft_memalloc(sizeof(t_wad_dir));
 			temp = temp->next;
 		}
 	}

@@ -6,20 +6,12 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/01 19:07:25 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/10 16:45:52 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOM_NUKEM_H
 # define DOOM_NUKEM_H
-
-# define NAME_WIN "Doom-Nukem (by Bdrinkin & Jthuy & Vneelix && Nsena)"
-// # define WIDTH_WIN 320
-// # define HEIGHT_WIN 200
-# define WIDTH_WIN 1500
-# define HEIGHT_WIN 1000
-# define HALF_WIDTH WIDTH_WIN / 2
-# define HALF_HEIGHT HEIGHT_WIN / 2
 
 # include <math.h>
 # include <stdbool.h>
@@ -88,11 +80,6 @@ typedef struct			s_color
 	Uint8				alpha;
 }						t_color;
 
-typedef struct			s_player
-{
-	t_limit				heals;
-}						t_player;
-
 typedef struct			s_sdl_sys
 {
 	SDL_Window			*window;
@@ -120,24 +107,16 @@ typedef struct			s_new_win
 	bool				quit;
 }						t_new_win;
 
-
-
-typedef struct			s_crd
-{
-	int					x;
-	int					*y;
-}						t_crd;
-
 typedef struct			s_doom
 {
 	struct s_sdl_sys	sdl;
 	struct s_mouse		mouse;
 	struct s_new_win	frame;
 	struct s_frames		*screen;
-	struct s_player		player;
+	struct s_wad_player	player;
 	t_timer				time;
 	t_wad				wad;
-	t_sprite			test[15];
+	t_wad_sprite		test[15];
 	int					buf1;
 	int					buf2;
 	bool				quit;
@@ -244,16 +223,16 @@ void					wad_draw_vertex(t_doom *doom, char *name_map);
 void					wad_draw_linedefs(t_wad wad,
 						t_vertex *vertex, SDL_Surface *surface, char *name_map);
 SDL_Surface				*wad_draw_texture(t_doom *doom, t_point start, char *texture);
-SDL_Surface				*wad_draw_patch(t_wad wad, char *pnames, t_sprite *sprite);
-void					put_pixel_sprite(t_sprite *sprite, int x, int y, uint32_t color);
-void					draw_gun_anim(t_doom *doom, t_sprite **sprite, Uint32 delay);
+SDL_Surface				*wad_draw_patch(t_wad wad, char *pnames, t_wad_sprite *sprite);
+void					put_pixel_sprite(t_wad_sprite *sprite, int x, int y, uint32_t color);
+void					draw_gun_anim(t_doom *doom, t_wad_sprite **sprite, Uint32 delay);
 
-void					draw_sprite_anim(t_doom *doom, t_sprite **sprite, Uint32 delay, t_rectf rect);
+void					draw_sprite_anim(t_doom *doom, t_wad_sprite **sprite, Uint32 delay, t_rectf rect);
 void					put_column(t_wad *wad, uint32_t offset,
-							int x, t_sprite *sprite);
+							int x, t_wad_sprite *sprite);
 void					wad_destroy_patch(t_patch patch);
 
-void					clear_wad_dir(t_dir *dir);
+void					clear_wad_dir(t_wad_dir *dir);
 void					print_bit(void *data);
 
 

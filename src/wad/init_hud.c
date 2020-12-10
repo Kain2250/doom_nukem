@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 15:54:08 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/01 21:08:05 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/02 13:51:32 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char			**name_big_digit(int count)
 	return (name);
 }
 
-void			digit_get(t_wad *wad, char *name, t_wad_digit *digit)
+void			digit_get(t_wad *wad, char *name, t_wad_sprite *digit)
 {
 	uint32_t	offset;
 	t_patch		patch;
@@ -109,18 +109,18 @@ void			digit_get(t_wad *wad, char *name, t_wad_digit *digit)
 
 	offset = find_offset_lump(wad->dir, name, NULL);
 	patch = wad_get_patch_info(wad->map, offset);
-	digit->name = (uint8_t *)name;
+	digit->name = (char *)name;
 	digit->h = patch.height;
 	digit->w = patch.width;
-	digit->x = patch.left_offset;
-	digit->y = patch.top_offset;
+	digit->left_offset = patch.left_offset;
+	digit->top_offset = patch.top_offset;
 	digit->pixel = (uint32_t *)malloc(sizeof(uint32_t) *
 		(digit->w * digit->h));
 	digit->pixel = ft_memset(digit->pixel, 0xFFFFFFFF,
 		sizeof(uint32_t) * digit->w * digit->h);
 	x = -1;
 	while (++x < patch.width)
-		put_column(wad, offset + patch.columnoffset[x], x, (t_sprite *)digit);
+		put_column(wad, offset + patch.columnoffset[x], x, digit);
 	wad_destroy_patch(patch);
 }
 
@@ -133,18 +133,18 @@ t_wad_hud		*init_hud(t_wad *wad)
 	
 	hud = (t_wad_hud *)ft_memalloc(sizeof(t_wad_hud));
 	hud->stbar = sprite_create(wad, "STBAR");
-	hud->big_digit = (t_wad_digit **)ft_memalloc(sizeof(t_wad_digit) * 10);
+	hud->big_digit = (t_wad_sprite **)ft_memalloc(sizeof(t_wad_sprite) * 10);
 	i = -1;
 	while (++i < 10)
-		hud->big_digit[i] = (t_wad_digit *)ft_memalloc(sizeof(t_wad_digit));
+		hud->big_digit[i] = (t_wad_sprite *)ft_memalloc(sizeof(t_wad_sprite));
 	name_b = name_big_digit(10);
 	i = -1;
 	while (++i < 10)
 		digit_get(wad, name_b[i], hud->big_digit[i]);
 	i = -1;
-	hud->digit = (t_wad_digit **)ft_memalloc(sizeof(t_wad_digit) * 11);
+	hud->digit = (t_wad_sprite **)ft_memalloc(sizeof(t_wad_sprite) * 11);
 	while (++i < 11)
-		hud->digit[i] = (t_wad_digit *)ft_memalloc(sizeof(t_wad_digit));
+		hud->digit[i] = (t_wad_sprite *)ft_memalloc(sizeof(t_wad_sprite));
 	name = name_digit(11);
 	i = -1;
 	while (++i < 11)

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:43:10 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/30 17:53:39 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/02 13:42:53 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ uint32_t		rec_column(t_wad wad, uint32_t offset, t_crd crd, SDL_Surface *surface
 	return (offset + 2);
 }
 
-SDL_Surface		*wad_draw_patch(t_wad wad, char *pnames, t_sprite *sprite)
+SDL_Surface		*wad_draw_patch(t_wad wad, char *pnames, t_wad_sprite *sprite)
 {
 	uint32_t	offset;
 	t_patch		patch;
