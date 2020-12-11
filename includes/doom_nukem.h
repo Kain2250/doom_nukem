@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/10 20:30:40 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/11 16:03:02 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct			s_doom
 	int					buf1;
 	int					buf2;
 	bool				quit;
+	bool				pause;
 }						t_doom;
 /*
 ** main.c
@@ -129,7 +130,7 @@ int						main(int ac, char **av);
 /*
 ** debug_file.c
 */
-void					doom_exit(t_doom *doom);
+int						doom_exit(t_doom *doom);
 /*
 ** event_list.c
 */

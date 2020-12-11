@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 09:15:51 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/10 20:11:13 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 00:00:58 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ void			event_list(t_doom *doom)
 {
 	SDL_PollEvent(&doom->sdl.event);
 	// SDL_PumpEvents();
-	doom->sdl.state = SDL_GetKeyboardState(NULL);
 	if (event_exit(doom) == true)
 		doom->quit = true;
 	else

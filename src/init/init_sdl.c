@@ -6,24 +6,25 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:30:01 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/03 20:20:39 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/11 17:06:21 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-bool			init_sdl(t_doom *doom)
+bool			init_sdl(t_sdl_sys *sdl)
 {
 	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO |
 			SDL_INIT_EVENTS) == -1)
 		return (false);
-	if ((doom->sdl.window = SDL_CreateWindow(NAME_WIN,
+	if ((sdl->window = SDL_CreateWindow(NAME_WIN,
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED, WIDTH_WIN,
 			HEIGHT_WIN, SDL_WINDOW_SHOWN)) == NULL)
 		return (false);
-	if ((doom->sdl.surface = SDL_GetWindowSurface(doom->sdl.window)) == NULL)
+	if ((sdl->surface = SDL_GetWindowSurface(sdl->window)) == NULL)
 		return (false);
+	sdl->state = SDL_GetKeyboardState(NULL);
 	return (true);
 }
 
@@ -61,7 +62,7 @@ bool			init_sdl_net(t_doom *doom)
 
 bool			init_lib_sdl(t_doom *doom)
 {
-	if (init_sdl(doom) == false)
+	if (init_sdl(&doom->sdl) == false)
 		return (put_error_sdl(ERR_INIT_SDL, SDL_GetError()));
 	if (init_sdl_image(doom) == false)
 		return (put_error_sdl(ERR_INIT_IMG, IMG_GetError()));
