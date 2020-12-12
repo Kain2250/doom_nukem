@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:39:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/02 13:44:15 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 16:15:22 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,14 +129,14 @@ bool			wad_reader(t_wad *wad)
 
 	i = -1;
 	read_head_data(wad->map, 0, &wad->head);
-	wad->dir = (t_wad_dir *)ft_memalloc(sizeof(t_wad_dir));
+	wad->dir = (t_wad_dir *)ft_xmemalloc(sizeof(t_wad_dir));
 	temp = wad->dir;
 	while (++i < wad->head.dir_count)
 	{
 		read_dir_data(wad->map, wad->head.dir_offset + i * 16, temp);
 		if (i + 1 != wad->head.dir_count)
 		{
-			temp->next = (t_wad_dir *)ft_memalloc(sizeof(t_wad_dir));
+			temp->next = (t_wad_dir *)ft_xmemalloc(sizeof(t_wad_dir));
 			temp = temp->next;
 		}
 	}

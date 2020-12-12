@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_smoothed_fill_rect.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kain2250 <kain2250@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 16:10:26 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/16 19:13:29 by kain2250         ###   ########.fr       */
+/*   Updated: 2020/12/12 13:18:35 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static void	put_smooth_fill_angle_pixel(SDL_Surface *dst, t_point coord,
 		x_minus = -1;
 	if (y_minus < 0)
 		y_minus = 0;
-	draw_line(dst, fill_point(x_plus, y_plus),
-		fill_point(x_minus, y_plus), color);
-	draw_line(dst, fill_point(x_plus, y_minus),
-		fill_point(x_minus, y_minus), color);
+	draw_line(dst, (t_point){x_plus, y_plus},
+		(t_point){x_minus, y_plus}, color);
+	draw_line(dst, (t_point){x_plus, y_minus},
+		(t_point){x_minus, y_minus}, color);
 }
 
 static void	draw_smooth_fill_angle(SDL_Surface *dst, t_point center[4],
@@ -70,14 +70,14 @@ static void	draw_smooth_fill_angle(SDL_Surface *dst, t_point center[4],
 static void	drawing(SDL_Surface *dst, t_rect *rect,
 				t_point	center[4], Uint32 color)
 {
-	draw_line(dst, fill_point(center[0].x, rect->y),
-		fill_point(center[1].x, rect->y), color);
-	draw_line(dst, fill_point(center[2].x, rect->y + rect->h),
-		fill_point(center[3].x, rect->y + rect->h), color);
-	draw_line(dst, fill_point(rect->x, center[0].y),
-		fill_point(rect->x, center[2].y), color);
-	draw_line(dst, fill_point(rect->x + rect->w, center[1].y),
-		fill_point(rect->x + rect->w, center[3].y), color);
+	draw_line(dst, (t_point){center[0].x, rect->y},
+		(t_point){center[1].x, rect->y}, color);
+	draw_line(dst, (t_point){center[2].x, rect->y + rect->h},
+		(t_point){center[3].x, rect->y + rect->h}, color);
+	draw_line(dst, (t_point){rect->x, center[0].y},
+		(t_point){rect->x, center[2].y}, color);
+	draw_line(dst, (t_point){rect->x + rect->w, center[1].y},
+		(t_point){rect->x + rect->w, center[3].y}, color);
 }
 
 void		draw_smooth_fill_rect(SDL_Surface *dst, t_rect *rect, Uint32 color)
@@ -99,6 +99,6 @@ void		draw_smooth_fill_rect(SDL_Surface *dst, t_rect *rect, Uint32 color)
 	center[3].y = rect->y + rect->h - rounding;
 	drawing(dst, rect, center, color);
 	draw_smooth_fill_angle(dst, center, rounding, color);
-	draw_feel_rect(dst, rect_fill(rect->x + 1, center[0].y + 1,
-		rect->w - 2, rect->h - rounding * 2), color, 1);
+	draw_feel_rect(dst, &(t_rect){rect->x + 1, center[0].y + 1,
+		rect->w - 2, rect->h - rounding * 2}, color, 1);
 }

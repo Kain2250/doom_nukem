@@ -6,13 +6,13 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 15:54:08 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/10 20:32:07 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 20:31:50 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wad.h"
 
-void			destroy_hud(t_wad_hud *hud)
+void		destroy_hud(t_wad_hud *hud)
 {
 	int			i;
 
@@ -39,7 +39,7 @@ void			destroy_hud(t_wad_hud *hud)
 	}
 }
 
-void			destroi_name(char **name)
+void		destroi_name(char **name)
 {
 	int			i;
 
@@ -56,15 +56,15 @@ void			destroi_name(char **name)
 	}
 }
 
-char			**name_digit(int count)
+char		**name_digit(int count)
 {
 	int			i;
 	char		**name;
 
-	name = ft_memalloc(sizeof(char *) * count);
+	name = ft_xmemalloc(sizeof(char *) * count);
 	i = -1;
 	while (++i < count)
-		name[i] = (char *)ft_memalloc(sizeof(char) * 9);
+		name[i] = (char *)ft_xmemalloc(sizeof(char) * 9);
 	name[0] = ft_strcpy(name[0], "STTNUM0");
 	name[1] = ft_strcpy(name[1], "STTNUM1");
 	name[2] = ft_strcpy(name[2], "STTNUM2");
@@ -79,15 +79,15 @@ char			**name_digit(int count)
 	return (name);
 }
 
-char			**name_big_digit(int count)
+char		**name_big_digit(int count)
 {
 	int			i;
 	char		**name;
 	
-	name = ft_memalloc(sizeof(char *) * count);
+	name = ft_xmemalloc(sizeof(char *) * count);
 	i = -1;
 	while (++i != count)
-		name[i] = (char *)ft_memalloc(sizeof(char) * 9);
+		name[i] = (char *)ft_xmemalloc(sizeof(char) * 9);
 	name[0] = ft_strcpy(name[0], "STYSNUM0");
 	name[1] = ft_strcpy(name[1], "STYSNUM1");
 	name[2] = ft_strcpy(name[2], "STYSNUM2");
@@ -101,7 +101,7 @@ char			**name_big_digit(int count)
 	return (name);
 }
 
-void			digit_get(t_wad *wad, char *name, t_wad_sprite *digit)
+void		digit_get(t_wad *wad, char *name, t_wad_sprite *digit)
 {
 	uint32_t	offset;
 	t_patch		patch;
@@ -124,27 +124,27 @@ void			digit_get(t_wad *wad, char *name, t_wad_sprite *digit)
 	wad_destroy_patch(patch);
 }
 
-t_wad_hud		*init_hud(t_wad *wad)
+t_wad_hud	*init_hud(t_wad *wad)
 {
 	t_wad_hud	*hud;
 	char		**name_b;
 	char		**name;
 	int			i;
 	
-	hud = (t_wad_hud *)ft_memalloc(sizeof(t_wad_hud));
+	hud = (t_wad_hud *)ft_xmemalloc(sizeof(t_wad_hud));
 	hud->stbar = sprite_create(wad, "STBAR");
-	hud->big_digit = (t_wad_sprite **)ft_memalloc(sizeof(t_wad_sprite) * 10);
+	hud->big_digit = (t_wad_sprite **)ft_xmemalloc(sizeof(t_wad_sprite) * 10);
 	i = -1;
 	while (++i < 10)
-		hud->big_digit[i] = (t_wad_sprite *)ft_memalloc(sizeof(t_wad_sprite));
+		hud->big_digit[i] = (t_wad_sprite *)ft_xmemalloc(sizeof(t_wad_sprite));
 	name_b = name_big_digit(10);
 	i = -1;
 	while (++i < 10)
 		digit_get(wad, name_b[i], hud->big_digit[i]);
 	i = -1;
-	hud->digit = (t_wad_sprite **)ft_memalloc(sizeof(t_wad_sprite) * 11);
+	hud->digit = (t_wad_sprite **)ft_xmemalloc(sizeof(t_wad_sprite) * 11);
 	while (++i < 11)
-		hud->digit[i] = (t_wad_sprite *)ft_memalloc(sizeof(t_wad_sprite));
+		hud->digit[i] = (t_wad_sprite *)ft_xmemalloc(sizeof(t_wad_sprite));
 	name = name_digit(11);
 	i = -1;
 	while (++i < 11)

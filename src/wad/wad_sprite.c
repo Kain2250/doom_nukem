@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 19:56:54 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/10 20:09:29 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 17:36:47 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_wad_sprite		*sprite_create(t_wad *wad, char *name)
 	uint32_t		offset;
 	int				x;
 
-	if (!(sprite = (t_wad_sprite *)ft_memalloc(sizeof(t_wad_sprite))))
+	if (!(sprite = (t_wad_sprite *)ft_xmemalloc(sizeof(t_wad_sprite))))
 		return (NULL);
 	offset = find_offset_lump(wad->dir, name, NULL);
 	patch = wad_get_patch_info(wad->map, offset);

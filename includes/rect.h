@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 20:22:43 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/10 17:21:13 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 13:18:41 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct		s_rect
 	int				y;
 	int				w;
 	int				h;
-	bool			free;
 }					t_rect;
 
 typedef struct		s_rectf
@@ -65,9 +64,5 @@ typedef struct			s_crd
 void					fill_limit(t_limit *data, int min, int cur, int max);
 void					fill_limit_f(t_limit_f *data, float min,
 							float cur, float max);
-t_rect					*rect_fill(int x, int y, int w, int h);
-t_rect					rect_fill_no_malloc(int x, int y, int w, int h);
-t_point					fill_point(int x, int y);
-
 
 #endif

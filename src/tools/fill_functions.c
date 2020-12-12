@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 14:48:05 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/17 21:09:39 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 13:07:26 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,51 +16,9 @@ void		if_rect(SDL_Surface *src, t_rect *rsrc,
 			SDL_Surface *dst, t_rect *rdst)
 {
 	if (rsrc == NULL)
-	{
-		rsrc = (t_rect *)ft_memalloc(sizeof(t_rect));
-		rsrc->w = src->w;
-		rsrc->h = src->h;
-		rsrc->free = true;
-	}
+		rsrc = &(t_rect){.w = src->w, .h = src->h};
 	if (rdst == NULL)
-	{
-		rdst = (t_rect *)ft_memalloc(sizeof(t_rect));
-		rdst->w = dst->w;
-		rdst->h = dst->h;
-		rsrc->free = true;
-	}
-}
-
-t_rect		rect_fill_no_malloc(int x, int y, int w, int h)
-{
-	t_rect	q;
-
-	q.x = x;
-	q.y = y;
-	q.w = w;
-	q.h = h;
-	return (q);
-}
-
-t_rect		*rect_fill(int x, int y, int w, int h)
-{
-	t_rect	*rect;
-
-	rect = (t_rect *)ft_memalloc(sizeof(t_rect));
-	rect->x = x;
-	rect->y = y;
-	rect->w = w;
-	rect->h = h;
-	return (rect);
-}
-
-t_point		fill_point(int x, int y)
-{
-	t_point	point;
-
-	point.x = x;
-	point.y = y;
-	return (point);
+		rdst = &(t_rect){.w = dst->w, .h = dst->h};
 }
 
 void		fill_limit_f(t_limit_f *data, float min, float cur, float max)

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 21:03:55 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/10 19:10:03 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 21:05:06 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void			while_scale_pic(t_wad_sprite *src, t_rect *rsrc,
 	t_pointf		crd[2];
 	t_rectf			delta;
 	Uint32			color;
+	int				temp;
 
 	delta = check_scale_delta(rdst, rsrc);
 	crd[0].y = rdst->y;
@@ -40,6 +41,7 @@ static void			while_scale_pic(t_wad_sprite *src, t_rect *rsrc,
 	while (crd[1].y < rsrc->h || crd[0].y < rdst->y + rdst->h)
 	{
 		crd[0].x = rdst->x;
+		temp = 
 		crd[1].x = rsrc->x;
 		while (crd[1].x < rsrc->w || crd[0].x < rdst->x + rdst->w)
 		{
@@ -48,6 +50,10 @@ static void			while_scale_pic(t_wad_sprite *src, t_rect *rsrc,
 			{
 				(crd[1].x += delta.w) && crd[0].x++;
 				continue ;
+			}
+			if (rdst->w < 0)
+			{
+				putpixel(dst, crd[0].x, crd[0].y, color);
 			}
 			putpixel(dst, crd[0].x, crd[0].y, color);
 			(crd[1].x += delta.w) && crd[0].x++;
@@ -61,7 +67,7 @@ void				blit_gan_scaled(t_wad_sprite *src, SDL_Surface *dst)
 	t_rect			rsrc;
 	t_rect			rdst;
 
-	rsrc = (t_rect){0, 0, src->w, src->h, false};
+	rsrc = (t_rect){0, 0, src->w, src->h};
 	rdst.w = SCALING_W(src->w);
 	rdst.h = SCALING_H(src->h);
 	rdst.x = -(SCALING_W(src->left_offset));
@@ -74,7 +80,7 @@ void				blit_hud_scaled(t_wad_sprite *src, SDL_Surface *dst)
 	t_rect			rsrc;
 	t_rect			rdst;
 
-	rsrc = (t_rect){0, 0, src->w, src->h, false};
+	rsrc = (t_rect){0, 0, src->w, src->h};
 	rdst.w = SCALING_W(src->w);
 	rdst.h = SCALING_H(src->h);
 	rdst.x = 0;
@@ -87,11 +93,22 @@ void				blit_sprite_scale(t_wad_sprite *src, SDL_Surface *dst,
 {
 	t_rect			rsrc;
 	t_rect			rdst_temp;
-
+	int32_t			temp_w;
+	
+	temp_w = 0;
+	if (rdst.w < 0)
+	{
+		temp_w = rdst.w;
+		rdst.w = -rdst.w;
+	}
 	rdst_temp.w = SCALING_W(src->w) * rdst.w;
 	rdst_temp.h = SCALING_H(src->h) * rdst.h;
 	rdst_temp.x = rdst.x - SCALING_W(src->left_offset);
 	rdst_temp.y = rdst.y - SCALING_H(src->top_offset);
-	rsrc = (t_rect){0, 0, src->w, src->h, false};
+	if (temp_w < 0)
+	{
+		rdst.w = -rdst.w;
+	}
+	rsrc = (t_rect){0, 0, src->w, src->h};
 	while_scale_pic(src, &rsrc, dst, &rdst_temp);
 }

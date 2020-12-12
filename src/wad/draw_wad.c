@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:43:10 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/02 13:42:53 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 13:17:14 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,10 @@ void			wad_draw_linedefs(t_wad wad,
 		if (wad.linedef[i].type == 1)
 			color = 0xff0000;
 		draw_line(surface,
-			fill_point((vertex[wad.linedef[i].start].x - wad.buf1) / 10,
-					abs(vertex[wad.linedef[i].start].y - wad.buf2) / 10),
-			fill_point((vertex[wad.linedef[i].finish].x - wad.buf1) / 10,
-					abs(vertex[wad.linedef[i].finish].y - wad.buf2) / 10), color);
+			(t_point){(vertex[wad.linedef[i].start].x - wad.buf1) / 10,
+					abs(vertex[wad.linedef[i].start].y - wad.buf2) / 10},
+			(t_point){(vertex[wad.linedef[i].finish].x - wad.buf1) / 10,
+					abs(vertex[wad.linedef[i].finish].y - wad.buf2) / 10}, color);
 		i++;
 	}
 }

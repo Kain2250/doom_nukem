@@ -6,17 +6,11 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 12:16:13 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/10 14:51:01 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 12:54:15 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-
-void		free_rect(t_rect *rect)
-{
-	if (rect->free == true)
-		free(rect);
-}
 
 void		check_scale(SDL_Surface *source, t_rect *src)
 {
@@ -52,6 +46,4 @@ void		blit_surface(SDL_Surface *src, t_rect *rsrc,
 		if (source.y > rdst->h)
 			break ;
 	}
-	free_rect(rsrc);
-	free_rect(rdst);
 }

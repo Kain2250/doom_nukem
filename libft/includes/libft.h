@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcarc <mcarc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 19:19:41 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/09 19:46:11 by mcarc            ###   ########.fr       */
+/*   Updated: 2020/12/12 15:06:23 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -494,5 +494,10 @@ double				ft_percent(int start, int end, int current);
 ** Выводит двойной массив в стандартный вывод
 */
 void				ft_put2arr(int count, char **arr);
+/*
+** Действует как ft_memalloc, но завершает программу если не выделилась память
+** с кодом ошибки 1.
+*/
+void				*ft_xmemalloc(size_t size);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 08:33:00 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/11 16:02:30 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 17:45:48 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ int		doom_exit(t_doom *doom)
 			TTF_CloseFont(doom->sdl.fonts[i]);
 	// clear_wad_dir(doom->wad.dir);
 	// clear_wad_struct(doom->wad);
-	if (doom->wad.map != NULL)
-		free(doom->wad.map);
+	if (doom->wad->map != NULL)
+		free(doom->wad->map);
 	free_editor(doom->screen);
 	IMG_Quit();
 	TTF_Quit();

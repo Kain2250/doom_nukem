@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 19:37:12 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/10 19:40:23 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 19:57:25 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,64 +18,54 @@
 /*
 **Пехотинец - 1 фаза состояние покоя
 */
-# define S_PEH_1 "POSSE1"; name[1] = "POSSE2E8"; name[2] = "POSSE3E7"; S_PEH_11
-# define S_PEH_11 name[3] = "POSSE4E6"; name[4] = "POSSE5"
+# define S_PEH_1 peh_e1
 
 /*
 **Пехотинец - 2 фаза движения
 */
-# define S_PEH_2 "POSSA1"; name[1] = "POSSA2A8"; name[2] = "POSSA3A7"; S_PEH_22
-# define S_PEH_22 name[3] = "POSSA4A6"; name[4] = "POSSA5"
+# define S_PEH_2 peh_a1
 
 /*
 **Пехотинец - 3 фаза движения
 */
-# define S_PEH_3 "POSSB1"; name[1] = "POSSB2B8"; name[2] = "POSSB3B7"; S_PEH_33
-# define S_PEH_33 name[3] = "POSSB4B6"; name[4] = "POSSB5"
+# define S_PEH_3 peh_b1
 
 /*
 **Пехотинец - 4 фаза движения
 */
-# define S_PEH_4 "POSSC1"; name[1] = "POSSC2C8"; name[2] = "POSSC3C7"; S_PEH_44
-# define S_PEH_44 name[3] = "POSSC4C6"; name[4] = "POSSC5"
+# define S_PEH_4 peh_c1
 
 /*
 **Пехотинец - 5 фаза движения
 */
-# define S_PEH_5 "POSSD1"; name[1] = "POSSD2D8"; name[2] = "POSSD3D7"; S_PEH_55
-# define S_PEH_55 name[3] = "POSSD4D6"; name[4] = "POSSD5"
+# define S_PEH_5 peh_d1
 
 /*
 **Пехотинец - Выстрел
 */
-# define S_PEH_G "POSSF1"; name[1] = "POSSF2F8"; name[2] = "POSSF3F7"; S_PEH_GG
-# define S_PEH_GG name[3] = "POSSF4F6"; name[4] = "POSSF5"
+# define S_PEH_G peh_f1
 
 /*
 **Пехотинец - Урон
 */
-# define S_PEH_DM "POSSG1"; name[1] = "POSSG2G8"; name[2] = "POSSG3G7"; S_PEH_MM
-# define S_PEH_MM name[3] = "POSSG4G6"; name[4] = "POSSG5"
+# define S_PEH_DM peh_g1
 
 /*
 **Пехотинец - анимация смерти
 */
-# define S_PEH_D "POSSH0"; name[1] = "POSSI0"; name[2] = "POSSJ0"; S_PEH_DD
-# define S_PEH_DD name[3] = "POSSK0"; name[4] = "POSSL0"
+# define S_PEH_D peh_h0
 
 # define IMP 5
 
 /*
 **Имп - 1 фаза состояние покоя
 */
-# define S_IMP_1 "TROOE1"; name[1] = "TROOE2E8"; name[2] = "TROOE3E7"; S_IMP_11
-# define S_IMP_11 name[3] = "TROOE4E6"; name[4] = "TROOE5"
+# define S_IMP_1 "TROOE1" "TROOE2E8" "TROOE3E7" "TROOE4E6" "TROOE5"
 
 /*
 **Имп - 2 фаза движения
 */
-# define S_IMP_2 "TROOA1"; name[1] = "TROOA2A8"; name[2] = "TROOA3A7"; S_IMP_22
-# define S_IMP_22 name[3] = "TROOA4A6"; name[4] = "TROOA5"
+# define S_IMP_2 "TROOA1" "TROOA2A8" "TROOA3A7" "TROOA4A6" "TROOA5"
 
 /*
 **Имп - 3 фаза движения
@@ -134,39 +124,87 @@
 # include <stdint.h>
 # include "rect.h"
 
-typedef struct		s_wad_sprite
-{
-	char			*name;
-	uint32_t		*pixel;
-	int32_t			w;
-	int32_t			h;
-	int32_t			left_offset;
-	int32_t			top_offset;
-}					t_wad_sprite;
+typedef struct s_wad_player	t_wad_player;
+typedef struct s_wad_hud	t_wad_hud;
+typedef struct s_wad_sprite	t_wad_sprite;
+typedef enum e_name_peh		t_name_peh;
+typedef enum e_name_pig		t_name_pig;
+typedef enum e_name_gun		t_name_gun;
+typedef enum e_name_mili	t_name_mili;
 
-typedef struct		s_wad_hud
-{
+enum		e_name_peh {
+	peh_a1,
+	peh_a2a8,
+	peh_a3a7,
+	peh_a4a6,
+	peh_a8,
+	peh_b1,
+	peh_b2b8,
+	peh_b3b7,
+	peh_b4b6,
+	peh_b8,
+	peh_c1,
+	peh_c2c8,
+	peh_a3c7,
+	peh_c4c6,
+	peh_c8,
+	peh_d1,
+	peh_d2d8,
+	peh_d3d7,
+	peh_d4d6,
+	peh_d8,
+	peh_e1,
+	peh_e2e8,
+	peh_e3e7,
+	peh_e4e6,
+	peh_e8,
+	peh_f1,
+	peh_f2f8,
+	peh_f3f7,
+	peh_f4f6,
+	peh_f8,
+	peh_g1,
+	peh_g2g8,
+	peh_g3g7,
+	peh_g4g6,
+	peh_g8,
+	peh_h0,
+	peh_h1,
+	peh_h2,
+	peh_h3,
+	peh_h4,
+	peh_total
+};
+
+struct		s_wad_sprite {
+	char		*name;
+	uint32_t	*pixel;
+	int32_t		w;
+	int32_t		h;
+	int32_t		left_offset;
+	int32_t		top_offset;
+};
+
+struct		s_wad_hud {
 	t_wad_sprite	*stbar;
 	t_wad_sprite	**digit;
 	t_wad_sprite	**big_digit;
-}					t_wad_hud;
+};
 
-typedef struct		s_wad_player
-{
+struct		s_wad_player {
 	t_limit			health;
 	t_limit			shield;
 	t_limit			ammo[4];
 	uint8_t			cur_gan;
 	t_wad_sprite	**gun;
-}					t_wad_player;
+};
 
-uint32_t			get_pixel_sprite(t_wad_sprite *surface, int x, int y);
-void				blit_sprite_scaled(t_wad_sprite *src, t_rect *rsrc,
-						SDL_Surface *dst, t_rect *rdst);
-void				blit_gan_scaled(t_wad_sprite *src, SDL_Surface *dst);
-void				blit_hud_scaled(t_wad_sprite *src, SDL_Surface *dst);
-void				blit_sprite_scale(t_wad_sprite *src,
-						SDL_Surface *dst, t_rectf rdst);
-
+uint32_t	get_pixel_sprite(t_wad_sprite *surface, int x, int y);
+void		blit_sprite_scaled(t_wad_sprite *src, t_rect *rsrc,
+				SDL_Surface *dst, t_rect *rdst);
+void		blit_gan_scaled(t_wad_sprite *src, SDL_Surface *dst);
+void		blit_hud_scaled(t_wad_sprite *src, SDL_Surface *dst);
+void		blit_sprite_scale(t_wad_sprite *src,
+				SDL_Surface *dst, t_rectf rdst);
 
 #endif

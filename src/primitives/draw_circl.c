@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 18:36:42 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/05 18:37:46 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 13:09:09 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static void	put_fill_circl_pixel(SDL_Surface *dst, t_point coord,
 		x_minus = -1;
 	if (y_minus < 0)
 		y_minus = 0;
-	draw_line(dst, fill_point(x_plus, y_plus),
-		fill_point(x_minus, y_plus), color);
-	draw_line(dst, fill_point(x_plus, y_minus),
-		fill_point(x_minus, y_minus), color);
+	draw_line(dst, (t_point){x_plus, y_plus},
+		(t_point){x_minus, y_plus}, color);
+	draw_line(dst, (t_point){x_plus, y_minus},
+		(t_point){x_minus, y_minus}, color);
 }
 
 void		draw_fill_circl(SDL_Surface *dst, int radius,

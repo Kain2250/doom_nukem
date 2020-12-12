@@ -6,13 +6,13 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/11 17:02:53 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 20:59:20 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-void				user_cursor(t_doom *doom)
+void			user_cursor(t_doom *doom)
 {
 	SDL_Cursor		*curs;
 
@@ -20,19 +20,7 @@ void				user_cursor(t_doom *doom)
 	SDL_SetCursor(curs);
 }
 
-void				wad_init_level(t_wad *wad, char *name_map)
-{
-	wad_get_things(wad, name_map);
-	wad_get_linedefs(wad, name_map);
-	wad_get_sidedefs(wad, name_map);
-	wad_get_vertex(wad, name_map);
-	wad_get_segs(wad, name_map);
-	wad_get_ssectors(wad, name_map);
-	wad_get_nodes(wad, name_map);
-	wad_get_sectors(wad, name_map);
-}
-
-void				skin(t_doom *doom)
+void			skin(t_doom *doom)
 {
 	SDL_GetWindowSize(doom->sdl.window, &doom->sdl.width, &doom->sdl.height);
 	user_cursor(doom);
@@ -46,80 +34,36 @@ void				skin(t_doom *doom)
 	doom->player.cur_gan = 0;
 }
 
-void				wad_destroy_patch(t_patch patch)
+void			wad_destroy_patch(t_patch patch)
 {
 	if (patch.columnoffset)
 		free(patch.columnoffset);
 	ft_bzero(&patch, sizeof(patch));
 }
 
-char				**fill_name()
-{
-	char			**name;
-	int				i;
-
-	i = -1;
-	name = (char **)ft_memalloc(sizeof(char *) * (PEH));
-	while (++i < PEH)
-		name[i] = ft_memalloc(sizeof(char) * 9);
-	name[0] = S_PEH_D;
-	return (name);
-}
-
-t_wad_sprite		**fill_sprites(int def_sprt, char **name, t_wad *wad)
-{
-	int				i;
-	t_wad_sprite	**sprites;
-
-	i = -1;
-	sprites = ft_memalloc(sizeof(t_wad_sprite *) * (def_sprt + 1));
-	while (++i <= def_sprt)
-		sprites[i] = (t_wad_sprite *)ft_memalloc(sizeof(t_wad_sprite));
-	i = -1;
-	while (++i < def_sprt)
-		sprites[i] = sprite_create(wad, name[i]);
-	sprites[i] = NULL;
-	return (sprites);
-}
-
-int					main(int ac, char **av)
+int				main(int ac, char **av)
 {
 	t_doom			*doom;
-	t_wad_sprite	**sprites;
-	char			**name;
-	t_wad_menu		*menu;
-	t_wad_hud		*hud;
-	char			*name_map = {"E1M1"};
 
 	if (ac == 2 || ac == 3)
 	{
-		doom = ft_memalloc(sizeof(t_doom));
+		doom = ft_xmemalloc(sizeof(t_doom));
 		init_lib_sdl(doom);
-		if (!load_res(doom) | !wad_loader(&doom->wad, av[1]))
-			return (doom_exit(doom));
+		load_res(doom);
 		skin(doom);
-		wad_reader(&doom->wad);
-		wad_init_level(&doom->wad, name_map);
 																				// doom->screen = init_editor(doom);
-		menu = wad_init_menu(&doom->wad);
-		name = fill_name();
-		sprites = fill_sprites(PEH, name, &doom->wad);
-		hud = init_hud(&doom->wad);
-		// timer_start(&doom->fps);
+		doom->wad = init_wad(av[1]);
 		timer_start(&doom->time);
 		while (doom->quit == false)
 		{
-			// fps_counter(&doom->fps);
+			wad_draw_menu(doom->sdl.surface, doom->wad);
+																				// fps_counter(&doom->fps);
 																				// frame_tamer(doom, doom->screen);
-			// if (doom->)
-			wad_draw_menu(doom->sdl.surface, &doom->wad, menu);
 																				// wad_draw_linedefs(doom->wad, doom->wad.vert, doom->sdl.surface, name_map);
-			draw_line(doom->sdl.surface, (t_point){HALF_WIDTH, 0}, (t_point){HALF_WIDTH, HALF_R_HEIGHT * 2}, 0xffffff);
-			draw_line(doom->sdl.surface, (t_point){0, HALF_R_HEIGHT}, (t_point){WIDTH_WIN, HALF_R_HEIGHT}, 0xffffff);
-			
-			draw_sprite_anim(doom, sprites, 125, (t_rectf){HALF_WIDTH, HALF_WIDTH, 1, 1});
-			draw_hud(doom->sdl.surface, hud, doom->player);
-			
+																				// draw_line(doom->sdl.surface, (t_point){HALF_WIDTH, 0}, (t_point){HALF_WIDTH, HALF_R_HEIGHT * 2}, 0xffffff);
+																				// draw_line(doom->sdl.surface, (t_point){0, HALF_R_HEIGHT}, (t_point){WIDTH_WIN, HALF_R_HEIGHT}, 0xffffff);
+			draw_sprite_anim(doom, doom->wad->sprites, 125, (t_rectf){HALF_WIDTH, HALF_WIDTH, -1, 1});
+			draw_hud(doom->sdl.surface, doom->wad->hud, doom->player);
 			event_list(doom);
 			SDL_UpdateWindowSurface(doom->sdl.window);
 			clear_surface(doom->sdl.surface, 0);

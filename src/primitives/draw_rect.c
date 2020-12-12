@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 16:06:54 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/17 21:20:06 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 13:01:32 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ void			draw_feel_rect(SDL_Surface *dst, t_rect *rect,
 	t_rect		null_rect;
 
 	if (rect == NULL)
-		null_rect = rect_fill_no_malloc(0, 0, dst->w, dst->h);
+		null_rect = (t_rect){0, 0, dst->w, dst->h};
 	while_draw(dst, (rect == NULL) ? &null_rect : rect, color, step);
 }

@@ -6,7 +6,7 @@
 #    By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/07 21:57:42 by bdrinkin          #+#    #+#              #
-#    Updated: 2020/07/10 19:33:56 by bdrinkin         ###   ########.fr        #
+#    Updated: 2020/12/12 15:06:07 by bdrinkin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,9 @@ SOURCES_LIST = ft_atoi.c\
 	ft_percent.c \
 	ft_putstrlen.c \
 	ft_putlstr.c \
-	ft_put2arr.c
+	ft_put2arr.c \
+	ft_xmemalloc.c
+
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 OBJECTS_DIRECTORY = objects/
 OBJECTS_LIST = $(patsubst %.c, %.o, $(SOURCES_LIST))

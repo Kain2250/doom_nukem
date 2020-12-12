@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 09:36:46 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/09 14:49:30 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 13:16:08 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,14 @@ void		recurs_draw(SDL_Surface *dst, t_rect *rect,
 	center[2].y = rect->y + rect->h - rounding;
 	center[3].x = rect->x + rect->w - rounding;
 	center[3].y = rect->y + rect->h - rounding;
-	draw_line(dst, fill_point(center[0].x, rect->y),
-		fill_point(center[1].x, rect->y), color);
-	draw_line(dst, fill_point(center[2].x, rect->y + rect->h),
-		fill_point(center[3].x, rect->y + rect->h), color);
-	draw_line(dst, fill_point(rect->x, center[0].y),
-		fill_point(rect->x, center[2].y), color);
-	draw_line(dst, fill_point(rect->x + rect->w, center[1].y),
-		fill_point(rect->x + rect->w, center[3].y), color);
+	draw_line(dst, (t_point){center[0].x, rect->y},
+		(t_point){center[1].x, rect->y}, color);
+	draw_line(dst, (t_point){center[2].x, rect->y + rect->h},
+		(t_point){center[3].x, rect->y + rect->h}, color);
+	draw_line(dst, (t_point){rect->x, center[0].y},
+		(t_point){rect->x, center[2].y}, color);
+	draw_line(dst, (t_point){rect->x + rect->w, center[1].y},
+		(t_point){rect->x + rect->w, center[3].y}, color);
 	draw_smooth_angle(dst, center, rounding, color);
 }
 
@@ -108,8 +108,8 @@ void		draw_smooth_rect(SDL_Surface *dst, t_rect *rect,
 	shift = 0;
 	while (i < thickness)
 	{
-		tmp_rect = rect_fill_no_malloc(rect->x + shift, rect->y + shift,
-			rect->w - shift * 2, rect->h - shift * 2);
+		tmp_rect = (t_rect){rect->x + shift, rect->y + shift,
+			rect->w - shift * 2, rect->h - shift * 2};
 		recurs_draw(dst, &tmp_rect, rounding, color);
 		if (rounding > 1)
 			rounding--;

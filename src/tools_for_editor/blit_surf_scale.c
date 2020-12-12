@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 21:03:55 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/11/26 20:04:44 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 12:53:12 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void				blit_surf_scaled(SDL_Surface *src, t_rect *rsrc,
 	t_rect			tmp_rdst;
 
 	if (rsrc == NULL)
-		tmp_rsrc = (t_rect){0, 0, src->w, src->h, false};
+		tmp_rsrc = (t_rect){0, 0, src->w, src->h};
 	if (rdst == NULL)
-		tmp_rdst = (t_rect){0, 0, dst->w, dst->h, false};
+		tmp_rdst = (t_rect){0, 0, dst->w, dst->h};
 	while_scale_pic(src, rsrc != NULL ? rsrc : &tmp_rsrc,
 		dst, rdst != NULL ? rdst : &tmp_rdst);
 }

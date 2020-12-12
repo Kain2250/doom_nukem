@@ -10,6 +10,7 @@
         "ios": "c",
         "__tuple": "c",
         "typeinfo": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "wad.h": "c"
     }
 }

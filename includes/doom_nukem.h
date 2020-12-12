@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/11 16:03:02 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 17:41:12 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,58 +54,58 @@ typedef struct		s_frames
 	struct s_frames	*next;
 }					t_frames;
 
-typedef struct			s_timer
+typedef struct	s_timer
 {
-	Uint32				start_ticks;
-	Uint32				paused_ticks;
-	bool				paused;
-	bool				started;
-	int					counted_frames;
-}						t_timer;
+	Uint32		start_ticks;
+	Uint32		paused_ticks;
+	bool		paused;
+	bool		started;
+	int			counted_frames;
+}				t_timer;
 
-typedef struct			s_mouse
+typedef struct	s_mouse
 {
-	bool				is_presed;
-	int					prew_x;
-	int					prew_y;
-	int					x;
-	int					y;
-}						t_mouse;
+	bool		is_presed;
+	int			prew_x;
+	int			prew_y;
+	int			x;
+	int			y;
+}				t_mouse;
 
-typedef struct			s_color
+typedef struct	s_color
 {
-	Uint8				red;
-	Uint8				green;
-	Uint8				blue;
-	Uint8				alpha;
-}						t_color;
+	Uint8		red;
+	Uint8		green;
+	Uint8		blue;
+	Uint8		alpha;
+}				t_color;
 
-typedef struct			s_sdl_sys
+typedef struct		s_sdl_sys
 {
-	SDL_Window			*window;
-	SDL_Renderer		*render;
-	SDL_Surface			*surface;
-	SDL_Window			*map_window;
-	SDL_Renderer		*map_render;
-	SDL_Event			event;
-	const Uint8			*state;
-	const Uint32		*state_mouse;
-	int					width;
-	int					height;
-	int					map_width;
-	int					map_heigth;
-	SDL_Surface			*textures[texture_total];
-	TTF_Font			*fonts[font_total];
-}						t_sdl_sys;
+	SDL_Window		*window;
+	SDL_Renderer	*render;
+	SDL_Surface		*surface;
+	SDL_Window		*map_window;
+	SDL_Renderer	*map_render;
+	SDL_Event		event;
+	const Uint8		*state;
+	const Uint32	*state_mouse;
+	int				width;
+	int				height;
+	int				map_width;
+	int				map_heigth;
+	SDL_Surface		*textures[texture_total];
+	TTF_Font		*fonts[font_total];
+}					t_sdl_sys;
 
-typedef struct			s_new_win
+typedef struct		s_new_win
 {
-	SDL_Window			*win;
-	SDL_Surface			*screen;
-	SDL_Event			event;
-	struct s_frames		*frames;
-	bool				quit;
-}						t_new_win;
+	SDL_Window		*win;
+	SDL_Surface		*screen;
+	SDL_Event		event;
+	struct s_frames	*frames;
+	bool			quit;
+}					t_new_win;
 
 typedef struct			s_doom
 {
@@ -116,7 +116,7 @@ typedef struct			s_doom
 	struct s_wad_player	player;
 	t_timer				time;
 	t_timer				fps;
-	t_wad				wad;
+	t_wad				*wad;
 	t_wad_sprite		test[15];
 	int					buf1;
 	int					buf2;
@@ -157,7 +157,7 @@ void					fps_counter(t_timer *time);
 /*
 ** load_res/load_res.c
 */
-bool					load_res(t_doom *doom);
+void					load_res(t_doom *doom);
 SDL_Surface				*load_surface(char *path, SDL_Surface *screen_surface);
 /*
 ** tools_for_editor/tools.c
@@ -236,6 +236,5 @@ void					wad_destroy_patch(t_patch patch);
 
 void					clear_wad_dir(t_wad_dir *dir);
 void					print_bit(void *data);
-
 
 #endif

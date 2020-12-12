@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 09:15:51 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/12 00:00:58 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 13:05:49 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ void			open_new_win(t_new_win *frame, TTF_Font *font)
 		SDL_WINDOWPOS_UNDEFINED, 600, 700, SDL_WINDOW_SHOWN);
 	frame->screen = SDL_GetWindowSurface(frame->win);
 	frame->quit = false;
-	q = rect_fill_no_malloc(10, 10, 60, 80);
+	q = (t_rect){10, 10, 60, 80};
 	frame->frames = new_frame(q, 0xa0a0a0,
 		new_block(2, q, TTF_RenderText_Blended(font, "Knopka", color)));
 	render_new_win(frame, 0xafafaf,
-		rect_fill_no_malloc(0, 0, frame->screen->w, frame->screen->h));
+		(t_rect){0, 0, frame->screen->w, frame->screen->h});
 }
 
 void			close_new_win(t_new_win *frame)

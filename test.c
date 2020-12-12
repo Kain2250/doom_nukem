@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 17:39:29 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/09/22 22:18:35 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 16:15:22 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int			*data_addit(int *data)
 {
 	int		*ret;
 
-	ret = (int *)ft_memalloc(sizeof(int));
+	ret = (int *)ft_xmemalloc(sizeof(int));
 	*ret = *data;
 	return (ret);
 }
@@ -94,7 +94,7 @@ t_tree		*new_node(int *data, short num_nod)
 {
 	t_tree	*node;
 
-	node = (t_tree *)ft_memalloc(sizeof(t_tree));
+	node = (t_tree *)ft_xmemalloc(sizeof(t_tree));
 	node->data = data_addit(data);
 	node->num_nod = num_nod;
 	node->node_front = NULL;
@@ -127,11 +127,11 @@ int			main(void)
 	int		j;
 
 	i = 0;
-	arr = ft_memalloc(sizeof(int *) * 7);
+	arr = ft_xmemalloc(sizeof(int *) * 7);
 	while (i != 7)
 	{
 		j = 0;
-		arr[i] = ft_memalloc(sizeof(int) * 10);
+		arr[i] = ft_xmemalloc(sizeof(int) * 10);
 		while (j != 10)
 		{
 			if ((i == 1 && j == 1) || (i == 1 && j == 3) || (i == 1 && j == 5) || (i == 1 && j == 8) ||

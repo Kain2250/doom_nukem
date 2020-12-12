@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:49:40 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/02 13:44:15 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/12 16:15:22 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void			wad_get_things(t_wad *wad, char *name_map)
 
 	offset = find_offset_lump(wad->dir, "THINGS", name_map);
 	size = find_size_lump(wad->dir, "THINGS", name_map);
-	wad->things = (t_things *)ft_memalloc(size / 10 * sizeof(t_things));
+	wad->things = (t_things *)ft_xmemalloc(size / 10 * sizeof(t_things));
 	temp_offset = offset + size;
 	i = 0;
 	while (offset < temp_offset)
@@ -56,7 +56,7 @@ void			wad_get_linedefs(t_wad *wad, char *name_map)
 
 	offset = find_offset_lump(wad->dir, "LINEDEFS", name_map);
 	size = find_size_lump(wad->dir, "LINEDEFS", name_map);
-	wad->linedef = (t_linedef *)ft_memalloc(size / 14 * sizeof(t_linedef));
+	wad->linedef = (t_linedef *)ft_xmemalloc(size / 14 * sizeof(t_linedef));
 	temp_offset = offset + size;
 	i = 0;
 	while (offset < temp_offset)
@@ -83,7 +83,7 @@ void			wad_get_sidedefs(t_wad *wad, char *name_map)
 	offset = find_offset_lump(wad->dir, "SIDEDEFS", name_map);
 	size = find_size_lump(wad->dir, "SIDEDEFS", name_map);
 	temp_offset = offset + size;
-	wad->sidedefs = (t_sidedef *)ft_memalloc(sizeof(t_sidedef) * size / 30);
+	wad->sidedefs = (t_sidedef *)ft_xmemalloc(sizeof(t_sidedef) * size / 30);
 	i = 0;
 	while (offset < temp_offset)
 	{
@@ -116,7 +116,7 @@ void			wad_get_vertex(t_wad *wad, char *name_map)
 	i = 0;
 	offset = find_offset_lump(wad->dir, "VERTEXES", name_map);
 	size = find_size_lump(wad->dir, "VERTEXES", name_map);
-	wad->vert = (t_vertex *)ft_memalloc(size / 4 * sizeof(t_vertex));
+	wad->vert = (t_vertex *)ft_xmemalloc(size / 4 * sizeof(t_vertex));
 	temp_offset = offset + size;
 	while (offset < temp_offset)
 	{
@@ -144,7 +144,7 @@ void			wad_get_segs(t_wad *wad, char *name_map)
 	offset = find_offset_lump(wad->dir, "SEGS", name_map);
 	size = find_size_lump(wad->dir, "SEGS", name_map);
 	temp_offset = size + offset;
-	wad->segs = (t_seg *)ft_memalloc(sizeof(t_seg) * size / 12);
+	wad->segs = (t_seg *)ft_xmemalloc(sizeof(t_seg) * size / 12);
 	i = 0;
 	while (offset < temp_offset)
 	{
@@ -181,7 +181,7 @@ void			wad_get_ssectors(t_wad *wad, char *name_map)
 	offset = find_offset_lump(wad->dir, "SSECTORS", name_map);
 	size = find_size_lump(wad->dir, "SSECTORS", name_map);
 	temp_offset = offset + size;
-	wad->ssectors = (t_ssectors *)ft_memalloc(sizeof(t_ssectors) * size / 4);
+	wad->ssectors = (t_ssectors *)ft_xmemalloc(sizeof(t_ssectors) * size / 4);
 	i = 0;
 	while (offset < temp_offset)
 	{
@@ -210,7 +210,7 @@ void			wad_get_nodes(t_wad *wad, char *map_name)
 	offset = find_offset_lump(wad->dir, "NODES", map_name);
 	size = find_size_lump(wad->dir, "NODES", map_name);
 	temp_offset = offset + size;
-	wad->nodes = (t_node *)ft_memalloc(size / 28 * sizeof(t_node));
+	wad->nodes = (t_node *)ft_xmemalloc(size / 28 * sizeof(t_node));
 	i = 0;
 	while (offset < temp_offset)
 	{
@@ -250,7 +250,7 @@ void			wad_get_sectors(t_wad *wad, char *name_map)
 	offset = find_offset_lump(wad->dir, "SECTORS", name_map);
 	size = find_size_lump(wad->dir, "SECTORS", name_map);
 	temp_offset = offset + size;
-	wad->sectors = (t_sector *)ft_memalloc(sizeof(t_sector) * size / 26);
+	wad->sectors = (t_sector *)ft_xmemalloc(sizeof(t_sector) * size / 26);
 	i = 0;
 	while (offset < temp_offset)
 	{
@@ -289,7 +289,7 @@ t_patch			wad_get_patch_info(const uint8_t *data,	uint32_t offset)
 	patch.height = bytes_to_short(data, offset + 2);
 	patch.left_offset = bytes_to_short(data, offset + 4);
 	patch.top_offset = bytes_to_short(data, offset + 6);
-	patch.columnoffset = (uint32_t *)ft_memalloc(sizeof(uint32_t) *
+	patch.columnoffset = (uint32_t *)ft_xmemalloc(sizeof(uint32_t) *
 		patch.width);
 	i = 0;
 	temp_offset = offset + 8;
@@ -361,7 +361,7 @@ void			wad_get_textures(const uint8_t *data, uint32_t offset, t_texture_head *te
 	temp_offset = offset;
 	texture->num_texture = bytes_to_int(data, temp_offset);
 	temp_offset += 4;
-	texture->offsets = (uint32_t *)ft_memalloc(texture->num_texture * (sizeof(uint32_t)));
+	texture->offsets = (uint32_t *)ft_xmemalloc(texture->num_texture * (sizeof(uint32_t)));
 	i = 0;
 	while (i < texture->num_texture)
 	{
@@ -369,7 +369,7 @@ void			wad_get_textures(const uint8_t *data, uint32_t offset, t_texture_head *te
 		temp_offset += 4;
 		i++;
 	}
-	texture->mtexture = (t_map_texture *)ft_memalloc(sizeof(t_map_texture) * i);
+	texture->mtexture = (t_map_texture *)ft_xmemalloc(sizeof(t_map_texture) * i);
 	i = 0;
 	while (i < texture->num_texture)
 	{
@@ -382,7 +382,7 @@ void			wad_get_textures(const uint8_t *data, uint32_t offset, t_texture_head *te
 		texture->mtexture[i].width = bytes_to_short(data, temp_offset + 4);
 		texture->mtexture[i].height = bytes_to_short(data, temp_offset + 6);
 		texture->mtexture[i].patchcount = bytes_to_short(data, temp_offset + 12);
-		texture->mtexture[i].patches = (t_patches *)ft_memalloc(sizeof(t_patches) * texture->mtexture[i].patchcount);
+		texture->mtexture[i].patches = (t_patches *)ft_xmemalloc(sizeof(t_patches) * texture->mtexture[i].patchcount);
 		j = 0;
 		temp_offset = temp_offset + 12;
 		while (j < texture->mtexture[i].patchcount)
@@ -410,9 +410,9 @@ void			wad_get_pnames(const uint8_t *data, t_wad_dir *dir, t_pnames *pname)
 	temp_offset = offset;
 	i = 0;
 	pname->num_map_patches = bytes_to_int(data, temp_offset);
-	pname->name = (char **)ft_memalloc(sizeof(char *) * pname->num_map_patches);
+	pname->name = (char **)ft_xmemalloc(sizeof(char *) * pname->num_map_patches);
 	while (i < pname->num_map_patches)
-		pname->name[i++] = (char *)ft_memalloc(sizeof(char) * 9);
+		pname->name[i++] = (char *)ft_xmemalloc(sizeof(char) * 9);
 	i = 0; 
 	temp_offset += 4;
 	while (i < pname->num_map_patches)
