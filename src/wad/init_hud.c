@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 15:54:08 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/12 20:31:50 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/21 19:12:47 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		destroy_hud(t_wad_hud *hud)
 {
-	int			i;
+	int	i;
 
 	if (hud)
 	{
@@ -41,7 +41,7 @@ void		destroy_hud(t_wad_hud *hud)
 
 void		destroi_name(char **name)
 {
-	int			i;
+	int	i;
 
 	if (name)
 	{
@@ -56,48 +56,21 @@ void		destroi_name(char **name)
 	}
 }
 
-char		**name_digit(int count)
+void		*name_digit()
 {
-	int			i;
-	char		**name;
-
-	name = ft_xmemalloc(sizeof(char *) * count);
-	i = -1;
-	while (++i < count)
-		name[i] = (char *)ft_xmemalloc(sizeof(char) * 9);
-	name[0] = ft_strcpy(name[0], "STTNUM0");
-	name[1] = ft_strcpy(name[1], "STTNUM1");
-	name[2] = ft_strcpy(name[2], "STTNUM2");
-	name[3] = ft_strcpy(name[3], "STTNUM3");
-	name[4] = ft_strcpy(name[4], "STTNUM4");
-	name[5] = ft_strcpy(name[5], "STTNUM5");
-	name[6] = ft_strcpy(name[6], "STTNUM6");
-	name[7] = ft_strcpy(name[7], "STTNUM7");
-	name[8] = ft_strcpy(name[8], "STTNUM8");
-	name[9] = ft_strcpy(name[9], "STTNUM9");
-	name[10] = ft_strcpy(name[10], "STTPRCNT");
+	static const char	*name[] = {
+		"STTNUM0", "STTNUM1", "STTNUM2", "STTNUM3", "STTNUM4", "STTNUM5",
+		"STTNUM6", "STTNUM7", "STTNUM8", "STTNUM9", NULL
+	};
 	return (name);
 }
 
-char		**name_big_digit(int count)
+void		*name_big_digit()
 {
-	int			i;
-	char		**name;
-	
-	name = ft_xmemalloc(sizeof(char *) * count);
-	i = -1;
-	while (++i != count)
-		name[i] = (char *)ft_xmemalloc(sizeof(char) * 9);
-	name[0] = ft_strcpy(name[0], "STYSNUM0");
-	name[1] = ft_strcpy(name[1], "STYSNUM1");
-	name[2] = ft_strcpy(name[2], "STYSNUM2");
-	name[3] = ft_strcpy(name[3], "STYSNUM3");
-	name[4] = ft_strcpy(name[4], "STYSNUM4");
-	name[5] = ft_strcpy(name[5], "STYSNUM5");
-	name[6] = ft_strcpy(name[6], "STYSNUM6");
-	name[7] = ft_strcpy(name[7], "STYSNUM7");
-	name[8] = ft_strcpy(name[8], "STYSNUM8");
-	name[9] = ft_strcpy(name[9], "STYSNUM9");
+	static const char	*name[] = {
+		"STYSNUM0", "STYSNUM1", "STYSNUM2", "STYSNUM3", "STYSNUM4", "STYSNUM5",
+		"STYSNUM6", "STYSNUM7", "STYSNUM8", "STYSNUM9", NULL
+	};
 	return (name);
 }
 
@@ -137,17 +110,17 @@ t_wad_hud	*init_hud(t_wad *wad)
 	i = -1;
 	while (++i < 10)
 		hud->big_digit[i] = (t_wad_sprite *)ft_xmemalloc(sizeof(t_wad_sprite));
-	name_b = name_big_digit(10);
+	name_b = name_big_digit();
 	i = -1;
 	while (++i < 10)
 		digit_get(wad, name_b[i], hud->big_digit[i]);
 	i = -1;
-	hud->digit = (t_wad_sprite **)ft_xmemalloc(sizeof(t_wad_sprite) * 11);
-	while (++i < 11)
+	hud->digit = (t_wad_sprite **)ft_xmemalloc(sizeof(t_wad_sprite) * 10);
+	while (++i < 10)
 		hud->digit[i] = (t_wad_sprite *)ft_xmemalloc(sizeof(t_wad_sprite));
-	name = name_digit(11);
+	name = name_digit();
 	i = -1;
-	while (++i < 11)
+	while (++i < 10)
 		digit_get(wad, name[i], hud->digit[i]);
 	return (hud);
 }

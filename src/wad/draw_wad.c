@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 19:43:10 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/12 13:17:14 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/21 19:13:44 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,6 @@ SDL_Surface		*wad_draw_patch(t_wad wad, char *pnames, t_wad_sprite *sprite)
 	}
 	return (ret);
 }
-
-
 
 void			wad_draw_linedefs(t_wad wad,
 					t_vertex *vertex, SDL_Surface *surface, char *name_map)

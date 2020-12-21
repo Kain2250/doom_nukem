@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 14:29:58 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/12 20:51:52 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/21 17:44:08 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,62 +24,26 @@ void	wad_init_level(t_wad *wad, char *name_map)
 	wad_get_sectors(wad, name_map);
 }
 
-void	def_name(char **name_lisl)
+void	*def_name(void)
 {
-	name_lisl[0] = ft_strdup("POSSA1");
-	name_lisl[1] = ft_strdup("POSSA2A8");
-	name_lisl[2] = ft_strdup("POSSA3A7");
-	name_lisl[3] = ft_strdup("POSSA4A6");
-	name_lisl[4] = ft_strdup("POSSA5");
-	name_lisl[5] = ft_strdup("POSSB1");
-	name_lisl[6] = ft_strdup("POSSB2B8");
-	name_lisl[7] = ft_strdup("POSSB3B7");
-	name_lisl[8] = ft_strdup("POSSB4B6");
-	name_lisl[9] = ft_strdup("POSSB5");
-	name_lisl[10] = ft_strdup("POSSC1");
-	name_lisl[11] = ft_strdup("POSSC2C8");
-	name_lisl[12] = ft_strdup("POSSC3C7");
-	name_lisl[13] = ft_strdup("POSSC4C6");
-	name_lisl[14] = ft_strdup("POSSC5");
-	name_lisl[15] = ft_strdup("POSSD1");
-	name_lisl[16] = ft_strdup("POSSD2D8");
-	name_lisl[17] = ft_strdup("POSSD3D7");
-	name_lisl[18] = ft_strdup("POSSD4D6");
-	name_lisl[19] = ft_strdup("POSSD5");
-	name_lisl[20] = ft_strdup("POSSE1");
-	name_lisl[21] = ft_strdup("POSSE2E8");
-	name_lisl[22] = ft_strdup("POSSE3E7");
-	name_lisl[23] = ft_strdup("POSSE4E6");
-	name_lisl[24] = ft_strdup("POSSE5");
-	name_lisl[25] = ft_strdup("POSSF1");
-	name_lisl[26] = ft_strdup("POSSF2F8");
-	name_lisl[27] = ft_strdup("POSSF3F7");
-	name_lisl[28] = ft_strdup("POSSF4F6");
-	name_lisl[29] = ft_strdup("POSSF5");
-	name_lisl[30] = ft_strdup("POSSG1");
-	name_lisl[31] = ft_strdup("POSSG2G8");
-	name_lisl[32] = ft_strdup("POSSG3G7");
-	name_lisl[33] = ft_strdup("POSSG4G6");
-	name_lisl[34] = ft_strdup("POSSG5");
-	name_lisl[35] = ft_strdup("POSSH0");
-	name_lisl[36] = ft_strdup("POSSI0");
-	name_lisl[37] = ft_strdup("POSSJ0");
-	name_lisl[38] = ft_strdup("POSSK0");
-	name_lisl[39] = ft_strdup("POSSL0");
-}
-
-void	init_name_list(t_wad *wad)
-{
-	int	i;
-
-	i = -1;
-	wad->name = (char **)ft_xmemalloc(sizeof(char *) * peh_total);
-	def_name(wad->name);
-	while (++i < peh_total)
-	{
-		if (wad->name[i] == NULL)
-			exit(put_error_sys(ERR_MALLOC));
-	}
+	static const char *names[] = {
+		"POSSA1", "POSSA2A8", "POSSA3A7", "POSSA4A6", "POSSA5", "POSSB1",
+		"POSSB2B8", "POSSB3B7", "POSSB4B6", "POSSB5", "POSSC1", "POSSC2C8",
+		"POSSC3C7", "POSSC4C6", "POSSC5", "POSSD1",	"POSSD2D8", "POSSD3D7",
+		"POSSD4D6", "POSSD5", "POSSE1", "POSSE2E8", "POSSE3E7", "POSSE4E6",
+		"POSSE5", "POSSF1", "POSSF2F8", "POSSF3F7", "POSSF4F6", "POSSF5",
+		"POSSG1", "POSSG2G8", "POSSG3G7", "POSSG4G6", "POSSG5", "POSSH0",
+		"POSSI0", "POSSJ0", "POSSK0", "POSSL0", "TROOE1", "TROOE2E8",
+		"TROOE3E7", "TROOE4E6", "TROOE5", "TROOA1", "TROOA2A8", "TROOA3A7",
+		"TROOA4A6", "TROOA5", "TROOB1", "TROOB2B8", "TROOB3B7", "TROOB4B6",
+		"TROOB5", "TROOC1", "TROOC2C8", "TROOC3C7", "TROOC4C6", "TROOC5",
+		"TROOC1", "TROOC2C8", "TROOC3C7", "TROOC4C6","TROOC5", "TROOG1",
+		"TROOG2G8", "TROOG3G7", "TROOG4G6", "TROOG5", "TROOH1", "TROOH2H8",
+		"TROOH3H7", "TROOH4H6", "TROOH5", "TROOI0", "TROOJ0", "TROOK0",
+		"TROOL0", "TROOM0", "PISGA0", "PISGB0", "PISGC0", "PISGD0", "PISGE0",
+		"PISFA0", NULL
+	};
+	return (names);
 }
 
 t_wad_sprite	**fill_sprites(int def_sprt, char **name, t_wad *wad)
@@ -88,7 +52,7 @@ t_wad_sprite	**fill_sprites(int def_sprt, char **name, t_wad *wad)
 	t_wad_sprite	**sprites;
 
 	i = -1;
-	sprites = ft_xmemalloc(sizeof(t_wad_sprite *) * (def_sprt + 1));
+	sprites = ft_xmemalloc(sizeof(t_wad_sprite *) * (def_sprt));
 	while (++i <= def_sprt)
 		sprites[i] = (t_wad_sprite *)ft_xmemalloc(sizeof(t_wad_sprite));
 	i = -1;
@@ -107,8 +71,8 @@ t_wad	*init_wad(char *av)
 	wad_reader(wad);
 	wad_init_level(wad, "E1M1");
 	wad_init_menu(wad);
-	init_name_list(wad);
+	wad->name = def_name();
 	wad->hud = init_hud(wad);
-	wad->sprites = fill_sprites(peh_total, wad->name, wad);
+	wad->sprites = fill_sprites(sprt_total, wad->name, wad);
 	return (wad);
 }

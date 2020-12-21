@@ -6,104 +6,12 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 19:37:12 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/12 19:57:25 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/21 19:50:57 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SPRITE_KIT_H
 # define SPRITE_KIT_H
-
-# define PEH 5
-
-/*
-**Пехотинец - 1 фаза состояние покоя
-*/
-# define S_PEH_1 peh_e1
-
-/*
-**Пехотинец - 2 фаза движения
-*/
-# define S_PEH_2 peh_a1
-
-/*
-**Пехотинец - 3 фаза движения
-*/
-# define S_PEH_3 peh_b1
-
-/*
-**Пехотинец - 4 фаза движения
-*/
-# define S_PEH_4 peh_c1
-
-/*
-**Пехотинец - 5 фаза движения
-*/
-# define S_PEH_5 peh_d1
-
-/*
-**Пехотинец - Выстрел
-*/
-# define S_PEH_G peh_f1
-
-/*
-**Пехотинец - Урон
-*/
-# define S_PEH_DM peh_g1
-
-/*
-**Пехотинец - анимация смерти
-*/
-# define S_PEH_D peh_h0
-
-# define IMP 5
-
-/*
-**Имп - 1 фаза состояние покоя
-*/
-# define S_IMP_1 "TROOE1" "TROOE2E8" "TROOE3E7" "TROOE4E6" "TROOE5"
-
-/*
-**Имп - 2 фаза движения
-*/
-# define S_IMP_2 "TROOA1" "TROOA2A8" "TROOA3A7" "TROOA4A6" "TROOA5"
-
-/*
-**Имп - 3 фаза движения
-*/
-# define S_IMP_3 "TROOB1"; name[1] = "TROOB2B8"; name[2] = "TROOB3B7"; S_IMP_33
-# define S_IMP_33 name[3] = "TROOB4B6"; name[4] = "TROOB5"
-
-/*
-**Имп - 4 фаза движения
-*/
-# define S_IMP_4 "TROOC1"; name[1] = "TROOC2C8"; name[2] = "TROOC3C7"; S_IMP_44
-# define S_IMP_44 name[3] = "TROOC4C6"; name[4] = "TROOC5"
-
-/*
-**Имп - 5 фаза движения
-*/
-# define S_IMP_5 "TROOD1"; name[1] = "TROOD2D8"; name[2] = "TROOD3D7"; S_IMP_55
-# define S_IMP_55 name[3] = "TROOD4D6"; name[4] = "TROOD5"
-
-/*
-**Имп - Выстрел
-*/
-# define S_IMP_G "TROOG1"; name[1] = "TROOG2G8"; name[2] = "TROOG3G7"; S_IMP_GG
-# define S_IMP_GG name[3] = "TROOG4G6"; name[4] = "TROOG5"
-
-/*
-**Имп - Урон
-*/
-# define S_IMP_DM "TROOH1"; name[1] = "TROOH2H8"; name[2] = "TROOH3H7"; S_IMP_MM
-# define S_IMP_MM name[3] = "TROOH4H6"; name[4] = "TROOH5"
-
-/*
-**Имп - анимация смерти
-*/
-# define S_IMP_D "TROOI0"; name[1] = "TROOJ0"; name[2] = "TROOK0"; S_IMP_DD
-# define S_IMP_DD name[3] = "TROOL0"; name[4] = "TROOM0"
-
-# define SAW 2
 
 /*
 **Бензопила - анимация покоя
@@ -127,53 +35,108 @@
 typedef struct s_wad_player	t_wad_player;
 typedef struct s_wad_hud	t_wad_hud;
 typedef struct s_wad_sprite	t_wad_sprite;
-typedef enum e_name_peh		t_name_peh;
-typedef enum e_name_pig		t_name_pig;
-typedef enum e_name_gun		t_name_gun;
-typedef enum e_name_mili	t_name_mili;
+typedef struct s_sub_sprite	t_sub_sprite;
+typedef struct s_sub_gun	t_sub_gun;
 
 enum		e_name_peh {
-	peh_a1,
-	peh_a2a8,
-	peh_a3a7,
-	peh_a4a6,
-	peh_a8,
-	peh_b1,
-	peh_b2b8,
-	peh_b3b7,
-	peh_b4b6,
-	peh_b8,
-	peh_c1,
-	peh_c2c8,
-	peh_a3c7,
-	peh_c4c6,
-	peh_c8,
-	peh_d1,
-	peh_d2d8,
-	peh_d3d7,
-	peh_d4d6,
-	peh_d8,
-	peh_e1,
-	peh_e2e8,
-	peh_e3e7,
-	peh_e4e6,
-	peh_e8,
-	peh_f1,
-	peh_f2f8,
-	peh_f3f7,
-	peh_f4f6,
-	peh_f8,
-	peh_g1,
-	peh_g2g8,
-	peh_g3g7,
-	peh_g4g6,
-	peh_g8,
-	peh_h0,
-	peh_h1,
-	peh_h2,
-	peh_h3,
-	peh_h4,
-	peh_total
+	peh_a1,		// straight 1
+	peh_a2a8,	// straight left/right 45 degree 1
+	peh_a3a7,	// left/right 1
+	peh_a4a6,	// back left/right 45 degree 1
+	peh_a8,		// back 1
+	peh_b1,		// straight 2
+	peh_b2b8,	// straight left/right 45 degree 2
+	peh_b3b7,	// left/right 2
+	peh_b4b6,	// back left/right 45 degree 2
+	peh_b8,		// back 2
+	peh_c1,		// straight 3
+	peh_c2c8,	// straight left/right 45 degree 3
+	peh_a3c7,	// left/right 3
+	peh_c4c6,	// back left/right 45 degree 3
+	peh_c8,		// back 3
+	peh_d1,		// straight 4
+	peh_d2d8,	// straight left/right 45 degree 4
+	peh_d3d7,	// left/right 4
+	peh_d4d6,	// back left/right 45 degree 4
+	peh_d8,		// back 4
+	peh_e1,		// fire straight 1
+	peh_e2e8,	// fire straight 45 degree left/right 1
+	peh_e3e7,	// fire left/right 1
+	peh_e4e6,	// fire back 45 degree left/righr 1
+	peh_e8,		// fire back 1
+	peh_f1,		// fire straight 2
+	peh_f2f8,	// fire straight 45 degree left/right 2
+	peh_f3f7,	// fire left/right 2
+	peh_f4f6,	// fire back 45 degree left/righr 2
+	peh_f8,		// fire back 2
+	peh_g1,		// death straight 1
+	peh_g2g8,	// death straight left/right 45 degree 1
+	peh_g3g7,	// death left/right 1
+	peh_g4g6,	// death back left/right 45 degree 1
+	peh_g8,		// death back 1
+	peh_h0,		// death 2
+	peh_h1,		// death 3
+	peh_h2,		// death 4
+	peh_h3,		// death 5
+	peh_h4,		// death 6
+	pig_a1,		// straight 1
+	pig_a2a8,	// straight left/right 45 degree 1
+	pig_a3a7,	// left/right 1
+	pig_a4a6,	// back left/right 45 degree 1
+	pig_a8,		// back 1
+	pig_b1,		// straight 2
+	pig_b2b8,	// straight left/right 45 degree 2
+	pig_b3b7,	// left/right 2
+	pig_b4b6,	// back left/right 45 degree 2
+	pig_b8,		// back 2
+	pig_c1,		// straight 3
+	pig_c2c8,	// straight left/right 45 degree 3
+	pig_a3c7,	// left/right 3
+	pig_c4c6,	// back left/right 45 degree 3
+	pig_c8,		// back 3
+	pig_d1,		// straight 4
+	pig_d2d8,	// straight left/right 45 degree 4
+	pig_d3d7,	// left/right 4
+	pig_d4d6,	// back left/right 45 degree 4
+	pig_d8,		// back 4
+	pig_e1,		// fire straight 1
+	pig_e2e8,	// fire straight 45 degree left/right 1
+	pig_e3e7,	// fire left/right 1
+	pig_e4e6,	// fire back 45 degree left/righr 1
+	pig_e8,		// fire back 1
+	pig_f1,		// fire straight 2
+	pig_f2f8,	// fire straight 45 degree left/right 2
+	pig_f3f7,	// fire left/right 2
+	pig_f4f6,	// fire back 45 degree left/righr 2
+	pig_f8,		// fire back 2
+	pig_g1,		// death straight 1
+	pig_g2g8,	// death straight left/right 45 degree 1
+	pig_g3g7,	// death left/right 1
+	pig_g4g6,	// death back left/right 45 degree 1
+	pig_g8,		// death back 1
+	pig_h0,		// death 2
+	pig_h1,		// death 3
+	pig_h2,		// death 4
+	pig_h3,		// death 5
+	pig_h4,		// death 6
+	gun_a0,		// gun 1
+	gun_b0,		// gun 2
+	gun_c0,		// gun 3
+	gun_d0,		// gun 4
+	gun_e0,		// gun 5
+	gun_f0,		// gun fire
+	sprt_total
+};
+
+struct		s_sub_sprite {
+	t_point	origin;
+	double	dist;
+	double	**z_buff;
+};
+
+struct		s_sub_gun {
+	bool	status;
+	t_limit	*ammo;
 };
 
 struct		s_wad_sprite {
@@ -200,11 +163,13 @@ struct		s_wad_player {
 };
 
 uint32_t	get_pixel_sprite(t_wad_sprite *surface, int x, int y);
-void		blit_sprite_scaled(t_wad_sprite *src, t_rect *rsrc,
-				SDL_Surface *dst, t_rect *rdst);
+void		wad_draw_gun(SDL_Surface *screen, t_wad_sprite **sprite, Uint32 delay, t_sub_gun sub);
+void		draw_sprite_anim(SDL_Surface *screen, t_wad_sprite **sprite, Uint32 delay, t_sub_sprite sub);
+
+void		blit_sprite_scaled(t_wad_sprite *src, SDL_Surface *dst, t_sub_sprite sub);
 void		blit_gan_scaled(t_wad_sprite *src, SDL_Surface *dst);
 void		blit_hud_scaled(t_wad_sprite *src, SDL_Surface *dst);
-void		blit_sprite_scale(t_wad_sprite *src,
-				SDL_Surface *dst, t_rectf rdst);
+void		blit_sprite_scale(t_wad_sprite *src, SDL_Surface *dst,
+				t_rectf rdst);
 
 #endif
