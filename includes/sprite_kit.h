@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 19:37:12 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/21 19:50:57 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/22 20:10:43 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,12 @@ enum		e_name_peh {
 	gun_d0,		// gun 4
 	gun_e0,		// gun 5
 	gun_f0,		// gun fire
+	shg_a0,		// shotgun 1
+	shg_b0,		// shotgun 2
+	shg_c0,		// shotgun 3
+	shg_d0,		// shotgun 4
+	shg_f0,		// shotgun fire 1
+	shg_f1,		// shotgun fire 2
 	sprt_total
 };
 
@@ -160,13 +166,22 @@ struct		s_wad_player {
 	t_limit			ammo[4];
 	uint8_t			cur_gan;
 	t_wad_sprite	**gun;
+	void			(*shot)(SDL_Surface *, t_wad_sprite **, Uint32, t_sub_gun);
+	bool			status;
 };
 
 uint32_t	get_pixel_sprite(t_wad_sprite *surface, int x, int y);
-void		wad_draw_gun(SDL_Surface *screen, t_wad_sprite **sprite, Uint32 delay, t_sub_gun sub);
-void		draw_sprite_anim(SDL_Surface *screen, t_wad_sprite **sprite, Uint32 delay, t_sub_sprite sub);
 
-void		blit_sprite_scaled(t_wad_sprite *src, SDL_Surface *dst, t_sub_sprite sub);
+void		wad_draw_pistol(SDL_Surface *screen, t_wad_sprite **sprite,
+				Uint32 delay, t_sub_gun sub);
+void		wad_draw_shotgun(SDL_Surface *screen, t_wad_sprite **sprite,
+				Uint32 delay, t_sub_gun sub);
+
+void		draw_sprite_anim(SDL_Surface *screen, t_wad_sprite **sprite,
+				Uint32 delay, t_sub_sprite sub);
+
+void		blit_sprite_scaled(t_wad_sprite *src, SDL_Surface *dst,
+				t_sub_sprite sub);
 void		blit_gan_scaled(t_wad_sprite *src, SDL_Surface *dst);
 void		blit_hud_scaled(t_wad_sprite *src, SDL_Surface *dst);
 void		blit_sprite_scale(t_wad_sprite *src, SDL_Surface *dst,

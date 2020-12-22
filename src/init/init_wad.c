@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 14:29:58 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/21 17:44:08 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/22 19:57:36 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	*def_name(void)
 		"TROOG2G8", "TROOG3G7", "TROOG4G6", "TROOG5", "TROOH1", "TROOH2H8",
 		"TROOH3H7", "TROOH4H6", "TROOH5", "TROOI0", "TROOJ0", "TROOK0",
 		"TROOL0", "TROOM0", "PISGA0", "PISGB0", "PISGC0", "PISGD0", "PISGE0",
-		"PISFA0", NULL
+		"PISFA0", "SHTGA0", "SHTGB0", "SHTGC0", "SHTGD0", "SHTFA0", "SHTFB0",
+		NULL
 	};
 	return (names);
 }

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 21:03:55 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/21 19:56:56 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/22 16:33:36 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ void				blit_sprite_scaled(t_wad_sprite *src, SDL_Surface *dst, t_sub_sprite sub
 	t_rect			rsrc;
 	t_rect			rdst_temp;
 
-	rdst_temp.w = SCALING_W(src->w) * dst->w;
-	rdst_temp.h = SCALING_H(src->h) * dst->h;
-	rdst_temp.x = sub.origin.x - SCALING_W(src->left_offset);
-	rdst_temp.y = sub.origin.y - SCALING_H(src->top_offset);
+	rdst_temp.w = SCALING_W(src->w) * sub.dist;
+	rdst_temp.h = SCALING_H(src->h) * sub.dist;
+	rdst_temp.x = sub.origin.x - SCALING_W(src->left_offset) * sub.dist;
+	rdst_temp.y = sub.origin.y - SCALING_H(src->top_offset) * sub.dist;
 	rsrc = (t_rect){0, 0, src->w, src->h};
 	while_scale_pic(src, &rsrc, dst, &rdst_temp);
 }

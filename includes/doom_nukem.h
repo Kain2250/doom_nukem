@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:50:34 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/21 20:02:26 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/22 20:41:36 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 #  include "SDL2/SDL_ttf.h"
 #  include "SDL2/SDL_net.h"
 # endif
+
+float	go;
 
 typedef struct		s_block
 {
@@ -154,6 +156,9 @@ Uint32					get_ticks(t_timer *time);
 bool					time_is_started(t_timer *time);
 bool					time_is_paused(t_timer *time);
 void					fps_counter(t_timer *time);
+bool					time_started(t_timer *time);
+void					time_update(t_timer *time);
+
 /*
 ** load_res/load_res.c
 */

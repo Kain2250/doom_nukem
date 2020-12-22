@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 14:40:45 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/21 18:42:58 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/22 15:49:45 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	button_left_event(t_doom *doom)
 {
 	(void)doom;
 	if (doom->mouse.is_presed)
-		status = true;
+		doom->player.status = true;
 	// if (is_slidebar_area(doom->screen->blocks->rect_block, doom->mouse))
 	// 	doom->player.heals.cur =
 	// 	doom->mouse.x - doom->screen->blocks->rect_block->x;
@@ -49,5 +49,5 @@ void		mouse_events(t_doom *doom)
 	else if (SDL_BUTTON_MIDDLE == button)
 		button_midle_event(doom);
 	if (!doom->mouse.is_presed)
-		status = false;
+		doom->player.status = false;
 }

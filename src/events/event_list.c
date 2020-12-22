@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 09:15:51 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/12 13:05:49 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/22 19:59:49 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,19 +116,29 @@ void			keybord_events(t_doom *doom)
 		if (doom->player.health.cur < doom->player.health.max)
 			doom->player.health.cur++;
 	}
-	if (doom->sdl.state[SDL_SCANCODE_A] && doom->frame.win == NULL)
+	else if (doom->sdl.state[SDL_SCANCODE_A] && doom->frame.win == NULL)
 	{
 		if (doom->player.health.cur > doom->player.health.min)
 			doom->player.health.cur--;
 	}
+	if (doom->sdl.state[SDL_SCANCODE_W])
+		go += (go >= 5) ? -0.01 : 0.01;
+	else if (doom->sdl.state[SDL_SCANCODE_S])
+		go -= (go <= 0.01) ? -0.01 : 0.01; 
 	if (doom->sdl.state[SDL_SCANCODE_E])
 		doom->player.ammo[doom->player.cur_gan].cur += (doom->player.ammo[doom->player.cur_gan].cur < doom->player.ammo[doom->player.cur_gan].max) ? 1 : 0;
-	if (doom->sdl.state[SDL_SCANCODE_Q])
+	else if (doom->sdl.state[SDL_SCANCODE_Q])
 		doom->player.ammo[doom->player.cur_gan].cur -= (doom->player.ammo[doom->player.cur_gan].cur > doom->player.ammo[doom->player.cur_gan].min) ? 1 : 0;
 	if (doom->sdl.state[SDL_SCANCODE_1])
+	{
 		doom->player.cur_gan = 0;
+		doom->player.shot = wad_draw_pistol;
+	}
 	else if (doom->sdl.state[SDL_SCANCODE_2])
+	{
 		doom->player.cur_gan = 1;
+		doom->player.shot = wad_draw_shotgun;
+	}
 	else if (doom->sdl.state[SDL_SCANCODE_3])
 		doom->player.cur_gan = 2;
 	else if (doom->sdl.state[SDL_SCANCODE_4])

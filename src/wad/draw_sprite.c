@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 14:35:50 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/21 19:52:07 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/22 20:59:18 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,60 @@ int		clamp(int x, int min, int max)
 	return (x);
 }
 
-void	wad_draw_gun(SDL_Surface *screen, t_wad_sprite **sprite,
+
+void	wad_draw_shotgun(SDL_Surface *screen, t_wad_sprite **sprite,
+			Uint32 delay, t_sub_gun sub)
+{
+	static t_timer	time;
+	static int		i = shg_a0;
+	static int		j = shg_f0;
+	// static bool		revers = false;
+
+	if (!sub.status || sub.ammo->cur == sub.ammo->min)
+	{
+		blit_gan_scaled(sprite[shg_a0], screen);
+		i = shg_a0;
+		j = shg_f0;
+	}
+	else if (sub.status || i <= shg_d0)
+	{
+		time_started(&time);
+		blit_gan_scaled(sprite[i], screen);
+		if (j <= shg_f1)
+			blit_gan_scaled(sprite[j], screen);
+		if (get_ticks(&time) >= delay)
+		{
+			if (i == shg_a0)
+				j++;
+			if (j > shg_f1)
+			{
+				i++;
+				// if (!revers)
+				// {
+				// 	i++;
+				// 	if (i == shg_d0)
+				// 		revers = !revers;
+				// }
+				// else
+				// {
+				// 	i--;
+				// 	if (i == shg_a0)
+				// 		revers = !revers;
+				// }
+			}
+			if (i > shg_d0)
+			{
+				i = shg_a0;
+				j = shg_f0;
+				sub.ammo->cur = clamp(sub.ammo->cur - 1, 0, sub.ammo->max);
+			}
+			time_update(&time);
+		}
+ 	}
+}
+
+
+void	wad_draw_pistol(SDL_Surface *screen, t_wad_sprite **sprite,
 			Uint32 delay, t_sub_gun sub)
 {
 	static t_timer	time;
@@ -70,8 +123,7 @@ void	wad_draw_gun(SDL_Surface *screen, t_wad_sprite **sprite,
 		blit_gan_scaled(sprite[gun_a0], screen);
 	else if ((sub.status || i <= gun_e0) && sub.ammo->cur != sub.ammo->min)
 	{
-		if (!time_is_started(&time))
-			timer_start(&time);
+		time_started(&time);
 		blit_gan_scaled(sprite[i], screen);
 		if (i == gun_d0)
 			blit_gan_scaled(sprite[gun_f0], screen);
@@ -83,8 +135,7 @@ void	wad_draw_gun(SDL_Surface *screen, t_wad_sprite **sprite,
 				i = gun_b0;
 				sub.ammo->cur = clamp(sub.ammo->cur - 1, 0, sub.ammo->max);
 			}
-			timer_stop(&time);
-			timer_start(&time);
+			time_update(&time);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/23 14:15:36 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/08/15 09:11:27 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/22 20:41:10 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,22 @@ bool		time_is_paused(t_timer *time)
 	return (time->paused);
 }
 
+bool		time_started(t_timer *time)
+{
+	if (!time_is_started(time))
+	{
+		timer_start(time);
+		return (true);
+	}
+	return (false);
+}
+
+void		time_update(t_timer *time)
+{
+	timer_stop(time);
+	timer_start(time);
+}
+
 void		fps_counter(t_timer *time)
 {
 	if (get_ticks(time) >= 1000)
@@ -44,8 +60,7 @@ void		fps_counter(t_timer *time)
 		ft_putstr("FPS: ");
 		ft_putnbr(time->counted_frames);
 		ft_putchar('\n');
-		timer_stop(time);
-		timer_start(time);
+		time_update(time);
 		time->counted_frames = 0;
 	}
 	else

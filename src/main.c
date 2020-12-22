@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/21 19:45:42 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/22 20:14:15 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,20 @@ int				main(int ac, char **av)
 																				// doom->screen = init_editor(doom);
 		doom->wad = init_wad(av[1]);
 		timer_start(&doom->fps);
+		go = 1;
+		doom->player.shot = wad_draw_pistol;
 		while (doom->quit == false)
 		{
 			// wad_draw_menu(doom->sdl.surface, doom->wad);
 			// fps_counter(&doom->fps);
 																				// frame_tamer(doom, doom->screen);
 																				// wad_draw_linedefs(doom->wad, doom->wad.vert, doom->sdl.surface, name_map);
-																				// draw_line(doom->sdl.surface, (t_point){HALF_WIDTH, 0}, (t_point){HALF_WIDTH, HALF_R_HEIGHT * 2}, 0xffffff);
-																				// draw_line(doom->sdl.surface, (t_point){0, HALF_R_HEIGHT}, (t_point){WIDTH_WIN, HALF_R_HEIGHT}, 0xffffff);
+																				draw_line(doom->sdl.surface, (t_point){HALF_WIDTH, 0}, (t_point){HALF_WIDTH, HALF_R_HEIGHT * 2}, 0xffffff);
+																				draw_line(doom->sdl.surface, (t_point){0, HALF_R_HEIGHT}, (t_point){WIDTH_WIN, HALF_R_HEIGHT}, 0xffffff);
 			draw_sprite_anim(doom->sdl.surface, doom->wad->sprites, 200,
-				(t_sub_sprite){(t_point){HALF_WIDTH, HALF_WIDTH}, 1, NULL});
-			wad_draw_gun(doom->sdl.surface, doom->wad->sprites, 100,
-				(t_sub_gun){status, &doom->player.ammo[doom->player.cur_gan]});
+				(t_sub_sprite){(t_point){HALF_R_WIDTH, HALF_R_HEIGHT}, go, NULL});
+			doom->player.shot(doom->sdl.surface, doom->wad->sprites, 150,
+				(t_sub_gun){doom->player.status, &doom->player.ammo[doom->player.cur_gan]});
 			draw_hud(doom->sdl.surface, doom->wad->hud, doom->player);
 			event_list(doom);
 			SDL_UpdateWindowSurface(doom->sdl.window);
