@@ -52,4 +52,4 @@ Module.symvers
 Mkfile.old
 dkms.conf
 123
-resource
+# resource
