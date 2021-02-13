@@ -6,7 +6,7 @@
 /*   By: bdrinkin <bdrinkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 06:55:31 by bdrinkin          #+#    #+#             */
-/*   Updated: 2020/12/22 20:14:15 by bdrinkin         ###   ########.fr       */
+/*   Updated: 2020/12/25 17:51:26 by bdrinkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int				main(int ac, char **av)
 			// fps_counter(&doom->fps);
 																				// frame_tamer(doom, doom->screen);
 																				// wad_draw_linedefs(doom->wad, doom->wad.vert, doom->sdl.surface, name_map);
-																				draw_line(doom->sdl.surface, (t_point){HALF_WIDTH, 0}, (t_point){HALF_WIDTH, HALF_R_HEIGHT * 2}, 0xffffff);
-																				draw_line(doom->sdl.surface, (t_point){0, HALF_R_HEIGHT}, (t_point){WIDTH_WIN, HALF_R_HEIGHT}, 0xffffff);
+																				// draw_line(doom->sdl.surface, (t_point){HALF_WIDTH, 0}, (t_point){HALF_WIDTH, HALF_R_HEIGHT * 2}, 0xffffff);
+																				// draw_line(doom->sdl.surface, (t_point){0, HALF_R_HEIGHT}, (t_point){WIDTH_WIN, HALF_R_HEIGHT}, 0xffffff);
 			draw_sprite_anim(doom->sdl.surface, doom->wad->sprites, 200,
 				(t_sub_sprite){(t_point){HALF_R_WIDTH, HALF_R_HEIGHT}, go, NULL});
 			doom->player.shot(doom->sdl.surface, doom->wad->sprites, 150,
