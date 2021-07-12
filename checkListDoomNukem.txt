@@ -1,0 +1,84 @@
+Чеклист Дум
+
+[]- Author file
+
+[]- Welcome back Wolf3D
+	[]- Move with keys on the keyboard in real time, rotate 360 degrees, move forward, move back (Перемещайтесь с помощью клавиш на клавиатуре в реальном времени, вращайте на 360 градусов, двигайтесь вперед, двигайтесь назад)
+	[]- Close the window and exit the prigram cleanly with the ESC or by cliking on the red cross at window border (Выход их игры по стандартам школы)
+	[]- There are textures on the walls ("Стены все в балоне")
+
+[]- Visual Elements (Ползунок)
+	[]- You can look in all directions (top to bottom and right to left) (Можно напровить взор в любую сторону)
+	[]- The spaces must have any shape, rooms a different number of walls, width several orientations (Помещения должны иметь любую форму)
+	[]- The floor and the celing have an adjustable height with unevenness between the different spaces (Разноуровневый пол и потолок)
+	[]- The floor and celing must be able to be inclined (Наклонные поверхности)
+	[]- Textures are present on the floor and celing (Пол и потолок текстурирован)
+
+[]- Decor elements (Ползунок)
+	[]- Sky must be present (not replace the texture of the celing by a sky...) (Скай бокс)
+	[]- There must be partially transpanent walls to see the space at the back (Прозрачные стены)
+	[]- There should be decorative elements on the walls, above the main texture (Декорации на стенах)
+	[]- There are sprites that always fase the player's orientation, such as seeng a front, side or back character (Следящие спрайты, всегда лицом к игроку)
+	[]- Ambient light must be present, affecting the eals and objects present (Разная освещенность сцены)
+
+[]- Check that message can be displayed during the game, overprinted (Вывод текста поверх игрового процесса)
+
+[]- Check that there ara at least 3 elements on the HUD (Должен присутствовать ХУД хотябы с тремя этементами)
+
+[]- Movements
+	[]- The movements are fluid, we can turn on oneself and from top to bottom (2 points) (Плавные движения)
+	[]- I's possible to strafe in a fluid way (1 point) (Стрейф)
+	[]- Ineractions with walls and steps are correct manager according to their and in a fluid movement (2 points) (Правильное движение по ступенькам и тд)
+
+[]- Advanced Movements (Ползунок)
+	[]- It's possible to run, jump, fall, bend down and get up in a fluid way (3 points) (Можно плавно бегать, прыгать, падать, наклоняться и вставать)
+	[]- It's possible to fly and/or swim in a fluid way (2 points) (Можно плавать и/или летать)
+
+[]- Interaction with the decor (Ползунок)
+	[]- The objects present react well in proportin to their visual representation (1 point) (Нет искажений при отрисовке объектов, взаимодействии с ними)
+	[]- The items present may or may not be picked up and added to an inventory (2 points) (Можно подбирать объекты и помещать их в инвентарь)
+	[]- Interactions are possible with the elements of the decor (Activate a plate, a boutton...)(2 points) (Можно взаимодействовать с объектами, кнопки, плиты)
+
+[]- Advanced interactions (Ползунок)
+	[]- There are actions that ara executed following a/few action(s), be append-minded (1 point) (Есть действия, которые выполняются после / нескольких действий, которые должны быть добавлены. Два ключа на одной двери)
+	[]- Actions can modify all the elements of the game, the forms, their priperties (2 points) (Действия могут изменять все элементы игры, формы, их свойства)
+	[]- There ara animations present following an interaction (Like opening a door) (2 points) (После взаимодействия присутствуют анимации - например, открытие двери)
+
+[]- Overal atmosphere of the game (Ползунок)
+	[]- Characters and objects can have their own actions (Персонажи и предметы могут иметь свои собственные действия)
+	[]- Projectiles can be fired with interaction on the environment (Снаряды могут взаимодействовать с окружающей средой)
+	[]- The game contains a story, with a mission and a goal to achieve (Миссии, ачивки, история)
+	[]- There is a begining and an end of level (Начало и конец уровня)
+	[]- Music and sound effects are present (Музыка и звуковые эффекты)
+
+
+[]- LEVEL EDITOR (Ползунок)
+	[]- Editing spaces (Walls, Floors, Celings)
+	[]- Texture editing
+	[]- Edit actions
+	[]- Objects editing
+	[]- Edition of general elements (begining end of level, terrestrial or lunar gravity, type of weapons available and damage, standart of living at the start, background music, solo/team, etc) (Редакция общих элементов - начало и конец уровня, земная или лунная гравитация, тип доступного оружия и урон, уровень жизни в начале, фоновая музыка, соло / команда и тд)
+
+[]- All the elements necessaty for the game must be in a single file. You should only be able to start the game with the binary doom-nukem and this file (Все элементы, необходимые для игры, должны быть в одном файле. Вы должны иметь возможность запускать игру только с двоичным doom-nukem и этим файлом)
+
+
+
+[]- SUGGESTED BONUSES (Ползунок)
+	[]- A menu to choose the level or difficulty options (2 point) (Выбор уровня сложности или карты)
+	[]- The atmosphere and the decor are meticulous (1 point) (Атмосфера и декор продуманы до мелочей)
+	[]- The story and the scenario are complex and elaborate (1 points) (Сюжет продуман и сложен)
+	[]- a good immersion, if you are transported in game it is that the Group has succeeded in its work (1 points) (Можно играть не отрываясь, короче, качественно сделаная игра)
+
+[]- The game has a rendering mode using threads using the library of the processor to speed up the rendering and fiudity of the game (В игре есть режим рендеринга с использованием потоков, использующих библиотеку процессора для ускорения рендеринга и точности игры)
+
+[]- A lobby is present and possible to play multi in network (Присутствует лобби, и можно играть по сети)
+
+[]-Be crazy (Ползунок)
+	[]- Игрок должен уметь обоссывать все вокруг
+	[]- В игре усть игровой автомат на котором можно поиграть в вульф
+	[]- С помощью написанной программы можно открывать оригинальные файлы дума
+	[]- Майнинговая ферма в школе 21
+	[]- Успеть в дедлайн и закрыть проект на 125
+
+
+
